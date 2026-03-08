@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57697865cbf152044ad6dc733ea330df, type: 3}
+  m_Name: BurstShotA
+  m_EditorClassIdentifier: Assembly-CSharp::Weapons.BurstShot
+  projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
+  power: 10
+  range: 10
+  projectileSpeed: 15
+  shotInterval: 1
+  burstNum: 4
+  burstInterval: 0.05

@@ -3,6 +3,7 @@ using Ships;
 using System.Collections.Generic;
 using UniRx.Triggers;
 using UniRx;
+using Managers;
 namespace Ships
 {
     public class Ship : MonoBehaviour
@@ -19,10 +20,24 @@ namespace Ships
         public List<GameObject> opponentShipObjectList = new List<GameObject>();
         public void Start()
         {
-            gameObject.UpdateAsObservable()
+            // gameObject.UpdateAsObservable()
+            //     .Subscribe(_ =>
+            //     {
+            //         GetNearestEnemy();
+            //     })
+            //     .AddTo(gameObject);
+            gameObject.OnDestroyAsObservable()
                 .Subscribe(_ =>
                 {
-                    GetNearestEnemy();
+                    int n = allyShipObjectList.Count;
+                    for(int i = 0;i < n;i++)
+                    {
+                        if(allyShipObjectList[i] == gameObject)
+                        {
+                            allyShipObjectList.RemoveAt(i);
+                            break;
+                        }
+                    }
                 })
                 .AddTo(gameObject);
         }
@@ -38,7 +53,7 @@ namespace Ships
             maxHullPoint = shipData.maxHullPoint;
             currentHullPoint = maxHullPoint;
         }
-        public void SetAO(List<GameObject> ally,List<GameObject> opponet)
+        public void SetShipList(List<GameObject> ally,List<GameObject> opponet)
         {
             allyShipObjectList = ally;
             opponentShipObjectList = opponet;
@@ -48,7 +63,7 @@ namespace Ships
             float mindist = Mathf.Infinity;
             foreach(var shipObject in opponentShipObjectList)
             {
-                if(mindist > Vector2.Distance(transform.position,shipObject.transform.position))
+                if(shipObject && mindist > Vector2.Distance(transform.position,shipObject.transform.position))
                 {
                     targetObject = shipObject;
                 }
@@ -61,32 +76,37 @@ namespace Ships
                 Debug.Log("shipData is null");
                 return;
             }
-            GetNearestEnemy();
             foreach(var weapon in shipData.weaponDataList)
             {
-                weapon.ShootAction(gameObject,targetObject.transform.position);
+                weapon.ShootAction(gameObject,this);
             }
         }
         public virtual void DealDamage(int power)
         {
-            int truePower = power;
+            Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
+            int actualPower = power;
             if(currentShieldPoint > 0)
             {
-                if(currentShieldPoint > truePower)
+                ShipManager.Instance.SetDamagevalue(actualPower,transform.position,true);
+                if(currentShieldPoint > actualPower)
                 {
-                    currentShieldPoint -= truePower;
+                    currentShieldPoint -= actualPower;
+                    actualPower = 0;
                 }
                 else 
                 {
-                    truePower -= currentShieldPoint;
+                    actualPower -= currentShieldPoint;
                     currentShieldPoint = 0;
                 }
+                
             }
+            if(actualPower == 0)return;
             if(currentHullPoint > 0)
             {
-                if(currentHullPoint > truePower)
+                ShipManager.Instance.SetDamagevalue(actualPower,transform.position,false);
+                if(currentHullPoint > actualPower)
                 {
-                    currentHullPoint -= truePower;
+                    currentHullPoint -= actualPower;
                 }
                 else 
                 {

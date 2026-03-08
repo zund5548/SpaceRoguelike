@@ -16,4 +16,5 @@ MonoBehaviour:
   shipType: 0
   maxHullPoint: 200
   maxShieldPoint: 200
-  weaponDataList: []
+  weaponDataList:
+  - {fileID: 11400000, guid: 0e6eee6d1c95aa4479114083a0deb928, type: 2}

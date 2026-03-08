@@ -4,6 +4,8 @@ using UniRx;
 using UniRx.Triggers;
 using System.Collections.Generic;
 using Ships;
+using TMPro;
+using System;
 namespace Managers
 {
     public class ShipManager : MonoBehaviour
@@ -20,6 +22,10 @@ namespace Managers
         public List<ShipData> enemyShipDataList = new List<ShipData>();
         private List<GameObject> playerShipList = new List<GameObject>();
         private List<GameObject> enemyShipList = new List<GameObject>();
+        [Header("Canvas")]
+        public RectTransform DamageValueCanvas;
+        [Header("Prefab")]
+        public TextMeshProUGUI damageValueDisplay;
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -46,14 +52,35 @@ namespace Managers
                     //Debug.DrawRay(_currentFleetPos,new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)));
                 })
                 .AddTo(gameObject);
-            foreach(var shipData in playerShipDataList)
-            {
-                InstantiatePlayerShip(shipData);
-            }   
             foreach(var shipData in enemyShipDataList)
             {
                 InstantiateEnemyShip(shipData);
             }  
+            foreach(var shipData in playerShipDataList)
+            {
+                InstantiatePlayerShip(shipData);
+            }   
+            
+        }
+        public void SetDamagevalue(int value,Vector2 worldPos,bool onShield)
+        {
+            var display = Instantiate(damageValueDisplay);
+            //位置
+            display.transform.SetParent(DamageValueCanvas,false);
+            Vector2 screenPos = _cam.WorldToScreenPoint(worldPos);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(DamageValueCanvas,screenPos,_cam,out Vector2 localPos);
+            float randDeg = UnityEngine.Random.Range(-180f,180f);
+            display.rectTransform.anchoredPosition = localPos + 25f * new Vector2(Mathf.Cos(randDeg * Mathf.Deg2Rad),Mathf.Sin(randDeg * Mathf.Deg2Rad));
+            //色と値
+            var textMesh = display.GetComponent<TextMeshProUGUI>();
+            textMesh.text = onShield?$"<color={"#1EE3DA"}>{value}</color>":value.ToString();
+            display.UpdateAsObservable()
+                .Delay(TimeSpan.FromSeconds(0.5f))
+                .Subscribe(_ =>
+                {
+                    Destroy(display.gameObject);
+                })
+                .AddTo(display);
         }
         private void InstantiatePlayerShip(ShipData shipData)
         {
@@ -74,8 +101,9 @@ namespace Managers
 
             Ship ship = shipObject.GetComponent<Ship>();
             ship.isPlayer = true;
+            ship.tag = "PlayerShip";
             ship.shipData = shipData;
-            ship.SetAO(playerShipList,enemyShipList);
+            ship.SetShipList(playerShipList,enemyShipList);
             ship.SetSPHP();
             ship.SetWeapon();
         }   
@@ -98,8 +126,9 @@ namespace Managers
 
             Ship ship = shipObject.GetComponent<Ship>();
             ship.isPlayer = false;
+            ship.tag = "EnemyShip";
             ship.shipData = shipData;
-            ship.SetAO(enemyShipList,playerShipList);
+            ship.SetShipList(enemyShipList,playerShipList);
             ship.SetSPHP();
         }   
     }
