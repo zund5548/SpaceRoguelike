@@ -250,6 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d0f6b1bd9ff7f46b0853a340463861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GManager
+  CurrentState:
+    value: 0
+  isMapCreated: 0
 --- !u!4 &506109495
 Transform:
   m_ObjectHideFlags: 0
@@ -460,7 +463,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -979,8 +982,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 653238694}
+  - {fileID: 688509670}
   - {fileID: 1612342223}
   - {fileID: 144322223}
   - {fileID: 506109495}
   - {fileID: 1874727543}
-  - {fileID: 688509670}

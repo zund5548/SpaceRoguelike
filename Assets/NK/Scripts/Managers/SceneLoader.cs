@@ -11,9 +11,11 @@ namespace Managers
         public static SceneLoader Instance{get;private set;}
         void Awake()
         {
+            
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
+                Destroy(fadeCanvas);
                 return;
             }
             Instance = this;
