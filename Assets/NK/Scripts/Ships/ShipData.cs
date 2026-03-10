@@ -19,7 +19,9 @@ namespace Ships
         }
         public int maxHullPoint;
         public int maxShieldPoint;
-        public List<WeaponData> weaponDataList = new List<WeaponData>();
+        public int power;
+        [SerializeReference,SubclassSelector]
+        public List<WeaponData> weaponDataList = new();
     }
 }
 

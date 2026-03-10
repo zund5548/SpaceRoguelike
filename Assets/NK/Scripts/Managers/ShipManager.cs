@@ -106,6 +106,8 @@ namespace Managers
             ship.SetShipList(playerShipList,enemyShipList);
             ship.SetSPHP();
             ship.SetWeapon();
+
+            ship.power = shipData.power;
         }   
         private void InstantiateEnemyShip(ShipData shipData)
         {

@@ -10,11 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
-  m_Name: P2
+  m_Name: P1
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
-  shipName: P2
+  shipName: P1
   shipType: 0
-  maxHullPoint: 200
-  maxShieldPoint: 200
+  maxHullPoint: 100
+  maxShieldPoint: 100
+  power: 25
   weaponDataList:
-  - {fileID: 11400000, guid: 0e6eee6d1c95aa4479114083a0deb928, type: 2}
+  - rid: 8997315990246129762
+  references:
+    version: 2
+    RefIds:
+    - rid: 8997315990246129762
+      type: {class: SingleShot, ns: Weapons, asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
+        range: 10
+        projectileSpeed: 10
+        shotInterval: 0.1

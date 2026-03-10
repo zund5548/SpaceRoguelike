@@ -4,13 +4,15 @@ using UnityEngine;
 
 namespace Maps
 {
+     [Serializable]
     public class StageNode
     {
         public string stageName;
         public int floorStageNum;
         public Vector2 buttonLocalPos;
         public StageType stageType;
-        public GameObject buttonObject;
+        public (int,int) mapIdx;//マップでのインデックス
+        //public GameObject buttonObject;
         [Serializable]
         public enum StageType
         {
@@ -20,6 +22,9 @@ namespace Maps
             credit,
             boss
         }
+        [SerializeReference]
         public List<StageNode> nextNodeList = new();
+        public List<Planet> planetList = new();
+        public List<Star> starList = new();
     }
 }

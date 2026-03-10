@@ -18,6 +18,8 @@ namespace Ships
         public GameObject targetObject;
         public List<GameObject> allyShipObjectList = new List<GameObject>();
         public List<GameObject> opponentShipObjectList = new List<GameObject>();
+
+        public int power;
         public void Start()
         {
             // gameObject.UpdateAsObservable()
