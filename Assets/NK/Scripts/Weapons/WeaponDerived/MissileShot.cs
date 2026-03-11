@@ -33,6 +33,7 @@ namespace Weapons
             float rad = UnityEngine.Random.Range(-Mathf.PI,Mathf.PI);
             return new Vector2(Mathf.Cos(rad),Mathf.Sin(rad));
         }
+        
         public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
@@ -55,11 +56,11 @@ namespace Weapons
                     isRight = !isRight;
                     for(int i = 0;i < burstNum;i++)
                     {
-                        var projectile = UnityEngine.Object.Instantiate(this.projectile);
-                        projectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
-                        projectile.transform.position = applyingdShipObject.transform.position;
-                        projectile.GetComponent<Projectile>().power = applyingShip.power;
-                        projectile.UpdateAsObservable()
+                        var missileProjectile = UnityEngine.Object.Instantiate(projectile);
+                        //missileProjectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
+                        missileProjectile.transform.position = applyingdShipObject.transform.position;
+                        //missileProjectile.GetComponent<Projectile>()._isDamaging = false;
+                        missileProjectile.UpdateAsObservable()
                             .Scan(
                                 new MissileState
                                 {
@@ -86,34 +87,40 @@ namespace Weapons
                             )
                         .Subscribe(state =>
                         {
-                            projectile.transform.position = state.pos;
-                            projectile.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(state.velocity.y,state.velocity.x)*Mathf.Rad2Deg);
-                            if(Vector2.Distance(projectile.transform.position,initTargetPos) <= 0.1f || state.period < 0f)
+                            missileProjectile.transform.position = state.pos;
+                            missileProjectile.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(state.velocity.y,state.velocity.x)*Mathf.Rad2Deg);
+                            if(state.period < 0f)
                             {
-                                var expl = UnityEngine.Object.Instantiate(explosion,projectile.transform.position,Quaternion.identity);
-                                expl.transform.localScale = ExplosionRadius * Vector2.one;
-                                var SR = expl.GetComponent<SpriteRenderer>();
-                                float remainingTime = 0.5f;
-                                float t = remainingTime;
-                                expl.UpdateAsObservable()
-                                    .Subscribe(_ =>
-                                    {
-                                        t -= Time.deltaTime;
-                                        Color color = new Color(SR.color.r,SR.color.g,SR.color.b,t/remainingTime);
-                                        SR.color = color;
-                                    })
-                                    .AddTo(expl);
-                                var E = expl.GetComponent<Explosion>();
-                                E.power = applyingShip.power;
-                                E.isPlayers = applyingShip.isPlayer;
-                                UnityEngine.Object.Destroy(projectile);
+                                SetExplosion(applyingShip,missileProjectile.transform.position);
+                                UnityEngine.Object.Destroy(missileProjectile);
+                                
                             }
                         })
-                        .AddTo(projectile);
+                        .AddTo(missileProjectile);
                     }
-                    
                 })
                 .AddTo(applyingdShipObject);
+        }
+        private void SetExplosion(Ship applyingShip,Vector2 pos)
+        {
+            var explosionRadiusObject = UnityEngine.Object.Instantiate(explosion,pos,Quaternion.identity);
+            explosionRadiusObject.transform.localScale = ExplosionRadius * Vector2.one;
+            var E = explosionRadiusObject.GetComponent<Explosion>();
+            E.power = (int)applyingShip.currentPower.Value;
+            E.isPlayers = applyingShip.isPlayer;
+            
+            float remainingTime = 0.5f;
+            float t = remainingTime;
+            var SR = explosionRadiusObject.GetComponent<SpriteRenderer>();
+            explosionRadiusObject.UpdateAsObservable()
+                .Subscribe(_ =>
+                {
+                    t -= Time.deltaTime;
+                    if(t < 0f) UnityEngine.Object.Destroy(explosionRadiusObject);
+                    Color color = new Color(SR.color.r,SR.color.g,SR.color.b,t/remainingTime*0.5f);
+                    SR.color = color;
+                })
+                .AddTo(explosionRadiusObject);
         }
     }
 }

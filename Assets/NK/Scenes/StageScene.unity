@@ -1125,9 +1125,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.ShipManager
   playerShipDataList:
-  - {fileID: 11400000, guid: 3210c4b2c651a3b4a8a82850a2ac7d34, type: 2}
-  enemyShipDataList:
   - {fileID: 11400000, guid: 1ab5a46868d85d04990db62e2c496ef6, type: 2}
+  enemyShipDataList:
+  - {fileID: 11400000, guid: ee4edddbb213bbd44a87183e945db095, type: 2}
   DamageValueCanvas: {fileID: 1969061087}
   damageValueDisplay: {fileID: 5495638505057098136, guid: 94d07249bdf4d0e4b876611f3d451ca2, type: 3}
 --- !u!4 &1838093858

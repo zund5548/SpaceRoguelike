@@ -72,7 +72,7 @@ namespace Managers
                     LR.SetPosition(i,radius * new Vector3(Mathf.Cos(orbitRad),Mathf.Sin(orbitRad),0f));
                     orbitRad += 2f * Mathf.PI/pointNum;
                 }
-                radius += Random.Range(1f,3f);
+                radius += Random.Range(2f,4f);
             }   
         }
     }

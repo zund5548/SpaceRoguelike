@@ -37,6 +37,8 @@ namespace Managers
         }
         void Start()
         {
+            if(GManager.Instance.playerShipDataList.Count != 0)playerShipDataList = GManager.Instance.playerShipDataList;
+            if(GManager.Instance.enemyShipDataList.Count != 0)enemyShipDataList = GManager.Instance.enemyShipDataList;
             _shipObject = (GameObject)Resources.Load("Ship");
             _cam = Camera.main;
             gameObject.UpdateAsObservable()
@@ -107,7 +109,7 @@ namespace Managers
             ship.SetSPHP();
             ship.SetWeapon();
 
-            ship.power = shipData.power;
+            ship.currentPower = new(shipData.power);
         }   
         private void InstantiateEnemyShip(ShipData shipData)
         {
@@ -132,6 +134,8 @@ namespace Managers
             ship.shipData = shipData;
             ship.SetShipList(enemyShipList,playerShipList);
             ship.SetSPHP();
+
+            ship.currentPower = new(shipData.power);
         }   
     }
 }

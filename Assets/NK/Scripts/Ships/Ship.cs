@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UniRx.Triggers;
 using UniRx;
 using Managers;
+using Stats;
 namespace Ships
 {
     public class Ship : MonoBehaviour
@@ -19,7 +20,7 @@ namespace Ships
         public List<GameObject> allyShipObjectList = new List<GameObject>();
         public List<GameObject> opponentShipObjectList = new List<GameObject>();
 
-        public int power;
+        public Stat currentPower;
         public void Start()
         {
             // gameObject.UpdateAsObservable()
@@ -85,7 +86,7 @@ namespace Ships
         }
         public virtual void DealDamage(int power)
         {
-            Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
+            //Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
             int actualPower = power;
             if(currentShieldPoint > 0)
             {

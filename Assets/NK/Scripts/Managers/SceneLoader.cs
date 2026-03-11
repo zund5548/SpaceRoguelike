@@ -43,13 +43,13 @@ namespace Managers
             switch(sceneName)
             {
                 case "MapScene":
-                    GManager.Instance.SetGameState(GManager.GameState.onMap);
+                    GManager.Instance.SetGameState(GManager.GameState.OnMap);
                     break; 
                 case "StageScene":
-                    GManager.Instance.SetGameState(GManager.GameState.onStage);
+                    GManager.Instance.SetGameState(GManager.GameState.OnStage);
                     break;
                 case "LobbyScene":
-                    GManager.Instance.SetGameState(GManager.GameState.onLobby);
+                    GManager.Instance.SetGameState(GManager.GameState.OnLobby);
                     break;
             }
             yield return Fading(1,0);

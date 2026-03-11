@@ -745,6 +745,10 @@ MonoBehaviour:
     nextNodeList: []
     planetList: []
     starList: []
+  playerShipDataList:
+  - {fileID: 11400000, guid: 1ab5a46868d85d04990db62e2c496ef6, type: 2}
+  enemyShipDataList:
+  - {fileID: 11400000, guid: ee4edddbb213bbd44a87183e945db095, type: 2}
   references:
     version: 2
     RefIds: []
@@ -1340,8 +1344,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
