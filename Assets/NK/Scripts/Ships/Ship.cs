@@ -61,14 +61,16 @@ namespace Ships
             allyShipObjectList = ally;
             opponentShipObjectList = opponet;
         }
-        public void GetNearestEnemy()
+        public void GetNearestOpponet()
         {
             float mindist = Mathf.Infinity;
             foreach(var shipObject in opponentShipObjectList)
             {
-                if(shipObject && mindist > Vector2.Distance(transform.position,shipObject.transform.position))
+                var dist = Vector2.Distance(transform.position,shipObject.transform.position);
+                if(shipObject && mindist > dist)
                 {
                     targetObject = shipObject;
+                    mindist = dist;
                 }
             }
         }
@@ -101,7 +103,6 @@ namespace Ships
                     actualPower -= currentShieldPoint;
                     currentShieldPoint = 0;
                 }
-                
             }
             if(actualPower == 0)return;
             if(currentHullPoint > 0)

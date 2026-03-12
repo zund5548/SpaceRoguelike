@@ -24,7 +24,7 @@ namespace Weapons
                 .Repeat()
                 .Subscribe(_ =>
                 {
-                    applyingShip.GetNearestEnemy();
+                    applyingShip.GetNearestOpponet();
                     if(!applyingdShipObject || !applyingShip.targetObject)return;
                     if(Vector2.Distance(applyingdShipObject.transform.position,applyingShip.targetObject.transform.position) > range)return;
                     

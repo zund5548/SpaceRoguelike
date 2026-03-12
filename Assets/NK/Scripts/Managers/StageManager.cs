@@ -33,6 +33,7 @@ namespace Managers
                 .Subscribe(_ =>
                 {
                     ToMapButton.interactable = false;
+                    GManager.Instance.passsedStageNodes.Add(GManager.Instance.currentStageNode);
                     SceneLoader.Instance.ToMap();
                 })
                 .AddTo(ToMapButton.gameObject);

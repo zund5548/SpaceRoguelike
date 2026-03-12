@@ -25,7 +25,7 @@ namespace Weapons
                 .ThrottleFirst(TimeSpan.FromSeconds(shotInterval))
                 .Subscribe(_ =>
                 {
-                    applyingShip.GetNearestEnemy();
+                    applyingShip.GetNearestOpponet();
                     if(!applyingdShipObject || !applyingShip.targetObject)return;
                     if(Vector2.Distance(applyingdShipObject.transform.position,applyingShip.targetObject.transform.position) > range)return;
                     float currentDeg = -angleDif * (bulletNum -1) /2f;

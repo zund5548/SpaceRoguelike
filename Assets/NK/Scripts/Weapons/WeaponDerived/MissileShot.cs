@@ -44,7 +44,7 @@ namespace Weapons
                 .ThrottleFirst(TimeSpan.FromSeconds(shotInterval))
                 .Subscribe(_ =>
                 {
-                    applyingShip.GetNearestEnemy();
+                    applyingShip.GetNearestOpponet();
                     if(!applyingdShipObject || !applyingShip.targetObject)return;
                     if(Vector2.Distance(applyingdShipObject.transform.position, applyingShip.targetObject.transform.position) > range) return;
                     
@@ -59,7 +59,7 @@ namespace Weapons
                         var missileProjectile = UnityEngine.Object.Instantiate(projectile);
                         //missileProjectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
                         missileProjectile.transform.position = applyingdShipObject.transform.position;
-                        //missileProjectile.GetComponent<Projectile>()._isDamaging = false;
+                        missileProjectile.GetComponent<Projectile>().enabled = false;
                         missileProjectile.UpdateAsObservable()
                             .Scan(
                                 new MissileState
@@ -78,22 +78,23 @@ namespace Weapons
                                         state.acceleration = (state.targetPos - state.pos - state.velocity * state.period)  * 2f / (state.period * state.period);
                                         //下行をコメントアウトすると追尾しなくなる
                                         //state.targetPos = new Vector2(initTargetPos.x,initTargetPos.y);
+                                        state.period -= Time.deltaTime;
+                                        state.velocity += state.acceleration * Time.deltaTime;
+                                        state.pos += state.velocity * Time.deltaTime;
                                     }
-                                    state.period -= Time.deltaTime;
-                                    state.velocity += state.acceleration * Time.deltaTime;
-                                    state.pos += state.velocity * Time.deltaTime;
                                     return state;
                                 }
                             )
                         .Subscribe(state =>
                         {
-                            missileProjectile.transform.position = state.pos;
+                            //missileProjectile.transform.position = state.pos;
+                            missileProjectile.transform.position = Vector2.MoveTowards(missileProjectile.transform.position,state.pos,state.velocity.magnitude);
                             missileProjectile.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(state.velocity.y,state.velocity.x)*Mathf.Rad2Deg);
                             if(state.period < 0f)
                             {
-                                SetExplosion(applyingShip,missileProjectile.transform.position);
+                                var p = state.pos;
                                 UnityEngine.Object.Destroy(missileProjectile);
-                                
+                                SetExplosion(applyingShip,p);
                             }
                         })
                         .AddTo(missileProjectile);

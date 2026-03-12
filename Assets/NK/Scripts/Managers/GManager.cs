@@ -12,6 +12,7 @@ public class GManager : MonoBehaviour
     public bool isMapCreated = false;
     public List<List<StageNode>> _stageFloorList = new();
     public StageNode currentStageNode;
+    public List<StageNode> passsedStageNodes = new();
     public List<ShipData> playerShipDataList = new List<ShipData>();
     public List<ShipData> enemyShipDataList = new List<ShipData>(); 
     void Awake()
