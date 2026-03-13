@@ -5,7 +5,7 @@ using Weapons;
 
 namespace Ships
 {
-    [CreateAssetMenu(fileName = "ShipData", menuName = "ShipData")]
+    [CreateAssetMenu(menuName = "ShipData")]
     [Serializable]
     public class ShipData : ScriptableObject
     {
@@ -20,6 +20,7 @@ namespace Ships
         public int maxHullPoint;
         public int maxShieldPoint;
         public int power;
+        public float speed;
         [SerializeReference,SubclassSelector]
         public List<WeaponData> weaponDataList = new();
     }

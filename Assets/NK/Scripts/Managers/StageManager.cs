@@ -1,5 +1,7 @@
+using System;
 using Maps;
 using UniRx;
+using UniRx.Triggers;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +27,14 @@ namespace Managers
             _planetObject = (GameObject)Resources.Load("PlanetObject");
             SetToMapButton();
             InstantiateStage(GManager.Instance.currentStageNode);
+            gameObject.UpdateAsObservable()
+                .Delay(TimeSpan.FromSeconds(3f))
+                .Take(1)
+                .Subscribe(_ =>
+                {
+                    GManager.Instance.currentStageNode.stageEncount.SetStageEncount();
+                })
+                .AddTo(gameObject);
         }
         private void SetToMapButton()
         {
@@ -62,7 +72,7 @@ namespace Managers
             foreach(var planet in stageNode.planetList)
             {
                 var planetObject = Instantiate(_planetObject);
-                float rad = Random.Range(-Mathf.PI,Mathf.PI);
+                float rad = UnityEngine.Random.Range(-Mathf.PI,Mathf.PI);
                 planetObject.transform.position = radius * new Vector2(Mathf.Cos(rad),Mathf.Sin(rad));
                 planetObject.transform.localScale = planet.radius * Vector2.one;
                 var LR = planetObject.GetComponent<LineRenderer>();
@@ -73,7 +83,7 @@ namespace Managers
                     LR.SetPosition(i,radius * new Vector3(Mathf.Cos(orbitRad),Mathf.Sin(orbitRad),0f));
                     orbitRad += 2f * Mathf.PI/pointNum;
                 }
-                radius += Random.Range(2f,4f);
+                radius += UnityEngine.Random.Range(2f,4f);
             }   
         }
     }

@@ -10,22 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
-  m_Name: P3
+  m_Name: EnemyB
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
-  shipName: P1
+  shipName: P2
   shipType: 0
-  maxHullPoint: 100
-  maxShieldPoint: 100
-  power: 25
+  maxHullPoint: 300
+  maxShieldPoint: 300
+  power: 20
+  speed: 1
   weaponDataList:
-  - rid: 8997316003655844148
+  - rid: 8997316051210076331
   references:
     version: 2
     RefIds:
-    - rid: 8997316003655844148
-      type: {class: RailgunShot, ns: Weapons, asm: Assembly-CSharp}
+    - rid: 8997316051210076331
+      type: {class: ScatterShot, ns: Weapons, asm: Assembly-CSharp}
       data:
-        projectile: {fileID: 2904888318123126438, guid: 9e7e7811405f6ed4ea6f0198f353de97, type: 3}
-        range: 20
-        projectileSpeed: 200
+        projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
+        range: 15
+        projectileSpeed: 5
         shotInterval: 1
+        bulletNum: 5
+        angleDif: 5

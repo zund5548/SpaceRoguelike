@@ -1948,7 +1948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddcac6ea0449d540b1b4f411246513e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.MapManager
-  _floorNum: 2
+  _floorNum: 10
   scrollVerticalSize: 1080
   stageButtonSize: 30
   _toStageButton: {fileID: 1681470752}
@@ -1959,8 +1959,10 @@ MonoBehaviour:
   FloorObject: {fileID: 1607181773263385609, guid: d04f8b494c5c0bb4f97088c1f2937340, type: 3}
   StageButtonObject: {fileID: 8002157796729800967, guid: 77c3d463d5aac7e45a510e2f55d363d9, type: 3}
   MapLineObject: {fileID: 1350734607157786096, guid: 51fc2e4eab644274da8b09230ff101ea, type: 3}
+  PointerObject: {fileID: 3254117908402660855, guid: e0286b6e64e65854eb2bdab2c53b9a1d, type: 3}
   planetDatabase: {fileID: 11400000, guid: 7cda6c52f52471d4c8bca6954d6da5fe, type: 2}
   starDatabase: {fileID: 11400000, guid: 480603450a7f8f84fa9fd79928b1b533, type: 2}
+  stageEncountDatabase: {fileID: 11400000, guid: 92ce33dc1dfe0044c8dfd10346cca452, type: 2}
 --- !u!1 &2112503574
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,5 +2008,5 @@ SceneRoots:
   - {fileID: 394934592}
   - {fileID: 235551699}
   - {fileID: 1922887460}
-  - {fileID: 1767001755}
   - {fileID: 399311866}
+  - {fileID: 1767001755}

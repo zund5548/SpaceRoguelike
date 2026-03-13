@@ -26,5 +26,6 @@ namespace Maps
         public List<StageNode> nextNodeList = new();
         public List<Planet> planetList = new();
         public List<Star> starList = new();
+        public StageEncount stageEncount;
     }
 }

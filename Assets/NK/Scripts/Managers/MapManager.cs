@@ -8,6 +8,7 @@ using Unity.Collections;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine.UIElements;
+using UniRx.Triggers;
 namespace Managers
 {
     public class MapManager : MonoBehaviour
@@ -26,15 +27,18 @@ namespace Managers
         public GameObject FloorObject;
         public GameObject StageButtonObject;
         public GameObject MapLineObject;
+        public GameObject PointerObject;
         [Header("database")]
         public PlanetDatabase planetDatabase;
         public StarDatabase starDatabase;
+        public StageEncountDatabase stageEncountDatabase;
         //
         //public int p,q;
         public List<List<StageNode>> _floorList = new();
         List<List<GameObject>> _buttonObjectFloorList = new();
         List<GameObject> lineObjectList = new();
         Dictionary<((int,int),(int,int)),int> lineIdx = new(); 
+        GameObject pointer;
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -115,10 +119,11 @@ namespace Managers
             var floorStages = new List<StageNode>();
             var stage = new StageNode
             {
-                stageName = "lobby",
+                stageName = "Lobby",
                 floorStageNum = 0,
                 buttonLocalPos = new Vector2(0f,0f),
                 stageType = StageNode.StageType.battle,
+                stageEncount = null
             };
             floorStages.Add(stage);
             _floorList.Add(floorStages);
@@ -141,8 +146,8 @@ namespace Managers
                         buttonLocalPos = new Vector2(UnityEngine.Random.Range(left+30f,right-30f),0f),
                         stageType = StageNode.StageType.battle,
                         starList = GetRandomStars(3),
-                        planetList = GetRandomPlanet(3)
-                        
+                        planetList = GetRandomPlanet(3),
+                        stageEncount = GetStageEncount()
                     };
                     floorStages.Add(stage);
                     left += horizontalSize/stageNum;
@@ -158,6 +163,7 @@ namespace Managers
                 floorStageNum = floorNum + 1,
                 buttonLocalPos = new Vector2(0f,0f),
                 stageType = StageNode.StageType.boss,
+                stageEncount = GetStageEncount()
             };
             floorStages.Add(stage);
             _floorList.Add(floorStages);
@@ -210,6 +216,10 @@ namespace Managers
                 p++;
             }
             GManager.Instance._stageFloorList = _floorList;
+        }
+        public StageEncount GetStageEncount()
+        {
+            return stageEncountDatabase.stageEncountList[0];
         }
         /// <summary>mapを元にボタンと線を生成</summary>
         void InstantiateMap()
@@ -272,10 +282,35 @@ namespace Managers
                             SetStageDescription(_floorList[p][q]);
                             GManager.Instance.currentStageNode = _floorList[p][q];
                             _toStageButton.interactable = true;
+                            if(!pointer)
+                            {
+                                pointer = Instantiate(PointerObject);
+                                pointer.UpdateAsObservable()
+                                    .Subscribe(_ =>
+                                    {
+                                        pointer.transform.Rotate(0f,0f,45f*Time.deltaTime);
+                                    })
+                                    .AddTo(pointer);
+                            }
+                            ((RectTransform)pointer.transform).anchoredPosition = Vector2.zero;
+                            var m = _floorList[p][q].mapIdx;
+                            pointer.transform.SetParent(_buttonObjectFloorList[m.Item1][m.Item2].transform,false);
+                            
                         })
                         .AddTo(button);
                 }
             }
+            //pointer生成
+            // var pointer = Instantiate(PointerObject);
+            // var m = GManager.Instance.currentStageNode.mapIdx;
+            // pointer.transform.SetParent(_buttonObjectFloorList[m.Item1][m.Item2].transform,false);
+            // ((RectTransform)pointer.transform).anchoredPosition = Vector2.zero;
+            // pointer.UpdateAsObservable()
+            //     .Subscribe(_ =>
+            //     {
+            //         pointer.transform.Rotate(0f,0f,45f*Time.deltaTime);
+            //     })
+            //     .AddTo(pointer);
         }
         public void SetMapColor()
         {
@@ -284,7 +319,7 @@ namespace Managers
             {
                 var mapIdx = node.mapIdx;
                 var buttonObject = _buttonObjectFloorList[mapIdx.Item1][mapIdx.Item2];
-                buttonObject.GetComponent<UnityEngine.UI.Image>().color = Color.lightGreen;
+                buttonObject.GetComponent<UnityEngine.UI.Image>().color = Color.turquoise;
             }
              //通ったステージのボタンの色を変える
             int passedStageNum = GManager.Instance.passsedStageNodes.Count;
@@ -293,7 +328,7 @@ namespace Managers
                 var s = GManager.Instance.passsedStageNodes[i];
                 var e = GManager.Instance.passsedStageNodes[i+1];
                 //if(i + 1 == _stageFloorList.Count - 1)continue;
-                lineObjectList[lineIdx[(s.mapIdx,e.mapIdx)]].GetComponent<UnityEngine.UI.Image>().color = Color.lightGreen;
+                lineObjectList[lineIdx[(s.mapIdx,e.mapIdx)]].GetComponent<UnityEngine.UI.Image>().color = Color.turquoise;
             }
             StageNode previoursStageNode = GManager.Instance.currentStageNode;
             //選べるステージにのボタンに向かう線の色を変える
@@ -303,8 +338,8 @@ namespace Managers
             {
                 var mapIdx = stageNode.mapIdx;
                 var preMapIdx = previoursStageNode.mapIdx;
-                _buttonObjectFloorList[mapIdx.Item1][mapIdx.Item2].GetComponent<UnityEngine.UI.Image>().color = Color.softYellow;
-                lineObjectList[lineIdx[((preMapIdx.Item1,preMapIdx.Item2),(mapIdx.Item1,mapIdx.Item2))]].GetComponent<UnityEngine.UI.Image>().color = Color.softYellow;
+                _buttonObjectFloorList[mapIdx.Item1][mapIdx.Item2].GetComponent<UnityEngine.UI.Image>().color = Color.orange;
+                lineObjectList[lineIdx[((preMapIdx.Item1,preMapIdx.Item2),(mapIdx.Item1,mapIdx.Item2))]].GetComponent<UnityEngine.UI.Image>().color = Color.orange;
             }
         }
         public void SetMapButton()
@@ -323,7 +358,7 @@ namespace Managers
                         b.OnClickAsObservable()
                             .Subscribe(_ =>
                             {
-                                _toStageButton.interactable = true;
+                                if(!_toStageButton.interactable)_toStageButton.interactable = true;
                             })
                             .AddTo(b);
                     }
@@ -333,7 +368,7 @@ namespace Managers
                         b.OnClickAsObservable()
                             .Subscribe(_ =>
                             {
-                                _toStageButton.interactable = false;
+                                if(_toStageButton.interactable)_toStageButton.interactable = false;
                             })
                             .AddTo(b);
                     }
