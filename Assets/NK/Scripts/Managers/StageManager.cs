@@ -12,6 +12,8 @@ namespace Managers
     {
         public static StageManager Instance{get;private set;}
         public Button ToMapButton;
+        [Header("Canvas")]
+        public GameObject clearCanvas;
         GameObject _planetObject;
         void Awake()
         {
@@ -35,6 +37,14 @@ namespace Managers
                     GManager.Instance.currentStageNode.stageEncount.SetStageEncount();
                 })
                 .AddTo(gameObject);
+            clearCanvas.SetActive(false);
+            EventManager.OnStageClear
+                .Subscribe(_ =>
+                {
+                    Debug.Log("Clear");
+                    StageClear();
+                })
+                .AddTo(EventManager.Instance);
         }
         private void SetToMapButton()
         {
@@ -48,6 +58,7 @@ namespace Managers
                 })
                 .AddTo(ToMapButton.gameObject);
         }
+
         private void InstantiateStage(StageNode stageNode)
         {
             if(stageNode.planetList.Count == 0)return;
@@ -85,6 +96,12 @@ namespace Managers
                 }
                 radius += UnityEngine.Random.Range(2f,4f);
             }   
+        }
+
+        private void StageClear()
+        {
+            clearCanvas.SetActive(true);
+            ShipManager.Instance.DeleteAllPlayer();
         }
     }
 }

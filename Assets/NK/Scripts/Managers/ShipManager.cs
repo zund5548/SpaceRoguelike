@@ -22,8 +22,8 @@ namespace Managers
         //
         public List<ShipData> playerShipDataList = new List<ShipData>();
         public List<ShipData> enemyShipDataList = new List<ShipData>();
-        private List<GameObject> playerShipList = new List<GameObject>();
-        private List<GameObject> enemyShipList = new List<GameObject>();
+        private List<GameObject> playerShipObjectList = new List<GameObject>();
+        private List<GameObject> enemyShipObjectList = new List<GameObject>();
         [Header("Canvas")]
         public RectTransform DamageValueCanvas;
         [Header("Prefab")]
@@ -89,7 +89,7 @@ namespace Managers
         private void InstantiatePlayerShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
-            playerShipList.Add(shipObject);
+            playerShipObjectList.Add(shipObject);
 
             float randDeg = UnityEngine.Random.Range(-180f,180f);
             var offset = 0.5f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
@@ -107,7 +107,7 @@ namespace Managers
             ship.isPlayer = true;
             ship.tag = "PlayerShip";
             ship.shipData = shipData;
-            ship.SetShipList(playerShipList,enemyShipList);
+            ship.SetShipList(playerShipObjectList,enemyShipObjectList);
             ship.SetSPHP();
             ship.SetWeapon();
 
@@ -116,7 +116,7 @@ namespace Managers
         private void InstantiateEnemyShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
-            enemyShipList.Add(shipObject);
+            enemyShipObjectList.Add(shipObject);
 
             float randDeg = UnityEngine.Random.Range(-180f,180f);
             var pos = 2f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
@@ -138,7 +138,7 @@ namespace Managers
             ship.isPlayer = false;
             ship.tag = "EnemyShip";
             ship.shipData = shipData;
-            ship.SetShipList(enemyShipList,playerShipList);
+            ship.SetShipList(enemyShipObjectList,playerShipObjectList);
             ship.SetSPHP();
             ship.SetWeapon();
             ship.currentPower = new(shipData.power);
@@ -152,19 +152,12 @@ namespace Managers
             int currentWaveNum = 1;
             foreach(var enemyWave in enemyWaveList)
             {
-                bool isNextWave = false;
-                while(!isNextWave)
-                {
-                    if(enemyShipList.Count == 0)
-                    {
-                        yield return WaveCoroutine(enemyWave,limit);
-                        isNextWave = true;
-                    }
-                    yield return null;
-                }
                 Debug.Log(currentWaveNum);
+                yield return WaveCoroutine(enemyWave,limit);
+                yield return new WaitForSeconds(2f);
                 currentWaveNum++;
             }
+            EventManager.OnStageClear.OnNext(Unit.Default);
         }
         private IEnumerator WaveCoroutine(EnemyWave enemyWave,int limit)
         {
@@ -173,7 +166,25 @@ namespace Managers
             {
                 InstantiateEnemyShip(shipData);
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitUntil(()=>enemyShipObjectList.Count == 0);
+        }
+        public void DeleteAllEnemy()
+        {
+            int n = enemyShipObjectList.Count;
+            for(int i = 0;i < n;i++)
+            {
+                Destroy(enemyShipObjectList[i]);
+            }
+            enemyShipObjectList.Clear();
+        }
+        public void DeleteAllPlayer()
+        {
+            int n = playerShipObjectList.Count;
+            for(int i = 0;i < n;i++)
+            {
+                Destroy(playerShipObjectList[i]);
+            }
+            playerShipObjectList.Clear();
         }
     }
 }
