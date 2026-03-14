@@ -8,10 +8,6 @@ namespace Items
         {
             
         }
-        public override void OnRemove(Ship appliedShip)
-        {
-            
-        }
     }
     public enum StatType
     {

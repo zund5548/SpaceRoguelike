@@ -3,6 +3,7 @@ using Ships;
 using System;
 namespace Weapons
 {
+    //SubclassSelectorで各々のshipDataに設定
     [Serializable]
     public abstract class WeaponData
     {

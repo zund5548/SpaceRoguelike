@@ -30,7 +30,7 @@ namespace Weapons
                     bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
                     bullet.transform.position = applyingdShipObject.transform.position;
 
-                    bullet.GetComponent<Projectile>().SetProjectile((int)applyingShip.currentPower.Value,false);
+                    bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,false);
 
                     var v = applyingShip.targetObject.transform.position - applyingdShipObject.transform.position;
                     bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg);

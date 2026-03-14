@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UniRx;
 using Maps;
 using Ships;
+using Items;
 public class GManager : MonoBehaviour
 {
     public static GManager Instance{get;private set;}
@@ -15,6 +16,7 @@ public class GManager : MonoBehaviour
     public List<StageNode> passsedStageNodes = new();
     public List<ShipData> playerShipDataList = new List<ShipData>();
     public List<ShipData> enemyShipDataList = new List<ShipData>(); 
+    public List<Item> itemList = new();
     void Awake()
     {
         if (Instance != null && Instance != this)

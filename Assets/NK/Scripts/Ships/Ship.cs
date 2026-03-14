@@ -23,12 +23,7 @@ namespace Ships
         public Stat currentPower;
         public void Start()
         {
-            // gameObject.UpdateAsObservable()
-            //     .Subscribe(_ =>
-            //     {
-            //         GetNearestEnemy();
-            //     })
-            //     .AddTo(gameObject);
+            if(!isPlayer)return;
             gameObject.OnDestroyAsObservable()
                 .Subscribe(_ =>
                 {
@@ -86,8 +81,9 @@ namespace Ships
                 weapon.ShootAction(gameObject,this);
             }
         }
-        public virtual void DealDamage(int power)
+        public void DealDamage(Ship dealtShip,int power)
         {
+            EventManager.Instance.PublishDamaged(new EventManager.ShipDamageEvent{ship = this,dealingShip = dealtShip,delatDamageValue = power});
             //Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
             int actualPower = power;
             if(currentShieldPoint > 0)

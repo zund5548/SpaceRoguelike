@@ -8,11 +8,16 @@ namespace Projectiles
     [RequireComponent(typeof(Collider2D))]
     public class Explosion : MonoBehaviour
     {
-        public int power;
-        public bool isPlayers;
+        public int _power{get;private set;}
+        public Ship _dealtShip{get;private set;}
         Collider2D expCol;
         public List<Collider2D> hitCols = new List<Collider2D>();
         ContactFilter2D filter;
+        public void SetExplosion(Ship ship,int power)
+        {
+            _power = power;
+            _dealtShip = ship;
+        }
         void Start()
         {
             expCol = GetComponent<Collider2D>();
@@ -24,11 +29,11 @@ namespace Projectiles
             for(int i = 0;i < n;i++)
             {
                 if(!hitCols[i])continue;
-                bool b1 = isPlayers && hitCols[i].gameObject.CompareTag("EnemyShip");
-                bool b2 = !isPlayers && hitCols[i].gameObject.CompareTag("PlayerShip");
+                bool b1 = gameObject.CompareTag("PlayerExplosion") && hitCols[i].gameObject.CompareTag("EnemyShip");
+                bool b2 = gameObject.CompareTag("EnemyExplosion") && hitCols[i].gameObject.CompareTag("PlayerShip");
                 if(b1 || b2)
                 {
-                    hitCols[i].gameObject.GetComponent<Ship>().DealDamage(power);
+                    hitCols[i].gameObject.GetComponent<Ship>().DealDamage(_dealtShip,_power);
                     Debug.DrawLine(transform.position,hitCols[i].gameObject.transform.position,Color.red,1f);
                 }
                 

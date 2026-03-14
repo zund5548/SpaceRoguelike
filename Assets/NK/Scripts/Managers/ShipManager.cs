@@ -8,6 +8,8 @@ using TMPro;
 using System;
 using System.Collections;
 using Maps;
+using Managers;
+using Items;
 namespace Managers
 {
     public class ShipManager : MonoBehaviour
@@ -21,9 +23,10 @@ namespace Managers
         private float _currentFleetDeg = 0f;
         //
         public List<ShipData> playerShipDataList = new List<ShipData>();
-        public List<ShipData> enemyShipDataList = new List<ShipData>();
+        //public List<ShipData> enemyShipDataList = new List<ShipData>();
         private List<GameObject> playerShipObjectList = new List<GameObject>();
         private List<GameObject> enemyShipObjectList = new List<GameObject>();
+        public List<Item> itemList = new();
         [Header("Canvas")]
         public RectTransform DamageValueCanvas;
         [Header("Prefab")]
@@ -40,7 +43,7 @@ namespace Managers
         void Start()
         {
             if(GManager.Instance.playerShipDataList.Count != 0)playerShipDataList = GManager.Instance.playerShipDataList;
-            if(GManager.Instance.enemyShipDataList.Count != 0)enemyShipDataList = GManager.Instance.enemyShipDataList;
+            //if(GManager.Instance.enemyShipDataList.Count != 0)enemyShipDataList = GManager.Instance.enemyShipDataList;
             _shipObject = (GameObject)Resources.Load("Ship");
             _cam = Camera.main;
             gameObject.UpdateAsObservable()
@@ -60,11 +63,19 @@ namespace Managers
             // {
             //     InstantiateEnemyShip(shipData);
             // }  
+            itemList = GManager.Instance.itemList;
             foreach(var shipData in playerShipDataList)
             {
-                InstantiatePlayerShip(shipData);
+                var shipObject = InstantiatePlayerShip(shipData);
+                foreach(var item in itemList)
+                {
+                    Debug.Log("load");
+                    foreach(var itemEffect in  item.itemEffectList)
+                    {
+                        itemEffect.OnApply(shipObject.GetComponent<Ship>());
+                    }
+                }
             }   
-            
         }
         public void SetDamagevalue(int value,Vector2 worldPos,bool onShield)
         {
@@ -86,7 +97,7 @@ namespace Managers
                 })
                 .AddTo(display);
         }
-        private void InstantiatePlayerShip(ShipData shipData)
+        private GameObject InstantiatePlayerShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
             playerShipObjectList.Add(shipObject);
@@ -112,8 +123,15 @@ namespace Managers
             ship.SetWeapon();
 
             ship.currentPower = new(shipData.power);
+            // EventManager.OnDamage
+            //     .Subscribe(damageEvent =>
+            //     {
+            //         Debug.Log(damageEvent.dealingShip.name);
+            //     })
+            //     .AddTo(ship);
+            return shipObject;
         }   
-        private void InstantiateEnemyShip(ShipData shipData)
+        private GameObject InstantiateEnemyShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
             enemyShipObjectList.Add(shipObject);
@@ -142,6 +160,7 @@ namespace Managers
             ship.SetSPHP();
             ship.SetWeapon();
             ship.currentPower = new(shipData.power);
+            return shipObject;
         }   
         public void BattleEncountWave(List<EnemyWave> enemyWaveList,int limit)
         {
@@ -152,19 +171,18 @@ namespace Managers
             int currentWaveNum = 1;
             foreach(var enemyWave in enemyWaveList)
             {
-                Debug.Log(currentWaveNum);
+                //Debug.Log(currentWaveNum);
                 yield return WaveCoroutine(enemyWave,limit);
                 yield return new WaitForSeconds(2f);
                 currentWaveNum++;
             }
-            EventManager.OnStageClear.OnNext(Unit.Default);
+            EventManager.Instance.PublishClear();
         }
         private IEnumerator WaveCoroutine(EnemyWave enemyWave,int limit)
         {
-
             foreach(var shipData in enemyWave.shipDataList)
             {
-                InstantiateEnemyShip(shipData);
+                var shipObject = InstantiateEnemyShip(shipData);
             }
             yield return new WaitUntil(()=>enemyShipObjectList.Count == 0);
         }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: StageEncountDatabase
   m_EditorClassIdentifier: Assembly-CSharp::Maps.StageEncountDatabase
   stageEncountList:
+  - rid: 8997316066545762461
   - rid: 8997316051210076237
   references:
     version: 2
@@ -40,3 +41,10 @@ MonoBehaviour:
           - {fileID: 11400000, guid: 851ab076ae9c5874ca188813809aee25, type: 2}
           - {fileID: 11400000, guid: ddd2138a6bdb89549afc3ddb6e9a452b, type: 2}
           - {fileID: 11400000, guid: ddd2138a6bdb89549afc3ddb6e9a452b, type: 2}
+    - rid: 8997316066545762461
+      type: {class: BattleEncount, ns: Maps, asm: Assembly-CSharp}
+      data:
+        oneWaveLimit: 0
+        enemyWaveList:
+        - shipDataList:
+          - {fileID: 11400000, guid: ee4edddbb213bbd44a87183e945db095, type: 2}

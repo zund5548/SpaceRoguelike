@@ -1,5 +1,8 @@
 using UnityEngine;
+using System;
 using UniRx;
+using UniRx.Triggers;
+using Ships;
 namespace Managers
 {
     public class EventManager : MonoBehaviour
@@ -14,7 +17,31 @@ namespace Managers
             }
             Instance = this;
         }
-        public static Subject<Unit> OnStageClear = new Subject<Unit>();
+        void Start()
+        {
+
+        }
+        //ステージをクリアしたとき
+        private static Subject<Unit> onStageClear = new Subject<Unit>();
+        public static IObservable<Unit> OnStageClear => onStageClear;
+        public void PublishClear()
+        {
+            onStageClear.OnNext(Unit.Default);
+        }
+        //ダメージを受けたとき
+        private static Subject<ShipDamageEvent> onDamage = new Subject<ShipDamageEvent>();
+        public static IObservable<ShipDamageEvent> OnDamage => onDamage;
+        public struct ShipDamageEvent
+        {
+            public Ship ship;
+            public Ship dealingShip;
+            public int delatDamageValue;
+        }
+        public void PublishDamaged(ShipDamageEvent shipDamageEvent)
+        {
+            onDamage.OnNext(shipDamageEvent);
+            //Debug.Log("a");
+        }
     }
 }
 

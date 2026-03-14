@@ -105,10 +105,11 @@ namespace Weapons
         private void SetExplosion(Ship applyingShip,Vector2 pos)
         {
             var explosionRadiusObject = UnityEngine.Object.Instantiate(explosion,pos,Quaternion.identity);
+            if(applyingShip.isPlayer)explosionRadiusObject.tag = "PlayerExplosion";
+            else if(!applyingShip.isPlayer)explosionRadiusObject.tag = "EnemyExplosion";
             explosionRadiusObject.transform.localScale = ExplosionRadius * Vector2.one;
             var E = explosionRadiusObject.GetComponent<Explosion>();
-            E.power = (int)applyingShip.currentPower.Value;
-            E.isPlayers = applyingShip.isPlayer;
+            E.SetExplosion(applyingShip,(int)applyingShip.currentPower.Value);
             
             float remainingTime = 0.5f;
             float t = remainingTime;

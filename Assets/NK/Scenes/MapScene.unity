@@ -747,13 +747,10 @@ MonoBehaviour:
     starList: []
   passsedStageNodes: []
   playerShipDataList:
-  - {fileID: 11400000, guid: c37e5a359d6925e46b121778ba812b06, type: 2}
-  enemyShipDataList:
-  - {fileID: 11400000, guid: ee4edddbb213bbd44a87183e945db095, type: 2}
-  - {fileID: 11400000, guid: ee4edddbb213bbd44a87183e945db095, type: 2}
-  - {fileID: 11400000, guid: ee4edddbb213bbd44a87183e945db095, type: 2}
-  - {fileID: 11400000, guid: ee4edddbb213bbd44a87183e945db095, type: 2}
-  - {fileID: 11400000, guid: ee4edddbb213bbd44a87183e945db095, type: 2}
+  - {fileID: 11400000, guid: 239b70ff072c0ec459b9845daa1b33ca, type: 2}
+  enemyShipDataList: []
+  itemList:
+  - {fileID: 11400000, guid: d6faaa4968595ab469ca29c64be534e1, type: 2}
   references:
     version: 2
     RefIds: []

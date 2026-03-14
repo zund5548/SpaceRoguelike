@@ -8,6 +8,8 @@ TagManager:
   - EnemyShip
   - PlayerProjectile
   - EnemyProjectile
+  - PlayerExplosion
+  - EnemyExplosion
   layers:
   - Default
   - TransparentFX
