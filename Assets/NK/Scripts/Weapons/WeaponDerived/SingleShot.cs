@@ -11,9 +11,9 @@ namespace Weapons
     public class SingleShot : WeaponData
     {
         public GameObject projectile;
-        public float range;
-        public float projectileSpeed;
-        public float shotInterval;
+        public float range = 10f;
+        public float projectileSpeed = 15f;
+        public float shotInterval = 0.5f;
         public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;

@@ -42,12 +42,22 @@ namespace Stats
             modifiers.RemoveAll(m => m.source == source);
         }
     }
+    [Serializable]
+    public enum StatType
+    {
+        Power,
+        MaxShield,
+        MaxHull,
+        Speed,
+    }
+    [Serializable]
     public enum ModType
     {
         Add,
         //Multiply,
         Percent
     }
+    [Serializable]
     public class StatModifier
     {
         public float value;

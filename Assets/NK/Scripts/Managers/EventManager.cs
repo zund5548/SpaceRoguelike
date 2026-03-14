@@ -19,7 +19,7 @@ namespace Managers
         }
         void Start()
         {
-
+            
         }
         //ステージをクリアしたとき
         private static Subject<Unit> onStageClear = new Subject<Unit>();

@@ -282,6 +282,7 @@ namespace Managers
                             SetStageDescription(_floorList[p][q]);
                             GManager.Instance.currentStageNode = _floorList[p][q];
                             _toStageButton.interactable = true;
+                            //pointer
                             if(!pointer)
                             {
                                 pointer = Instantiate(PointerObject);
@@ -292,6 +293,7 @@ namespace Managers
                                     })
                                     .AddTo(pointer);
                             }
+                            //pointer.transform.eulerAngles = Vector3.zero;
                             ((RectTransform)pointer.transform).anchoredPosition = Vector2.zero;
                             var m = _floorList[p][q].mapIdx;
                             pointer.transform.SetParent(_buttonObjectFloorList[m.Item1][m.Item2].transform,false);

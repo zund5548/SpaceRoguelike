@@ -16,9 +16,17 @@ MonoBehaviour:
   shipType: 0
   maxHullPoint: 100000
   maxShieldPoint: 100000
-  power: 0
-  speed: 0
-  weaponDataList: []
+  power: 100
+  speed: 200
+  weaponDataList:
+  - rid: 8997316069547311328
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8997316069547311328
+      type: {class: SingleShot, ns: Weapons, asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
+        range: 10
+        projectileSpeed: 15
+        shotInterval: 0.5

@@ -24,13 +24,14 @@ namespace Managers
         //
         public List<ShipData> playerShipDataList = new List<ShipData>();
         //public List<ShipData> enemyShipDataList = new List<ShipData>();
-        private List<GameObject> playerShipObjectList = new List<GameObject>();
-        private List<GameObject> enemyShipObjectList = new List<GameObject>();
-        public List<Item> itemList = new();
+        public List<GameObject> playerShipObjectList = new List<GameObject>();
+        public List<GameObject> enemyShipObjectList = new List<GameObject>();
+        //public List<Item> itemList = new();
         [Header("Canvas")]
         public RectTransform DamageValueCanvas;
         [Header("Prefab")]
         public TextMeshProUGUI damageValueDisplay;
+        
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -40,6 +41,7 @@ namespace Managers
             }
             Instance = this;
         }
+
         void Start()
         {
             if(GManager.Instance.playerShipDataList.Count != 0)playerShipDataList = GManager.Instance.playerShipDataList;
@@ -63,20 +65,20 @@ namespace Managers
             // {
             //     InstantiateEnemyShip(shipData);
             // }  
-            itemList = GManager.Instance.itemList;
+            foreach(var item in GManager.Instance.itemList)
+            {
+                foreach(var itemEffect in  item.itemEffectList)
+                {
+                    itemEffect.OnApply();
+                }
+            }
             foreach(var shipData in playerShipDataList)
             {
                 var shipObject = InstantiatePlayerShip(shipData);
-                foreach(var item in itemList)
-                {
-                    Debug.Log("load");
-                    foreach(var itemEffect in  item.itemEffectList)
-                    {
-                        itemEffect.OnApply(shipObject.GetComponent<Ship>());
-                    }
-                }
             }   
+            //itemList = GManager.Instance.itemList;
         }
+
         public void SetDamagevalue(int value,Vector2 worldPos,bool onShield)
         {
             var display = Instantiate(damageValueDisplay);
@@ -97,6 +99,7 @@ namespace Managers
                 })
                 .AddTo(display);
         }
+
         private GameObject InstantiatePlayerShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
@@ -123,14 +126,9 @@ namespace Managers
             ship.SetWeapon();
 
             ship.currentPower = new(shipData.power);
-            // EventManager.OnDamage
-            //     .Subscribe(damageEvent =>
-            //     {
-            //         Debug.Log(damageEvent.dealingShip.name);
-            //     })
-            //     .AddTo(ship);
             return shipObject;
         }   
+
         private GameObject InstantiateEnemyShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
@@ -162,10 +160,12 @@ namespace Managers
             ship.currentPower = new(shipData.power);
             return shipObject;
         }   
+
         public void BattleEncountWave(List<EnemyWave> enemyWaveList,int limit)
         {
             StartCoroutine(BattleEncountWaveCoroutine(enemyWaveList,limit));
         }
+
         private IEnumerator BattleEncountWaveCoroutine(List<EnemyWave> enemyWaveList,int limit)
         {
             int currentWaveNum = 1;
@@ -178,6 +178,7 @@ namespace Managers
             }
             EventManager.Instance.PublishClear();
         }
+
         private IEnumerator WaveCoroutine(EnemyWave enemyWave,int limit)
         {
             foreach(var shipData in enemyWave.shipDataList)
@@ -186,6 +187,7 @@ namespace Managers
             }
             yield return new WaitUntil(()=>enemyShipObjectList.Count == 0);
         }
+
         public void DeleteAllEnemy()
         {
             int n = enemyShipObjectList.Count;

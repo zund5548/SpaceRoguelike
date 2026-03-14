@@ -12,15 +12,23 @@ namespace Ships
         public bool isPlayer = true;
         public ShipData shipData;
         public int currentShieldPoint{get; private set;} 
-        public int maxShieldPoint{get; private set;}
+        public Stat maxShieldPoint{get; private set;}
         public int currentHullPoint{get; private set;}
-        public int maxHullPoint{get; private set;}
+        public Stat maxHullPoint{get; private set;}
 
         public GameObject targetObject;
         public List<GameObject> allyShipObjectList = new List<GameObject>();
         public List<GameObject> opponentShipObjectList = new List<GameObject>();
 
         public Stat currentPower;
+        public Stat GetStat(StatType type)
+        {
+            return type switch
+            {
+                StatType.Power => currentPower,
+                _ => null
+            };
+        }
         public void Start()
         {
             if(!isPlayer)return;
@@ -46,10 +54,10 @@ namespace Ships
                 Debug.Log("shipData is null");
                 return;
             }
-            maxShieldPoint = shipData.maxShieldPoint;
-            currentShieldPoint = maxShieldPoint;
-            maxHullPoint = shipData.maxHullPoint;
-            currentHullPoint = maxHullPoint;
+            maxShieldPoint = new Stat(shipData.maxShieldPoint); 
+            currentShieldPoint = (int)maxShieldPoint.Value;
+            maxHullPoint = new Stat(shipData.maxHullPoint);
+            currentHullPoint = (int)maxHullPoint.Value;
         }
         public void SetShipList(List<GameObject> ally,List<GameObject> opponet)
         {
@@ -88,32 +96,37 @@ namespace Ships
             int actualPower = power;
             if(currentShieldPoint > 0)
             {
-                ShipManager.Instance.SetDamagevalue(actualPower,transform.position,true);
                 if(currentShieldPoint > actualPower)
                 {
+                    ShipManager.Instance.SetDamagevalue(actualPower,transform.position,true);
                     currentShieldPoint -= actualPower;
                     actualPower = 0;
                 }
-                else 
+                else
                 {
+                    ShipManager.Instance.SetDamagevalue(currentShieldPoint,transform.position,true);
                     actualPower -= currentShieldPoint;
                     currentShieldPoint = 0;
                 }
+
             }
-            if(actualPower == 0)return;
+            if(actualPower <= 0)return;
             if(currentHullPoint > 0)
             {
-                ShipManager.Instance.SetDamagevalue(actualPower,transform.position,false);
                 if(currentHullPoint > actualPower)
                 {
+                    ShipManager.Instance.SetDamagevalue(actualPower,transform.position,false);
                     currentHullPoint -= actualPower;
+                    actualPower = 0;
                 }
-                else 
+                else
                 {
-                    //truePower -= currentHullPoint;
+                    ShipManager.Instance.SetDamagevalue(currentHullPoint,transform.position,false);
+                    actualPower -= currentHullPoint;
                     currentHullPoint = 0;
                 }
             }
+
             if(currentHullPoint == 0)
             {
                 int n = allyShipObjectList.Count;

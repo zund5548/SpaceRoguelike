@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageEncountDatabase
   m_EditorClassIdentifier: Assembly-CSharp::Maps.StageEncountDatabase
   stageEncountList:
-  - rid: 8997316066545762461
   - rid: 8997316051210076237
+  - rid: 8997316066545762461
   references:
     version: 2
     RefIds:

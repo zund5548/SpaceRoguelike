@@ -15,16 +15,15 @@ namespace Items
     public class ReflectionEffect:ItemEffect
     {
         public int power;
-        public override void OnApply(Ship appliedShip)
+        public override void OnApply()
         {
-            
             EventManager.OnDamage
                 .Subscribe(damageEvent =>
                 {
                     Debug.Log(damageEvent.dealingShip.shipData.name+"/"+damageEvent.ship.shipData.name);
                     //反射時はONDamageを発行しない
                 })
-                .AddTo(appliedShip);
+                .AddTo(EventManager.Instance);
         }
     }
 }
