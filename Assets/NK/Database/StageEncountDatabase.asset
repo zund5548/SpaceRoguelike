@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageEncountDatabase
   m_EditorClassIdentifier: Assembly-CSharp::Maps.StageEncountDatabase
   stageEncountList:
-  - rid: 8997316051210076237
   - rid: 8997316066545762461
+  - rid: 8997316051210076237
   references:
     version: 2
     RefIds:
@@ -47,4 +47,4 @@ MonoBehaviour:
         oneWaveLimit: 0
         enemyWaveList:
         - shipDataList:
-          - {fileID: 11400000, guid: ee4edddbb213bbd44a87183e945db095, type: 2}
+          - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}

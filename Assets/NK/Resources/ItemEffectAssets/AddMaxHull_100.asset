@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
-  m_Name: AddPower5
+  m_Name: AddMaxHull_100
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u653B\u6483\u529B\u304C5\u5897\u52A0\u3059\u308B"
-  value: 5
-  statType: 0
+  description: "\u8239\u4F53\u5024\u304C100\u5897\u52A0\u3059\u308B\u3002"
+  value: 100
+  statType: 2
   modType: 0

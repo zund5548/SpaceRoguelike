@@ -1,0 +1,37 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Items;
+using Maps;
+using TMPro;
+using UniRx;
+using UniRx.Triggers;
+using UnityEngine;
+using UnityEngine.UI;
+namespace Items
+{
+    /// <summary>スタックが溜まると数秒移動不可</summary>
+    public class SurgeStackEffect:StackEffect
+    {
+        public float cantMoveTime = 3f;
+        public override void OnStackChanged()
+        {
+            Debug.Log(stackNum);
+            if(stackNum >= threshold)
+            {
+                stackNum %= threshold;
+                if(ownerShip.isAbleToMove)ownerShip.isAbleToMove = false;
+                if(isAbletoAdd)isAbletoAdd = false;
+                Observable.Timer(TimeSpan.FromSeconds(cantMoveTime))
+                    .Subscribe(_ =>
+                    {
+                        ownerShip.isAbleToMove = true;
+                        isAbletoAdd = true;
+                    })
+                    .AddTo(ownerShip);
+            }
+        }
+    }
+}
+

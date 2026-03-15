@@ -7,9 +7,7 @@ using Maps;
 using TMPro;
 using UniRx;
 using UniRx.Triggers;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace Managers

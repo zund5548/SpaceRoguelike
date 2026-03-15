@@ -49,7 +49,6 @@ namespace Stats
         Shield,
         Hull,
         shotInterval,
-        Speed,
     }
     [Serializable]
     public enum ModType

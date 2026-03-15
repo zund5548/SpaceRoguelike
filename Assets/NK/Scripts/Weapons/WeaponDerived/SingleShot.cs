@@ -15,7 +15,7 @@ namespace Weapons
         public float range = 10f;
         public float projectileSpeed = 15f;
         public float shotInterval = 0.5f;
-
+        public float errorDeg = 1f;
         private void ShootSingleProjectile(GameObject applyingdShipObject,Ship applyingShip)
         {
             var bullet = UnityEngine.Object.Instantiate(projectile);
@@ -25,7 +25,7 @@ namespace Weapons
             bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,false);
 
             var v = applyingShip.targetObject.transform.position - applyingdShipObject.transform.position;
-            bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg);
+            bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg + UnityEngine.Random.Range(-errorDeg,errorDeg));
             bullet.UpdateAsObservable()
                 .Subscribe(_=>
                 {

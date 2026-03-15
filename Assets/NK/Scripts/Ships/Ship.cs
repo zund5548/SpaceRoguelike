@@ -5,6 +5,8 @@ using UniRx.Triggers;
 using UniRx;
 using Managers;
 using Stats;
+using System;
+using Items;
 namespace Ships
 {
     public class Ship : MonoBehaviour
@@ -20,6 +22,7 @@ namespace Ships
         public List<GameObject> allyShipObjectList = new List<GameObject>();
         public List<GameObject> opponentShipObjectList = new List<GameObject>();
 
+        public bool isAbleToMove = true;//falseで移動不可
         public Stat currentPower;
         /// <summary>パーセント</summary>
         public Stat shotIntervalReduction;
@@ -34,6 +37,9 @@ namespace Ships
                 _ => null
             };
         }
+        //スタック
+        public StackEffectController stackEffectController = new();
+        //
         public void Start()
         {
             if(!isPlayer)return;

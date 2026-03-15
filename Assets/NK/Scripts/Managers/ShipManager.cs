@@ -111,6 +111,7 @@ namespace Managers
         private GameObject InstantiatePlayerShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
+            Ship ship = shipObject.GetComponent<Ship>();
             playerShipObjectList.Add(shipObject);
 
             float randDeg = UnityEngine.Random.Range(-180f,180f);
@@ -120,12 +121,18 @@ namespace Managers
             shipObject.UpdateAsObservable()
             .Subscribe(_ =>
             {
+                //プレイヤーの船は止まらない
+                // if(!ship.isAbleToMove)
+                // {
+                //     Debug.Log("cant move");
+                //     return;
+                // }
                 shipObject.transform.position = _currentFleetPos + offset;
                 shipObject.transform.eulerAngles = new Vector3(0f,0f,_currentFleetDeg);
             })
             .AddTo(shipObject);
 
-            Ship ship = shipObject.GetComponent<Ship>();
+            
             ship.isPlayer = true;
             ship.tag = "PlayerShip";
             ship.shipData = shipData;
@@ -140,6 +147,7 @@ namespace Managers
         private GameObject InstantiateEnemyShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
+            Ship ship = shipObject.GetComponent<Ship>();
             enemyShipObjectList.Add(shipObject);
 
             float randDeg = UnityEngine.Random.Range(-180f,180f);
@@ -149,6 +157,11 @@ namespace Managers
             shipObject.UpdateAsObservable()
             .Subscribe(_ =>
             {
+                if(!ship.isAbleToMove)
+                {
+                    // Debug.Log("cant move");
+                    return;
+                }
                 var s = shipObject;
                 if(Vector2.Distance(s.transform.position,_currentFleetPos) < 0.1f)return;
                 var v = _currentFleetPos - (Vector2)s.transform.position;
@@ -158,7 +171,7 @@ namespace Managers
             })
             .AddTo(shipObject);
 
-            Ship ship = shipObject.GetComponent<Ship>();
+           
             ship.isPlayer = false;
             ship.tag = "EnemyShip";
             ship.shipData = shipData;

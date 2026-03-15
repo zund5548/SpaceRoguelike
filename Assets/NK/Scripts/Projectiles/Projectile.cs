@@ -1,5 +1,6 @@
 using UnityEngine;
 using Ships;
+using Items;
 namespace Projectiles
 {
     public class Projectile : MonoBehaviour
@@ -26,7 +27,13 @@ namespace Projectiles
             {
                 if(_isDamaging)
                 {
-                    if(!isDamagedOnce)collision.gameObject.GetComponent<Ship>().DealDamage(_dealtShip,_power);
+                    if(!isDamagedOnce)
+                    {
+                        var ship = collision.gameObject.GetComponent<Ship>();
+                        ship.DealDamage(_dealtShip,_power);
+                        // ship.stackEffectController.AddStackNum<SurgeStackEffect>(ship,1);
+                    }
+                    
                     if(!_isPiercing)isDamagedOnce = true;
                 }
                 if(!_isPiercing)Destroy(gameObject);

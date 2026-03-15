@@ -20,6 +20,7 @@ namespace Maps
             battle,
             defence,
             credit,
+            elite,
             boss
         }
         [SerializeReference]
