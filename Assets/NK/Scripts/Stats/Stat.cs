@@ -46,8 +46,9 @@ namespace Stats
     public enum StatType
     {
         Power,
-        MaxShield,
-        MaxHull,
+        Shield,
+        Hull,
+        shotInterval,
         Speed,
     }
     [Serializable]

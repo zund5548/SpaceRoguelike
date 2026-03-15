@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
-  m_Name: TestEnemy
+  m_Name: TestWeakEnemy
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
   shipName: P2
   shipType: 0
-  maxHullPoint: 100000
-  maxShieldPoint: 100000
+  maxHullPoint: 1
+  maxShieldPoint: 1
   power: 0
   speed: 0
   weaponDataList:

@@ -20,9 +20,10 @@ namespace Weapons
         public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
+            var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             applyingdShipObject.UpdateAsObservable()
                 .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
-                .ThrottleFirst(TimeSpan.FromSeconds(shotInterval))
+                .ThrottleFirst(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
                 .Subscribe(_ =>
                 {
                     applyingShip.GetNearestOpponet();

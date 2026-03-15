@@ -169,6 +169,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7c787031a906f64db6f913675bcbaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectiles.Explosion
-  power: 0
-  isPlayers: 0
   hitCols: []

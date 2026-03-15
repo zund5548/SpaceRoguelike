@@ -16,7 +16,7 @@ MonoBehaviour:
   shipType: 0
   maxHullPoint: 100
   maxShieldPoint: 100
-  power: 10
+  power: 0
   speed: 1
   weaponDataList:
   - rid: 8997315987808190837

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6634b2c5dc17f574891f9a8dce424084, type: 3}
   m_Name: ReflectionEffect5
   m_EditorClassIdentifier: Assembly-CSharp::Items.ReflectionEffect
+  description: "\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u305F\u3068\u304D\u3001\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u305F\u6575\u306B5\u30C0\u30E1\u30FC\u30B8\u4E0E\u3048\u308B\u3002"
   power: 5

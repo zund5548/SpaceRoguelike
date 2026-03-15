@@ -75,6 +75,7 @@ namespace Managers
                 {
                     SceneLoader.Instance.ToStage();
                     _toStageButton.interactable = false;
+                    _toStageButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "ワープドライブ起動...";
                 })
                 .AddTo(_toStageButton.gameObject);
         }
@@ -282,6 +283,7 @@ namespace Managers
                             SetStageDescription(_floorList[p][q]);
                             GManager.Instance.currentStageNode = _floorList[p][q];
                             _toStageButton.interactable = true;
+                            _toStageButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "星系へワープ";
                             //pointer
                             if(!pointer)
                             {
@@ -302,17 +304,6 @@ namespace Managers
                         .AddTo(button);
                 }
             }
-            //pointer生成
-            // var pointer = Instantiate(PointerObject);
-            // var m = GManager.Instance.currentStageNode.mapIdx;
-            // pointer.transform.SetParent(_buttonObjectFloorList[m.Item1][m.Item2].transform,false);
-            // ((RectTransform)pointer.transform).anchoredPosition = Vector2.zero;
-            // pointer.UpdateAsObservable()
-            //     .Subscribe(_ =>
-            //     {
-            //         pointer.transform.Rotate(0f,0f,45f*Time.deltaTime);
-            //     })
-            //     .AddTo(pointer);
         }
         public void SetMapColor()
         {

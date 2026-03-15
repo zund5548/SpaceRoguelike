@@ -11,9 +11,18 @@ namespace Items
     {
         public string itemName;
         public Sprite itemIcon;
-        public string description;
+        public int itemTier;//大きいほどいい
         [SerializeReference]
         public List<ItemEffect> itemEffectList;
+        public string GetDescription()
+        {
+            string result = "";
+            foreach(var itemEffect in itemEffectList)
+            {
+                result += "・" + itemEffect.description + "\n";
+            }
+            return result;
+        }
     }
 }
 

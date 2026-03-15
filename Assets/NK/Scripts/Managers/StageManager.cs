@@ -24,8 +24,8 @@ namespace Managers
         public GameObject ResultCanvas;
         public GameObject ItemBannerCanvas;
 
-        GameObject _planetObject;
-        GameObject _ItemBannerButton;
+        public GameObject _planetObject;
+        public GameObject _ItemBannerButton;
         public List<Item> allItemList;
         List<GameObject> planetObjectList = new();
         void Awake()
@@ -39,8 +39,8 @@ namespace Managers
         }
         void Start()
         {
-            _planetObject = (GameObject)Resources.Load("PlanetObject");
-            _ItemBannerButton = (GameObject)Resources.Load("BannerButton");
+            // _planetObject = (GameObject)Resources.Load("PlanetObject");
+            // _ItemBannerButton = (GameObject)Resources.Load("ItemBannerButton");
             SetToMapButton();
             InstantiateStage(GManager.Instance.currentStageNode);
             gameObject.UpdateAsObservable()
@@ -133,7 +133,7 @@ namespace Managers
                 var randomItem = allItemList[UnityEngine.Random.Range(0,allItemList.Count)];
                 banner.transform.SetParent(ItemBannerCanvas.transform.GetChild(0).GetChild(1),false);
                 banner.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = randomItem.itemName;
-                banner.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = randomItem.description;
+                banner.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = randomItem.GetDescription();
                 banner.GetComponent<Button>().OnClickAsObservable()
                     .Where(_=>!isBannerPushed)
                     .Subscribe(_=>
@@ -189,7 +189,7 @@ namespace Managers
                 if(deg > 90f)break;
                 yield return null;
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             isAnimEnd = true;
             yield break;
         }

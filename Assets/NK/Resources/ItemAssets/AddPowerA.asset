@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
   m_Name: AddPowerA
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: 
+  itemName: "\u5F37\u5316\u5F3E\u982D1"
   itemIcon: {fileID: 0}
-  description: Add +5 power
   itemEffectList:
   - {fileID: 11400000, guid: 08c164f4daf08664ba7215e05a849451, type: 2}

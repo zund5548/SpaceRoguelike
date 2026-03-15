@@ -10,6 +10,7 @@ using System.Collections;
 using Maps;
 using Managers;
 using Items;
+using UnityEngine.UI;
 namespace Managers
 {
     public class ShipManager : MonoBehaviour
@@ -29,9 +30,10 @@ namespace Managers
         //public List<Item> itemList = new();
         [Header("Canvas")]
         public RectTransform DamageValueCanvas;
+        public RectTransform PlayerShipBannerArea;
         [Header("Prefab")]
         public TextMeshProUGUI damageValueDisplay;
-        
+        public GameObject playerShipBanner;
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -56,8 +58,8 @@ namespace Managers
                     if(Vector2.Distance(destination,_currentFleetPos) < 0.1f)return;
                     var v = destination - _currentFleetPos;
                     _currentFleetDeg = Mathf.MoveTowardsAngle(_currentFleetDeg,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg,720f*Time.deltaTime);
-                    
                     _currentFleetPos += new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)) * 5f * Time.deltaTime;
+                    
                     //Debug.DrawRay(_currentFleetPos,new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)));
                 })
                 .AddTo(gameObject);
@@ -65,6 +67,11 @@ namespace Managers
             // {
             //     InstantiateEnemyShip(shipData);
             // }  
+
+            foreach(var shipData in playerShipDataList)
+            {
+                var shipObject = InstantiatePlayerShip(shipData);
+            }   
             foreach(var item in GManager.Instance.itemList)
             {
                 foreach(var itemEffect in  item.itemEffectList)
@@ -72,11 +79,12 @@ namespace Managers
                     itemEffect.OnApply();
                 }
             }
-            foreach(var shipData in playerShipDataList)
+            foreach(var shipObject in playerShipObjectList)
             {
-                var shipObject = InstantiatePlayerShip(shipData);
+                var ship = shipObject.GetComponent<Ship>();
+                ship.SetCurrent();
+                SetPlayerShipBanner(ship);
             }   
-            //itemList = GManager.Instance.itemList;
         }
 
         public void SetDamagevalue(int value,Vector2 worldPos,bool onShield)
@@ -122,12 +130,12 @@ namespace Managers
             ship.tag = "PlayerShip";
             ship.shipData = shipData;
             ship.SetShipList(playerShipObjectList,enemyShipObjectList);
-            ship.SetSPHP();
-            ship.SetWeapon();
-
-            ship.currentPower = new(shipData.power);
+            //Shipをinstantiate → SetSPHPでStatのインスタンスをつくる →　Statにmodifier追加 →　Statを反映
+            ship.SetStats();
             return shipObject;
         }   
+
+        
 
         private GameObject InstantiateEnemyShip(ShipData shipData)
         {
@@ -155,11 +163,40 @@ namespace Managers
             ship.tag = "EnemyShip";
             ship.shipData = shipData;
             ship.SetShipList(enemyShipObjectList,playerShipObjectList);
-            ship.SetSPHP();
-            ship.SetWeapon();
-            ship.currentPower = new(shipData.power);
+            
+            //Shipをinstantiate → SetSPHPでStatのインスタンスをつくる →　Statにmodifier追加 →　Statを反映
+            ship.SetStats();
             return shipObject;
         }   
+
+        public void SetPlayerShipBanner(Ship ship)
+        {
+            var shipBanner = Instantiate(playerShipBanner);
+            shipBanner.transform.SetParent(PlayerShipBannerArea,false);
+            Slider shieldSlider = shipBanner.transform.GetChild(0).GetChild(0).GetComponent<Slider>();
+            Slider hullSlider = shipBanner.transform.GetChild(0).GetChild(1).GetComponent<Slider>();
+            shieldSlider.maxValue = ship.maxShieldPoint.Value;
+            hullSlider.maxValue = ship.maxHullPoint.Value;
+            TextMeshProUGUI shieldValueDisplay = shieldSlider.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI hullValueDisplay = hullSlider.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI StatDisplay = shipBanner.transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>();
+            shipBanner.UpdateAsObservable()
+                .Subscribe(_=>
+                {
+                    shieldSlider.value = ship.currentShieldPoint;
+                    shieldValueDisplay.text = shieldSlider.value.ToString() + " / " +  shieldSlider.maxValue.ToString();
+                    hullSlider.value = ship.currentHullPoint;
+                    hullValueDisplay.text = hullSlider.value.ToString() + " / " +  hullSlider.maxValue.ToString();
+                    StatDisplay.text = "攻撃:" + ship.currentPower.Value.ToString();
+                })
+                .AddTo(ship);
+                
+            ship.OnDestroyAsObservable()
+                .Subscribe(_ =>
+                {
+                    Destroy(shipBanner);
+                });
+        }
 
         public void BattleEncountWave(List<EnemyWave> enemyWaveList,int limit)
         {
@@ -185,6 +222,12 @@ namespace Managers
             {
                 var shipObject = InstantiateEnemyShip(shipData);
             }
+            //ここで敵のアイテムをロード
+            foreach(var shipObject in enemyShipObjectList)
+            {
+                var ship = shipObject.GetComponent<Ship>();
+                ship.SetCurrent();
+            }   
             yield return new WaitUntil(()=>enemyShipObjectList.Count == 0);
         }
 

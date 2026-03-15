@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
   shipName: P2
   shipType: 0
-  maxHullPoint: 100000
-  maxShieldPoint: 100000
-  power: 100
+  maxHullPoint: 300
+  maxShieldPoint: 300
+  power: 20
   speed: 200
   weaponDataList:
   - rid: 8997316069547311328
@@ -29,4 +29,4 @@ MonoBehaviour:
         projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
         range: 10
         projectileSpeed: 15
-        shotInterval: 0.5
+        shotInterval: 0.3

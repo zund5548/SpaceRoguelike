@@ -195,6 +195,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32250454}
   m_CullTransparentMesh: 1
+--- !u!1 &74340486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 74340487}
+  - component: {fileID: 74340488}
+  m_Layer: 5
+  m_Name: PlayerShipBannerArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &74340487
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74340486}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1786096168}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -800.90027, y: -34.9}
+  m_SizeDelta: {x: 320, y: 1010.21}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &74340488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74340486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_Padding:
+    m_Left: 10
+    m_Right: 10
+    m_Top: 20
+    m_Bottom: 20
+  m_ChildAlignment: 0
+  m_Spacing: 10
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &265763832
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,10 +751,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Back To Map
+  m_text: "\u30DE\u30C3\u30D7\u306B\u623B\u308B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d443aec15a873b147853bb176d7a4408, type: 2}
+  m_sharedMaterial: {fileID: -312031699444090467, guid: d443aec15a873b147853bb176d7a4408, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -780,7 +842,7 @@ GameObject:
   - component: {fileID: 978691834}
   - component: {fileID: 978691835}
   m_Layer: 5
-  m_Name: ChooseOne
+  m_Name: ItemBannerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1169,8 +1231,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: choose one
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d443aec15a873b147853bb176d7a4408, type: 2}
+  m_sharedMaterial: {fileID: -312031699444090467, guid: d443aec15a873b147853bb176d7a4408, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1502,7 +1564,7 @@ GameObject:
   - component: {fileID: 1715575282}
   - component: {fileID: 1715575281}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ChooseOne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1659,7 +1721,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 74340487}
+  - {fileID: 1987129141}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1701,7 +1765,9 @@ MonoBehaviour:
   playerShipObjectList: []
   enemyShipObjectList: []
   DamageValueCanvas: {fileID: 1969061087}
+  PlayerShipBannerArea: {fileID: 74340487}
   damageValueDisplay: {fileID: 5495638505057098136, guid: 94d07249bdf4d0e4b876611f3d451ca2, type: 3}
+  playerShipBanner: {fileID: 6529244073740876022, guid: 552a9f0b63ab6824286c027f3517822b, type: 3}
 --- !u!4 &1838093858
 Transform:
   m_ObjectHideFlags: 0
@@ -1749,6 +1815,8 @@ MonoBehaviour:
   ToMapButton: {fileID: 1531537615}
   ResultCanvas: {fileID: 1080116889}
   ItemBannerCanvas: {fileID: 2071527172}
+  _planetObject: {fileID: 5953231632616163392, guid: c46596476dea0544dbf42333e34b305a, type: 3}
+  _ItemBannerButton: {fileID: 323769567971474431, guid: ff3aa13e4925c2349baa2b7726f2be99, type: 3}
   allItemList: []
 --- !u!4 &1938667672
 Transform:
@@ -1866,6 +1934,81 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1987129140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1987129141}
+  - component: {fileID: 1987129143}
+  - component: {fileID: 1987129142}
+  m_Layer: 5
+  m_Name: Square
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1987129141
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987129140}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -4859.999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1786096168}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.002594, y: 505.1}
+  m_SizeDelta: {x: 1920, y: 69.79}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1987129142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987129140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.16078432, g: 0.16078432, b: 0.16078432, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1987129143
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987129140}
+  m_CullTransparentMesh: 1
 --- !u!1 &2042086452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1907,7 +2050,9 @@ MonoBehaviour:
     planetList: []
     starList: []
   passsedStageNodes: []
-  playerShipDataList: []
+  playerShipDataList:
+  - {fileID: 11400000, guid: 239b70ff072c0ec459b9845daa1b33ca, type: 2}
+  - {fileID: 11400000, guid: 239b70ff072c0ec459b9845daa1b33ca, type: 2}
   enemyShipDataList: []
   itemList: []
   references:
@@ -2122,5 +2267,5 @@ SceneRoots:
   - {fileID: 1786096168}
   - {fileID: 692143750}
   - {fileID: 1133996237}
-  - {fileID: 1080116893}
   - {fileID: 2071527176}
+  - {fileID: 1080116893}

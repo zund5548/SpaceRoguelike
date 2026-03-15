@@ -26,8 +26,8 @@ MonoBehaviour:
         - shipDataList:
           - {fileID: 11400000, guid: 851ab076ae9c5874ca188813809aee25, type: 2}
           - {fileID: 11400000, guid: 851ab076ae9c5874ca188813809aee25, type: 2}
-          - {fileID: 11400000, guid: 851ab076ae9c5874ca188813809aee25, type: 2}
           - {fileID: 11400000, guid: ddd2138a6bdb89549afc3ddb6e9a452b, type: 2}
+          - {fileID: 11400000, guid: 851ab076ae9c5874ca188813809aee25, type: 2}
         - shipDataList:
           - {fileID: 11400000, guid: 851ab076ae9c5874ca188813809aee25, type: 2}
           - {fileID: 11400000, guid: 851ab076ae9c5874ca188813809aee25, type: 2}

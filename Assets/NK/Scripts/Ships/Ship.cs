@@ -11,9 +11,9 @@ namespace Ships
     {
         public bool isPlayer = true;
         public ShipData shipData;
-        public int currentShieldPoint{get; private set;} 
+        public int currentShieldPoint;
         public Stat maxShieldPoint{get; private set;}
-        public int currentHullPoint{get; private set;}
+        public int currentHullPoint;
         public Stat maxHullPoint{get; private set;}
 
         public GameObject targetObject;
@@ -21,11 +21,16 @@ namespace Ships
         public List<GameObject> opponentShipObjectList = new List<GameObject>();
 
         public Stat currentPower;
+        /// <summary>パーセント</summary>
+        public Stat shotIntervalReduction;
         public Stat GetStat(StatType type)
         {
             return type switch
             {
                 StatType.Power => currentPower,
+                StatType.Hull => maxHullPoint,
+                StatType.Shield => maxShieldPoint,
+                StatType.shotInterval => shotIntervalReduction,
                 _ => null
             };
         }
@@ -47,7 +52,12 @@ namespace Ships
                 })
                 .AddTo(gameObject);
         }
-        public void SetSPHP()
+        // public void SetStat()
+        // {
+        //     SetSPHP();
+        //     SetWeapon();
+        // }
+        public void SetMaxSPHP()
         {
             if(shipData == null)
             {
@@ -55,15 +65,53 @@ namespace Ships
                 return;
             }
             maxShieldPoint = new Stat(shipData.maxShieldPoint); 
-            currentShieldPoint = (int)maxShieldPoint.Value;
             maxHullPoint = new Stat(shipData.maxHullPoint);
+        }
+        public void SetStats()
+        {
+            
+            if(shipData == null)
+            {
+                Debug.Log("shipData is null");
+                return;
+            }
+            maxShieldPoint = new Stat(shipData.maxShieldPoint); 
+            maxHullPoint = new Stat(shipData.maxHullPoint);
+            currentPower = new Stat(shipData.power);
+            shotIntervalReduction = new Stat(0f);
+        }
+        
+        public void SetCurrent()
+        {
+            SetCurrentSPHP();
+            SetWeapon();
+        }
+        
+        public void SetCurrentSPHP()
+        {
+            currentShieldPoint = (int)maxShieldPoint.Value;
             currentHullPoint = (int)maxHullPoint.Value;
         }
+
+        public void SetWeapon()
+        {
+            if(shipData == null)
+            {
+                Debug.Log("shipData is null");
+                return;
+            }
+            foreach(var weapon in shipData.weaponDataList)
+            {
+                weapon.ShootAction(gameObject,this);
+            }
+        }
+
         public void SetShipList(List<GameObject> ally,List<GameObject> opponet)
         {
             allyShipObjectList = ally;
             opponentShipObjectList = opponet;
         }
+
         public void GetNearestOpponet()
         {
             float mindist = Mathf.Infinity;
@@ -77,18 +125,7 @@ namespace Ships
                 }
             }
         }
-        public void SetWeapon()
-        {
-            if(shipData == null)
-            {
-                Debug.Log("shipData is null");
-                return;
-            }
-            foreach(var weapon in shipData.weaponDataList)
-            {
-                weapon.ShootAction(gameObject,this);
-            }
-        }
+        
         public void DealDamage(Ship dealtShip,int power)
         {
             EventManager.Instance.PublishDamaged(new EventManager.ShipDamageEvent{ship = this,dealingShip = dealtShip,delatDamageValue = power});

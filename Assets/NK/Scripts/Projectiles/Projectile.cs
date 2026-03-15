@@ -19,6 +19,7 @@ namespace Projectiles
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            //与えるダメージは発射した時点でのpowerの値
             bool b1 = collision.gameObject.CompareTag("PlayerShip") && gameObject.CompareTag("EnemyProjectile");
             bool b2 = collision.gameObject.CompareTag("EnemyShip") && gameObject.CompareTag("PlayerProjectile");
             if(b1 || b2)
