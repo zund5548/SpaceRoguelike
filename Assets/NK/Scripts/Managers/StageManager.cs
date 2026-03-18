@@ -16,12 +16,14 @@ namespace Managers
     {
         public static StageManager Instance{get;private set;}
         public Button ToMapButton;
+        //private bool isBannerPushed = false;
         private bool isBannerPushed = false;
-        private bool isAnimEnd = false;
+        [Header("prefab")]
+        public GameObject NoticeObject;
         [Header("Canvas")]
         public GameObject ResultCanvas;
         public GameObject ItemBannerCanvas;
-
+        public GameObject UICanvas;
         public GameObject _planetObject;
         public GameObject _ItemBannerButton;
         public List<Item> allItemList;
@@ -58,6 +60,7 @@ namespace Managers
                     StageClear();
                 })
                 .AddTo(EventManager.Instance);
+            SetNotice(GManager.Instance.currentStageNode.stageName);
         }
         private void SetToMapButton()
         {
@@ -71,7 +74,12 @@ namespace Managers
                 })
                 .AddTo(ToMapButton.gameObject);
         }
-
+        private void SetNotice(string message)
+        {
+            var notice = Instantiate(NoticeObject);
+            notice.transform.SetParent(UICanvas.transform,false);
+            notice.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = message;
+        }
         private void InstantiateStage(StageNode stageNode)
         {
             if(stageNode.planetList.Count == 0)return;
@@ -112,6 +120,7 @@ namespace Managers
                 radius += UnityEngine.Random.Range(2f,4f);
             }   
         }
+
         private void DeleteAllPlanet()
         {
             int n = planetObjectList.Count;
@@ -120,42 +129,6 @@ namespace Managers
                 Destroy(planetObjectList[i]);
             }
             planetObjectList.Clear();
-        }
-        private void SetItemBanner(int n)
-        {
-            allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();
-            var buttonList = new List<Button>();
-            for(int i = 0;i < n;i++)
-            {
-                var banner = Instantiate(_ItemBannerButton);
-                var randomItem = allItemList[UnityEngine.Random.Range(0,allItemList.Count)];
-                banner.transform.SetParent(ItemBannerCanvas.transform.GetChild(0).GetChild(1),false);
-                banner.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = randomItem.itemName;
-                banner.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = randomItem.GetDescription();
-                banner.GetComponent<Button>().OnClickAsObservable()
-                    .Where(_=>!isBannerPushed)
-                    .Subscribe(_=>
-                    {
-                        var item = randomItem;
-                        var buttonObject = banner;
-                        isBannerPushed = true;
-                        GManager.Instance.itemList.Add(item);
-                        StartCoroutine(BannerAnimation(buttonObject));
-                        ItemBannerCanvas.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-                        foreach(var button in buttonList)
-                        {
-                            button.GetComponent<Button>().interactable = false;
-                        }
-                    })
-                    .AddTo(banner);
-            }
-            
-        }
-
-        private void StageClear()
-        {
-            StartCoroutine(ClearCoroutine());
-            ShipManager.Instance.DeleteAllPlayer();
         }
 
         private IEnumerator ClearCoroutine()
@@ -168,27 +141,49 @@ namespace Managers
             yield break;
         }
 
+        private void SetItemBanner(int n)
+        {
+            allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();
+            var buttonList = new List<Button>();
+            for(int i = 0;i < n;i++)
+            {
+                var banner = Instantiate(_ItemBannerButton);
+                var randomItem = allItemList[UnityEngine.Random.Range(0,allItemList.Count)];
+                banner.transform.SetParent(ItemBannerCanvas.transform.GetChild(1),false);
+                banner.GetComponent<ItemBanner>().SetBanner(randomItem.itemName,randomItem.GetDescription());
+                banner.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable()
+                    .Where(_=>!isBannerPushed)
+                    .Subscribe(_=>
+                    {
+                        var item = randomItem;
+                        var buttonObject = banner;
+                        isBannerPushed = true;
+                        GManager.Instance.itemList.Add(item);
+                        //ItemBannerCanvas.SetActive(false);
+                        foreach(var button in buttonList)
+                        {
+                            button.GetComponent<Button>().interactable = false;
+                        }
+                        buttonObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("BannerUp");
+                    })
+                    .AddTo(banner);
+            }
+            
+        }
+
+        private void StageClear()
+        {
+            StartCoroutine(ClearCoroutine());
+            ShipManager.Instance.DeleteAllPlayer();
+        }
+
         private IEnumerator SetItemCoroutine()
         { 
             ItemBannerCanvas.SetActive(true);
             SetItemBanner(3);
-            yield return new WaitUntil(()=>isAnimEnd);
+            yield return new WaitUntil(()=>isBannerPushed);
+            yield return new WaitForSeconds(1f);
             ItemBannerCanvas.SetActive(false);
-            yield break;
-        }
-
-        private IEnumerator BannerAnimation(GameObject banner)
-        {
-            float deg = 0f;
-            while(true)
-            {
-                deg += 180f * Time.deltaTime;
-                ((RectTransform)banner.transform).anchoredPosition += new Vector2(0f,5f * Mathf.Cos(deg * Mathf.Deg2Rad));
-                if(deg > 90f)break;
-                yield return null;
-            }
-            yield return new WaitForSeconds(0.5f);
-            isAnimEnd = true;
             yield break;
         }
     }

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
   shipName: P2
   shipType: 0
-  maxHullPoint: 300
-  maxShieldPoint: 300
+  maxHullPoint: 200
+  maxShieldPoint: 200
   power: 0
-  speed: 1
+  speed: 0.5
   weaponDataList:
   - rid: 8997316051210076331
   references:

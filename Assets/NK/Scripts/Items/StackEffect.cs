@@ -7,7 +7,7 @@ namespace Items
     {
         public Ship ownerShip;
         public int stackNum = 0;
-        public int threshold = 5;
+        
         public bool isAbletoAdd = true;
         public void AddStack(int value)
         {

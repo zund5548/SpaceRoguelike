@@ -11,9 +11,10 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace Items
 {
-    /// <summary>スタックが溜まると数秒移動不可</summary>
+    /// <summary>スタックが溜まるとダメージ</summary>
     public class SurgeStackEffect:StackEffect
     {
+        public int threshold = 5;
         public float cantMoveTime = 3f;
         public override void OnStackChanged()
         {

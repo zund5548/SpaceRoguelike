@@ -30,8 +30,8 @@ namespace Projectiles
                     if(!isDamagedOnce)
                     {
                         var ship = collision.gameObject.GetComponent<Ship>();
-                        ship.DealDamage(_dealtShip,_power);
-                        // ship.stackEffectController.AddStackNum<SurgeStackEffect>(ship,1);
+                        ship.DealDamage(_power,_dealtShip);
+                        //ship.stackEffectController.AddStackNum<CrackStackEffect>(ship,1);
                     }
                     
                     if(!_isPiercing)isDamagedOnce = true;

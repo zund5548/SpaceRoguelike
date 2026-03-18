@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: StageEncountDatabase
   m_EditorClassIdentifier: Assembly-CSharp::Maps.StageEncountDatabase
   stageEncountList:
-  - rid: 8997316066545762461
   - rid: 8997316051210076237
+  - rid: 8997316165282300528
+  - rid: 8997316124326756755
   references:
     version: 2
     RefIds:
     - rid: 8997316051210076237
       type: {class: BattleEncount, ns: Maps, asm: Assembly-CSharp}
       data:
+        name: basic
         oneWaveLimit: 6
         enemyWaveList:
         - shipDataList:
@@ -41,10 +43,28 @@ MonoBehaviour:
           - {fileID: 11400000, guid: 851ab076ae9c5874ca188813809aee25, type: 2}
           - {fileID: 11400000, guid: ddd2138a6bdb89549afc3ddb6e9a452b, type: 2}
           - {fileID: 11400000, guid: ddd2138a6bdb89549afc3ddb6e9a452b, type: 2}
-    - rid: 8997316066545762461
+    - rid: 8997316124326756755
       type: {class: BattleEncount, ns: Maps, asm: Assembly-CSharp}
       data:
-        oneWaveLimit: 0
+        name: TestStrong
+        oneWaveLimit: 10
         enemyWaveList:
         - shipDataList:
           - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}
+          - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}
+          - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}
+          - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}
+          - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}
+          - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}
+          - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}
+          - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}
+        - shipDataList:
+          - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}
+        - shipDataList:
+          - {fileID: 11400000, guid: 34fb7531e7f9b17409eb8c808c2bf317, type: 2}
+    - rid: 8997316165282300528
+      type: {class: BattleEncount, ns: Maps, asm: Assembly-CSharp}
+      data:
+        name: zero
+        oneWaveLimit: 0
+        enemyWaveList: []

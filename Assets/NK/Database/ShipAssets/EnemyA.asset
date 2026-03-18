@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHullPoint: 100
   maxShieldPoint: 100
   power: 0
-  speed: 1
+  speed: 0.5
   weaponDataList:
   - rid: 8997315987808190837
   references:
@@ -30,3 +30,4 @@ MonoBehaviour:
         range: 15
         projectileSpeed: 5
         shotInterval: 2
+        errorDeg: 1

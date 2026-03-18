@@ -118,23 +118,28 @@ namespace Ships
             opponentShipObjectList = opponet;
         }
 
-        public void GetNearestOpponet()
+        public GameObject GetNearestOpponet()
         {
             float mindist = Mathf.Infinity;
+            GameObject result = null;
             foreach(var shipObject in opponentShipObjectList)
             {
                 var dist = Vector2.Distance(transform.position,shipObject.transform.position);
                 if(shipObject && mindist > dist)
                 {
-                    targetObject = shipObject;
+                    result = shipObject;
                     mindist = dist;
                 }
             }
+            targetObject = result;
+            return result;
         }
-        
-        public void DealDamage(Ship dealtShip,int power)
+        /// <summary>このshipにダメージを与える</summary>
+        /// <param name="power"></param>
+        /// <param name="dealtShip">nullにするとPublishDamagedを発行しない</param>
+        public void DealDamage(int power,Ship dealtShip = null)
         {
-            EventManager.Instance.PublishDamaged(new EventManager.ShipDamageEvent{ship = this,dealingShip = dealtShip,delatDamageValue = power});
+            if(dealtShip != null)EventManager.Instance.PublishDamaged(new EventManager.ShipDamageEvent{ship = this,dealingShip = dealtShip,delatDamageValue = power});
             //Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
             int actualPower = power;
             if(currentShieldPoint > 0)

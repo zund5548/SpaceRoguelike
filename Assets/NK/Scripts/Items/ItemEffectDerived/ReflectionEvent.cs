@@ -20,8 +20,8 @@ namespace Items
             EventManager.OnDamage
                 .Subscribe(damageEvent =>
                 {
-                    Debug.Log(damageEvent.dealingShip.shipData.name+"/"+damageEvent.ship.shipData.name);
                     //反射時はONDamageを発行しない
+                    damageEvent.dealingShip.DealDamage(power);
                 })
                 .AddTo(EventManager.Instance);
         }

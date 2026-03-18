@@ -40,7 +40,7 @@ namespace Projectiles
                 bool b2 = gameObject.CompareTag("EnemyExplosion") && hitCols[i].gameObject.CompareTag("PlayerShip");
                 if(b1 || b2)
                 {
-                    hitCols[i].gameObject.GetComponent<Ship>().DealDamage(_dealtShip,_power);
+                    hitCols[i].gameObject.GetComponent<Ship>().DealDamage(_power,_dealtShip);
                     Debug.DrawLine(transform.position,hitCols[i].gameObject.transform.position,Color.red,1f);
                 }
             }

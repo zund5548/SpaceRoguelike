@@ -30,3 +30,4 @@ MonoBehaviour:
         range: 20
         projectileSpeed: 15
         shotInterval: 0.1
+        errorDeg: 2

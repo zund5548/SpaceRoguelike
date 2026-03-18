@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: StarDatabase
   m_EditorClassIdentifier: Assembly-CSharp::Maps.StarDatabase
   starList:
-  - radius: 1
+  - radius: 6
     sprite: {fileID: 0}
     starType: 3

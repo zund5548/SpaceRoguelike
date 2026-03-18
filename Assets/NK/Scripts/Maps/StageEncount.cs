@@ -6,6 +6,7 @@ namespace Maps
     [Serializable]
     public class StageEncount
     {
+        public string name;
         public virtual void SetStageEncount(){}
     }
 }

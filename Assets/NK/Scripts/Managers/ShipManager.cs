@@ -23,6 +23,8 @@ namespace Managers
         private Vector2 _currentFleetPos = Vector2.zero;
         private float _currentFleetDeg = 0f;
         //
+        public float playerSpeed;
+        public float turnRate;
         public List<ShipData> playerShipDataList = new List<ShipData>();
         //public List<ShipData> enemyShipDataList = new List<ShipData>();
         public List<GameObject> playerShipObjectList = new List<GameObject>();
@@ -31,6 +33,8 @@ namespace Managers
         [Header("Canvas")]
         public RectTransform DamageValueCanvas;
         public RectTransform PlayerShipBannerArea;
+        [Header("UI")]
+        public TextMeshProUGUI _StageNameText;
         [Header("Prefab")]
         public TextMeshProUGUI damageValueDisplay;
         public GameObject playerShipBanner;
@@ -57,8 +61,8 @@ namespace Managers
                     Vector2 destination = _cam.ScreenToWorldPoint(Input.mousePosition);
                     if(Vector2.Distance(destination,_currentFleetPos) < 0.1f)return;
                     var v = destination - _currentFleetPos;
-                    _currentFleetDeg = Mathf.MoveTowardsAngle(_currentFleetDeg,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg,720f*Time.deltaTime);
-                    _currentFleetPos += new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)) * 5f * Time.deltaTime;
+                    _currentFleetDeg = Mathf.MoveTowardsAngle(_currentFleetDeg,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg,turnRate * Time.deltaTime);
+                    _currentFleetPos += new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)) * playerSpeed * Time.deltaTime;
                     
                     //Debug.DrawRay(_currentFleetPos,new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)));
                 })
@@ -141,7 +145,8 @@ namespace Managers
             ship.SetStats();
             return shipObject;
         }   
-
+        float separationDist = 1f;
+        float separationStrength = 0.5f;
         
 
         private GameObject InstantiateEnemyShip(ShipData shipData)
@@ -151,7 +156,7 @@ namespace Managers
             enemyShipObjectList.Add(shipObject);
 
             float randDeg = UnityEngine.Random.Range(-180f,180f);
-            var pos = 2f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
+            var pos = 10f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
             shipObject.transform.position = pos;
             shipObject.transform.eulerAngles = new Vector3(0f,0f,0f);
             shipObject.UpdateAsObservable()
@@ -162,12 +167,31 @@ namespace Managers
                     // Debug.Log("cant move");
                     return;
                 }
-                var s = shipObject;
-                if(Vector2.Distance(s.transform.position,_currentFleetPos) < 0.1f)return;
-                var v = _currentFleetPos - (Vector2)s.transform.position;
-                var deg = Mathf.MoveTowardsAngle(s.transform.eulerAngles.z,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg,360f*Time.deltaTime);
-                s.transform.eulerAngles = new Vector3(0f,0f,deg);
-                s.transform.position = (Vector2)s.transform.position + new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg * Mathf.Deg2Rad)) * shipData.speed * Time.deltaTime; 
+                //var s = shipObject;
+                if(Vector2.Distance(shipObject.transform.position,_currentFleetPos) < 0.1f)return;
+                var v = _currentFleetPos - (Vector2)shipObject.transform.position;
+                // var v = _currentFleetPos - (Vector2)shipObject.transform.position;
+                // var deg = Mathf.MoveTowardsAngle(shipObject.transform.eulerAngles.z,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg,360f*Time.deltaTime);
+                // s.transform.eulerAngles = new Vector3(0f,0f,deg);
+                // s.transform.position = (Vector2)s.transform.position + new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg * Mathf.Deg2Rad)) * shipData.speed * Time.deltaTime; 
+                //Vector2 moveDir = new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg * Mathf.Deg2Rad)) * shipData.speed * Time.deltaTime; 
+                //Vector2 moveDir = new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg * Mathf.Deg2Rad)).normalized; 
+                Vector2 moveDir = v.normalized;
+                Vector2 separation = Vector2.zero;
+                foreach (var other in ship.allyShipObjectList)
+                {
+                    if(other == shipObject)continue;
+                    float dist = Vector2.Distance(shipObject.transform.position,other.transform.position);
+                    if(dist < separationDist)
+                    {
+                        Vector2 away = shipObject.transform.position - other.transform.position;
+                        separation += away.normalized/dist;
+                    }
+                }
+                Vector2 finalDir = moveDir + separation * separationStrength;
+                shipObject.transform.position = (Vector2)shipObject.transform.position + finalDir.normalized * shipData.speed * Time.deltaTime; 
+                float deg = Mathf.MoveTowardsAngle(shipObject.transform.eulerAngles.z,Mathf.Atan2(finalDir.y,finalDir.x) * Mathf.Rad2Deg,180f*Time.deltaTime);
+                shipObject.transform.eulerAngles = new Vector3(0f,0f,deg);
             })
             .AddTo(shipObject);
 
@@ -213,6 +237,7 @@ namespace Managers
 
         public void BattleEncountWave(List<EnemyWave> enemyWaveList,int limit)
         {
+            _StageNameText.text = "ウェーブ : -/-";
             StartCoroutine(BattleEncountWaveCoroutine(enemyWaveList,limit));
         }
 
@@ -222,6 +247,7 @@ namespace Managers
             foreach(var enemyWave in enemyWaveList)
             {
                 //Debug.Log(currentWaveNum);
+                _StageNameText.text = "ウェーブ : "+currentWaveNum.ToString()+"/"+ enemyWaveList.Count.ToString();
                 yield return WaveCoroutine(enemyWave,limit);
                 yield return new WaitForSeconds(2f);
                 currentWaveNum++;
