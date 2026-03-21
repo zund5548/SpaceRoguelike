@@ -20,10 +20,16 @@ namespace Managers
         private bool isBannerPushed = false;
         [Header("prefab")]
         public GameObject NoticeObject;
+        [Header("UI")]
+        public TextMeshProUGUI _StageNameText;
+        public RectTransform _RewardContent;
+        public RectTransform _ShopScrollContent;
+        public GameObject _LeaveShopButton;
         [Header("Canvas")]
         public GameObject ResultCanvas;
-        public GameObject ItemBannerCanvas;
-        public GameObject UICanvas;
+        public GameObject _ItemBannerCanvas;
+        public GameObject _ShopItemBannerCanvas;
+        public GameObject _UICanvas;
         public GameObject _planetObject;
         public GameObject _ItemBannerButton;
         public List<Item> allItemList;
@@ -42,16 +48,17 @@ namespace Managers
             // _planetObject = (GameObject)Resources.Load("PlanetObject");
             // _ItemBannerButton = (GameObject)Resources.Load("ItemBannerButton");
             SetToMapButton();
+            allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();
             InstantiateStage(GManager.Instance.currentStageNode);
             gameObject.UpdateAsObservable()
                 .Delay(TimeSpan.FromSeconds(3f))
                 .Take(1)
                 .Subscribe(_ =>
                 {
-                    GManager.Instance.currentStageNode.stageEncount.SetStageEncount();
+                    StartCoroutine(GManager.Instance.currentStageNode.stageEncount.SetStageEncount());
                 })
                 .AddTo(gameObject);
-            ItemBannerCanvas.SetActive(false);
+            _ItemBannerCanvas.SetActive(false);
             ResultCanvas.SetActive(false);
             EventManager.OnStageClear
                 .Subscribe(_ =>
@@ -77,7 +84,7 @@ namespace Managers
         private void SetNotice(string message)
         {
             var notice = Instantiate(NoticeObject);
-            notice.transform.SetParent(UICanvas.transform,false);
+            notice.transform.SetParent(_UICanvas.transform,false);
             notice.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = message;
         }
         private void InstantiateStage(StageNode stageNode)
@@ -117,7 +124,7 @@ namespace Managers
                     LR.SetPosition(i,radius * new Vector3(Mathf.Cos(orbitRad),Mathf.Sin(orbitRad),0f));
                     orbitRad += 2f * Mathf.PI/pointNum;
                 }
-                radius += UnityEngine.Random.Range(2f,4f);
+                radius += (int)UnityEngine.Random.Range(2f,4f);
             }   
         }
 
@@ -130,7 +137,11 @@ namespace Managers
             }
             planetObjectList.Clear();
         }
-
+        private void StageClear()
+        {
+            StartCoroutine(ClearCoroutine());
+            ShipManager.Instance.DeleteAllPlayer();
+        }
         private IEnumerator ClearCoroutine()
         {
             //アイテムの詳細をItemBannerButtonにセットする
@@ -140,16 +151,30 @@ namespace Managers
             ResultCanvas.SetActive(true);
             yield break;
         }
+        private IEnumerator SetItemCoroutine()
+        { 
+            _ItemBannerCanvas.SetActive(true);
+            SetItemBanner(3);
+            yield return new WaitUntil(()=>isBannerPushed);
+            yield return new WaitForSeconds(1f);
+            foreach (Transform banner in _ItemBannerCanvas.transform.GetChild(1))
+            {
+                //ItemBannerをすべて削除
+                Destroy(banner.gameObject);
+            }
+            _ItemBannerCanvas.SetActive(false);
 
+            yield break;
+        }
         private void SetItemBanner(int n)
         {
-            allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();
+           
             var buttonList = new List<Button>();
             for(int i = 0;i < n;i++)
             {
                 var banner = Instantiate(_ItemBannerButton);
                 var randomItem = allItemList[UnityEngine.Random.Range(0,allItemList.Count)];
-                banner.transform.SetParent(ItemBannerCanvas.transform.GetChild(1),false);
+                banner.transform.SetParent(_RewardContent,false);
                 banner.GetComponent<ItemBanner>().SetBanner(randomItem.itemName,randomItem.GetDescription());
                 banner.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable()
                     .Where(_=>!isBannerPushed)
@@ -167,24 +192,12 @@ namespace Managers
                         buttonObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("BannerUp");
                     })
                     .AddTo(banner);
-            }
-            
+            }   
         }
 
-        private void StageClear()
+        private void SetCredit(int value)
         {
-            StartCoroutine(ClearCoroutine());
-            ShipManager.Instance.DeleteAllPlayer();
-        }
-
-        private IEnumerator SetItemCoroutine()
-        { 
-            ItemBannerCanvas.SetActive(true);
-            SetItemBanner(3);
-            yield return new WaitUntil(()=>isBannerPushed);
-            yield return new WaitForSeconds(1f);
-            ItemBannerCanvas.SetActive(false);
-            yield break;
+            
         }
     }
 }

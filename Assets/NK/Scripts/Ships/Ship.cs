@@ -90,7 +90,7 @@ namespace Ships
         public void SetCurrent()
         {
             SetCurrentSPHP();
-            SetWeapon();
+            SetCurrentWeapon();
         }
         
         public void SetCurrentSPHP()
@@ -99,7 +99,7 @@ namespace Ships
             currentHullPoint = (int)maxHullPoint.Value;
         }
 
-        public void SetWeapon()
+        public void SetCurrentWeapon()
         {
             if(shipData == null)
             {
@@ -135,11 +135,11 @@ namespace Ships
             return result;
         }
         /// <summary>このshipにダメージを与える</summary>
-        /// <param name="power"></param>
-        /// <param name="dealtShip">nullにするとPublishDamagedを発行しない</param>
+        /// <param name="power">ダメージ量</param>
+        /// <param name="dealtShip">ダメージを与えた船</param>
         public void DealDamage(int power,Ship dealtShip = null)
         {
-            if(dealtShip != null)EventManager.Instance.PublishDamaged(new EventManager.ShipDamageEvent{ship = this,dealingShip = dealtShip,delatDamageValue = power});
+            if(dealtShip != null)EventManager.Instance.PublishDamaged(new EventManager.ShipDamageEvent{targetShip = this,dealingShip = dealtShip,delatDamageValue = power});
             //Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
             int actualPower = power;
             if(currentShieldPoint > 0)
@@ -186,6 +186,7 @@ namespace Ships
                         break;
                     }
                 }
+                if(isPlayer && allyShipObjectList.Count == 0)EventManager.Instance.PublishFalse();
                 Destroy(gameObject);
             }
         }

@@ -11,6 +11,7 @@ using Maps;
 using Managers;
 using Items;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 namespace Managers
 {
     public class ShipManager : MonoBehaviour
@@ -29,6 +30,7 @@ namespace Managers
         //public List<ShipData> enemyShipDataList = new List<ShipData>();
         public List<GameObject> playerShipObjectList = new List<GameObject>();
         public List<GameObject> enemyShipObjectList = new List<GameObject>();
+        public InputActionAsset inputAction;
         //public List<Item> itemList = new();
         [Header("Canvas")]
         public RectTransform DamageValueCanvas;
@@ -38,6 +40,30 @@ namespace Managers
         [Header("Prefab")]
         public TextMeshProUGUI damageValueDisplay;
         public GameObject playerShipBanner;
+        //input
+        private InputAction clickAction;
+        private InputAction positionAction;
+        private Vector2 worldPos;
+        private void OnEnable()
+        {
+            //clickAction.performed += OnClick;
+            positionAction.performed += OnCursorMoved;
+        }
+        private void OnDisable()
+        {
+            //clickAction.performed -= OnClick;
+            positionAction.performed -= OnCursorMoved;
+        }
+        // private void OnClick(InputAction.CallbackContext ctx)
+        // {
+        //     Vector2 screenPos = positionAction.ReadValue<Vector2>();
+        //     worldPos = _cam.ScreenToWorldPoint(new Vector2(screenPos.x,screenPos.y));
+        // }
+        private void OnCursorMoved(InputAction.CallbackContext ctx)
+        {
+            Vector2 screenPos = positionAction.ReadValue<Vector2>();
+            worldPos = _cam.ScreenToWorldPoint(new Vector2(screenPos.x,screenPos.y));
+        }
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -46,8 +72,9 @@ namespace Managers
                 return;
             }
             Instance = this;
+            clickAction = inputAction["Click"];
+            positionAction = inputAction["Position"];
         }
-
         void Start()
         {
             if(GManager.Instance.playerShipDataList.Count != 0)playerShipDataList = GManager.Instance.playerShipDataList;
@@ -55,11 +82,13 @@ namespace Managers
             _shipObject = (GameObject)Resources.Load("Ship");
             _cam = Camera.main;
             gameObject.UpdateAsObservable()
-                .Where(_=>Input.GetMouseButton(0))
+                //.Where(_=>Input.GetMouseButton(0))
                 .Subscribe(_ =>
                 {
-                    Vector2 destination = _cam.ScreenToWorldPoint(Input.mousePosition);
+                    Vector2 destination = worldPos;
+                    //Vector2 destination = _cam.ScreenToWorldPoint(Input.mousePosition);
                     if(Vector2.Distance(destination,_currentFleetPos) < 0.1f)return;
+                    if(!clickAction.IsPressed())return;
                     var v = destination - _currentFleetPos;
                     _currentFleetDeg = Mathf.MoveTowardsAngle(_currentFleetDeg,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg,turnRate * Time.deltaTime);
                     _currentFleetPos += new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)) * playerSpeed * Time.deltaTime;
@@ -71,7 +100,6 @@ namespace Managers
             // {
             //     InstantiateEnemyShip(shipData);
             // }  
-
             foreach(var shipData in playerShipDataList)
             {
                 var shipObject = InstantiatePlayerShip(shipData);
@@ -90,51 +118,33 @@ namespace Managers
                 SetPlayerShipBanner(ship);
             }   
         }
-
-        public void SetDamagevalue(int value,Vector2 worldPos,bool onShield)
-        {
-            var display = Instantiate(damageValueDisplay);
-            //位置
-            display.transform.SetParent(DamageValueCanvas,false);
-            Vector2 screenPos = _cam.WorldToScreenPoint(worldPos);
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(DamageValueCanvas,screenPos,_cam,out Vector2 localPos);
-            float randDeg = UnityEngine.Random.Range(-180f,180f);
-            display.rectTransform.anchoredPosition = localPos + 25f * new Vector2(Mathf.Cos(randDeg * Mathf.Deg2Rad),Mathf.Sin(randDeg * Mathf.Deg2Rad));
-            //色と値
-            var textMesh = display.GetComponent<TextMeshProUGUI>();
-            textMesh.text = onShield?$"<color={"#1EE3DA"}>{value}</color>":value.ToString();
-            display.UpdateAsObservable()
-                .Delay(TimeSpan.FromSeconds(0.5f))
-                .Subscribe(_ =>
-                {
-                    Destroy(display.gameObject);
-                })
-                .AddTo(display);
-        }
-
+        
+        
         private GameObject InstantiatePlayerShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
             Ship ship = shipObject.GetComponent<Ship>();
+            float deg = (float)playerShipObjectList.Count/playerShipDataList.Count * 360f;
+            //Debug.Log(playerShipObjectList.Count.ToString()+"/"+playerShipDataList.Count.ToString());
+            //Debug.Log(playerShipObjectList.Count.ToString()+"/"+playerShipDataList.Count.ToString());
+            var offset = 0.5f * new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg  * Mathf.Deg2Rad));
             playerShipObjectList.Add(shipObject);
 
-            float randDeg = UnityEngine.Random.Range(-180f,180f);
-            var offset = 0.5f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
             shipObject.transform.position = _currentFleetPos;
             shipObject.transform.eulerAngles = new Vector3(0f,0f,_currentFleetDeg);
             shipObject.UpdateAsObservable()
-            .Subscribe(_ =>
-            {
-                //プレイヤーの船は止まらない
-                // if(!ship.isAbleToMove)
-                // {
-                //     Debug.Log("cant move");
-                //     return;
-                // }
-                shipObject.transform.position = _currentFleetPos + offset;
-                shipObject.transform.eulerAngles = new Vector3(0f,0f,_currentFleetDeg);
-            })
-            .AddTo(shipObject);
+                .Subscribe(_ =>
+                {
+                    //プレイヤーの船は止まらない
+                    // if(!ship.isAbleToMove)
+                    // {
+                    //     Debug.Log("cant move");
+                    //     return;
+                    // }
+                    shipObject.transform.position = _currentFleetPos + offset;
+                    shipObject.transform.eulerAngles = new Vector3(0f,0f,_currentFleetDeg);
+                })
+                .AddTo(shipObject);
 
             
             ship.isPlayer = true;
@@ -147,8 +157,6 @@ namespace Managers
         }   
         float separationDist = 1f;
         float separationStrength = 0.5f;
-        
-
         private GameObject InstantiateEnemyShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
@@ -170,12 +178,6 @@ namespace Managers
                 //var s = shipObject;
                 if(Vector2.Distance(shipObject.transform.position,_currentFleetPos) < 0.1f)return;
                 var v = _currentFleetPos - (Vector2)shipObject.transform.position;
-                // var v = _currentFleetPos - (Vector2)shipObject.transform.position;
-                // var deg = Mathf.MoveTowardsAngle(shipObject.transform.eulerAngles.z,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg,360f*Time.deltaTime);
-                // s.transform.eulerAngles = new Vector3(0f,0f,deg);
-                // s.transform.position = (Vector2)s.transform.position + new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg * Mathf.Deg2Rad)) * shipData.speed * Time.deltaTime; 
-                //Vector2 moveDir = new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg * Mathf.Deg2Rad)) * shipData.speed * Time.deltaTime; 
-                //Vector2 moveDir = new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg * Mathf.Deg2Rad)).normalized; 
                 Vector2 moveDir = v.normalized;
                 Vector2 separation = Vector2.zero;
                 foreach (var other in ship.allyShipObjectList)
@@ -205,7 +207,26 @@ namespace Managers
             ship.SetStats();
             return shipObject;
         }   
-
+        public void SetDamagevalue(int value,Vector2 worldPos,bool onShield)
+        {
+            var display = Instantiate(damageValueDisplay);
+            //位置
+            display.transform.SetParent(DamageValueCanvas,false);
+            Vector2 screenPos = _cam.WorldToScreenPoint(worldPos);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(DamageValueCanvas,screenPos,_cam,out Vector2 localPos);
+            float randDeg = UnityEngine.Random.Range(-180f,180f);
+            display.rectTransform.anchoredPosition = localPos + 25f * new Vector2(Mathf.Cos(randDeg * Mathf.Deg2Rad),Mathf.Sin(randDeg * Mathf.Deg2Rad));
+            //色と値
+            var textMesh = display.GetComponent<TextMeshProUGUI>();
+            textMesh.text = onShield?$"<color={"#1EE3DA"}>{value}</color>":value.ToString();
+            display.UpdateAsObservable()
+                .Delay(TimeSpan.FromSeconds(0.5f))
+                .Subscribe(_ =>
+                {
+                    Destroy(display.gameObject);
+                })
+                .AddTo(display);
+        }
         public void SetPlayerShipBanner(Ship ship)
         {
             var shipBanner = Instantiate(playerShipBanner);
@@ -235,10 +256,10 @@ namespace Managers
                 });
         }
 
-        public void BattleEncountWave(List<EnemyWave> enemyWaveList,int limit)
+        public IEnumerator BattleEncountWave(List<EnemyWave> enemyWaveList,int limit)
         {
             _StageNameText.text = "ウェーブ : -/-";
-            StartCoroutine(BattleEncountWaveCoroutine(enemyWaveList,limit));
+            yield return BattleEncountWaveCoroutine(enemyWaveList,limit);
         }
 
         private IEnumerator BattleEncountWaveCoroutine(List<EnemyWave> enemyWaveList,int limit)
@@ -252,7 +273,6 @@ namespace Managers
                 yield return new WaitForSeconds(2f);
                 currentWaveNum++;
             }
-            EventManager.Instance.PublishClear();
         }
 
         private IEnumerator WaveCoroutine(EnemyWave enemyWave,int limit)

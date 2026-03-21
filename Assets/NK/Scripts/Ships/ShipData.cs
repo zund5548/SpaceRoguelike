@@ -17,6 +17,7 @@ namespace Ships
             frigate,
             destroyer
         }
+        
         public int maxHullPoint;
         public int maxShieldPoint;
         public int power;

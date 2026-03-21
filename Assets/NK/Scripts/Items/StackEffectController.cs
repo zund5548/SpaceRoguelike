@@ -11,11 +11,13 @@ namespace Items
     public class StackEffectController
     {
         public Dictionary<Type,StackEffect> stackDic = new();
+        //stackの情報を読む
         public T GetStackEffect<T>() where T : StackEffect
         {
             stackDic.TryGetValue(typeof(T), out var status);
             return status as T;
         }
+        //新しいstackを与える
         public T AddStackEffect<T>(Ship ownerShip) where T : StackEffect, new()
         {
             var type = typeof(T);
@@ -27,6 +29,7 @@ namespace Items
             }
             return (T)status;
         }
+        //stackを指定した数与える
         public void AddStackNum<T>(Ship ownerShip,int value) where T : StackEffect, new()
         {
             var status = AddStackEffect<T>(ownerShip);

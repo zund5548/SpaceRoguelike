@@ -9,6 +9,10 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine.UIElements;
 using UniRx.Triggers;
+using System;
+using System.Collections;
+using System.Linq;
+using Items;
 namespace Managers
 {
     public class MapManager : MonoBehaviour
@@ -23,6 +27,7 @@ namespace Managers
         public RectTransform _mapScrollContent;
         public Canvas MapCanvas;
         public TextMeshProUGUI stageNameDisplay;
+        public TextMeshProUGUI stageTypeDisplay;
         [Header("prefab")]
         public GameObject FloorObject;
         public GameObject StageButtonObject;
@@ -31,7 +36,6 @@ namespace Managers
         [Header("database")]
         public PlanetDatabase planetDatabase;
         public StarDatabase starDatabase;
-        public StageEncountDatabase stageEncountDatabase;
         //
         //public int p,q;
         public List<List<StageNode>> _floorList = new();
@@ -50,14 +54,15 @@ namespace Managers
         }
         void Start()
         {
-            _toStageButton.interactable = false;
-            SetToStageButton();
             if(!GManager.Instance.isMapCreated)CreateMap(_floorNum,4,6);
+            else _floorList = GManager.Instance._stageFloorList;
             InstantiateMap();
             SetStageDescription(GManager.Instance.currentStageNode);
             SetMapColor();
             SetMapButton();
             _mapScrollRect.verticalNormalizedPosition = 1f/ _floorNum * GManager.Instance.currentStageNode.floorStageNum;
+            _toStageButton.interactable = false;
+            SetToStageButton();
         }
         void Update()
         {
@@ -123,7 +128,7 @@ namespace Managers
                 stageName = "Lobby",
                 floorStageNum = 0,
                 buttonLocalPos = new Vector2(0f,0f),
-                stageType = StageNode.StageType.battle,
+                stageType = StageNode.StageType.Lobby,
                 stageEncount = null
             };
             floorStages.Add(stage);
@@ -145,10 +150,10 @@ namespace Managers
                         stageName = GetRandomStageName(2,4),
                         floorStageNum = i + 1,
                         buttonLocalPos = new Vector2(UnityEngine.Random.Range(left+30f,right-30f),0f),
-                        stageType = StageNode.StageType.battle,
-                        starList = GetRandomStars(3),
-                        planetList = GetRandomPlanet(3),
-                        stageEncount = GetStageEncount()
+                        //stageType = StageNode.StageType.battle,
+                        starList = GetRandomStars(1),
+                        planetList = GetRandomPlanet(UnityEngine.Random.Range(3,6)),
+                        //stageEncount = GetStageEncount()
                     };
                     floorStages.Add(stage);
                     left += horizontalSize/stageNum;
@@ -163,8 +168,8 @@ namespace Managers
                 stageName = "??-????",
                 floorStageNum = floorNum + 1,
                 buttonLocalPos = new Vector2(0f,0f),
-                stageType = StageNode.StageType.boss,
-                stageEncount = GetStageEncount()
+                stageType = StageNode.StageType.Boss,
+                //stageEncount = GetStageEncount()
             };
             floorStages.Add(stage);
             _floorList.Add(floorStages);
@@ -191,14 +196,6 @@ namespace Managers
                     idx = nextIdx;
                 }
             }
-            // for(int i = 0;i < _stageFloorList.Count-1;i++)
-            // {
-            //     for(int j = 0;j < _stageFloorList[i].Count-1;j++)
-            //     {
-            //         if(_stageFloorList[i][j].nextNodeList.Count == 0)
-            //         Destroy(_stageFloorList[i][j].buttonObject);
-            //     }
-            // }
             // 接続していないノードを削除
             for(int i = 0;i < _floorList.Count-1;i++)
             {
@@ -216,16 +213,31 @@ namespace Managers
                 }
                 p++;
             }
+            //stageType代入
+            SetStageType();
             GManager.Instance._stageFloorList = _floorList;
         }
-        public StageEncount GetStageEncount()
+        public void SetStageType()
         {
-            return stageEncountDatabase.stageEncountList[0];
+            //allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();StageEncountAsset
+            List<StageEncount> encountList = Resources.LoadAll<StageEncount>("StageEncountAsset").ToList();
+            for(int i = 1;i < _floorList.Count-1;i++)
+            {
+                for(int j = 0;j < _floorList[i].Count;j++)
+                {
+                    float r = UnityEngine.Random.value;
+                    if(r < 0.9f)_floorList[i][j].stageType = StageNode.StageType.Battle;
+                    else _floorList[i][j].stageType = StageNode.StageType.Shop;
+                    //stageEncount代入
+                    var filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
+                    _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];
+                }
+            }
         }
         /// <summary>mapを元にボタンと線を生成</summary>
         void InstantiateMap()
         {
-            if(GManager.Instance.isMapCreated)_floorList = GManager.Instance._stageFloorList;
+            
             for(int i = 0;i < _floorList.Count;i++)
             {
                 var floor = Instantiate(FloorObject);
@@ -270,13 +282,14 @@ namespace Managers
                     }
                 }
             }
-            //ボタンに関数を設定
+            
             for(int i = 0;i < _floorList.Count;i++)
             {
                 for(int j = 0;j <  _floorList[i].Count;j++)
                 {
                     int p = i,q = j;
                     var button = _buttonObjectFloorList[p][q].GetComponent<UnityEngine.UI.Button>();
+                    //ボタンに関数を設定
                     button.GetComponent<UnityEngine.UI.Button>().OnClickAsObservable()
                         .Subscribe(_ =>
                         {
@@ -302,12 +315,16 @@ namespace Managers
                             
                         })
                         .AddTo(button);
+                    //ボタン配下のアイコン変更
+                    var buttonObject = _buttonObjectFloorList[p][q];
+                    if(_floorList[p][q].stageEncount && _floorList[p][q].stageEncount.icon)buttonObject.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = _floorList[p][q].stageEncount.icon;
+                    else buttonObject.transform.GetChild(0).gameObject.SetActive(false);
                 }
             }
         }
+         /// <summary>通ったルート・ボタンの色を変える</summary>
         public void SetMapColor()
         {
-            //通った道の色を変える
             foreach(var node in GManager.Instance.passsedStageNodes)
             {
                 var mapIdx = node.mapIdx;
@@ -335,6 +352,7 @@ namespace Managers
                 lineObjectList[lineIdx[((preMapIdx.Item1,preMapIdx.Item2),(mapIdx.Item1,mapIdx.Item2))]].GetComponent<UnityEngine.UI.Image>().color = Color.orange;
             }
         }
+        /// <summary> ボタンの有効・無効を決める</summary>
         public void SetMapButton()
         {
             //クリアした階層と次の階層のボタンを無効化
@@ -378,6 +396,7 @@ namespace Managers
         public void SetStageDescription(StageNode stageNode)
         {
             stageNameDisplay.text = stageNode.stageName;
+            stageTypeDisplay.text = stageNode.GetStageTypeStr();
         }
     }
 }

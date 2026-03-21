@@ -28,20 +28,40 @@ namespace Managers
         {
             onStageClear.OnNext(Unit.Default);
         }
+        //失敗したとき
+        private static Subject<Unit> onStageFalse = new Subject<Unit>();
+        public static IObservable<Unit> OnStageFalse => onStageFalse;
+        public void PublishFalse()
+        {
+            onStageFalse.OnNext(Unit.Default);
+        }
         //ダメージを受けたとき
         private static Subject<ShipDamageEvent> onDamage = new Subject<ShipDamageEvent>();
         public static IObservable<ShipDamageEvent> OnDamage => onDamage;
         public struct ShipDamageEvent
         {
-            public Ship ship;
-            public Ship dealingShip;
-            public int delatDamageValue;
+            public Ship targetShip;//受けた船
+            public Ship dealingShip;//与えた船
+            public int delatDamageValue;//与えたダメージ
         }
         public void PublishDamaged(ShipDamageEvent shipDamageEvent)
         {
             onDamage.OnNext(shipDamageEvent);
             //Debug.Log("a");
         }
+
+        private static Subject<ShipShotEvent> onShoot = new Subject<ShipShotEvent>();
+        public static IObservable<ShipShotEvent> OnShoot => onShoot;
+        public struct ShipShotEvent
+        {
+            public Ship  dealingShip;//与えた船
+        }
+        public void PublishShoot(ShipShotEvent shipShotEvent)
+        {
+            onShoot.OnNext(shipShotEvent);
+        }
+
+
     }
 }
 

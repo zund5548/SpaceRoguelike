@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Items
 {
+    //しきい値を超えるとownerShipにbuff/debuffを与える
     public abstract class StackEffect
     {
         public Ship ownerShip;

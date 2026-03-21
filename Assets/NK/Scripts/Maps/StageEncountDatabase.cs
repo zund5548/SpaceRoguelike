@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Maps
 {
-    [CreateAssetMenu(menuName = "Scriptable Objects/StageEncountDatabase")]
+    [CreateAssetMenu(menuName = "Database/StageEncountDatabase")]
     public class StageEncountDatabase : ScriptableObject
     {
         [SerializeReference,SubclassSelector]

@@ -1,13 +1,21 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Maps;
+using Ships;
+using Managers;
+using UnityEngine;
+using System.Collections;
 namespace Maps
 {
     [Serializable]
-    public class StageEncount
+    public class StageEncount:ScriptableObject
     {
-        public string name;
-        public virtual void SetStageEncount(){}
+        public StageNode.StageType stageType;
+        public Sprite icon;
+        public virtual IEnumerator SetStageEncount()
+        {
+            yield return null;
+        }
     }
 }
 

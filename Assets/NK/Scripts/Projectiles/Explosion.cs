@@ -17,7 +17,7 @@ namespace Projectiles
         public List<Collider2D> hitCols;
         ContactFilter2D filter = new();
         //
-        private bool isDamaged = false;
+        //private bool isDamaged = false;
         public void SetExplosion(Ship ship,int power,float radius)
         {
             _power = power;
@@ -26,6 +26,8 @@ namespace Projectiles
         }
         IEnumerator Start()
         {
+            if(gameObject.CompareTag("PlayerExplosion"))GetComponent<SpriteRenderer>().color = Color.turquoise;
+            else if(gameObject.CompareTag("EnemyExplosion"))GetComponent<SpriteRenderer>().color = Color.orange;
             transform.localScale = _radius * Vector3.one;
             //1フレーム待つとコライダーの大きさが反映される
             yield return null;

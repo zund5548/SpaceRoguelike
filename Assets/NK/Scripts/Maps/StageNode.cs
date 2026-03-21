@@ -16,17 +16,34 @@ namespace Maps
         [Serializable]
         public enum StageType
         {
-            lobby,
-            battle,
-            defence,
-            credit,
-            elite,
-            boss
+            Lobby,
+            Battle,
+            Defence,
+            Shop,
+            Credit,
+            Elite,
+            Boss,
         }
         [SerializeReference]
         public List<StageNode> nextNodeList = new();
-        public List<Planet> planetList = new();
         public List<Star> starList = new();
+        public List<Planet> planetList = new();
         public StageEncount stageEncount;
+
+        public string GetStageTypeStr()
+        {
+            //if((int)stageType == 7)Debug.Log("stageType isn't set");
+            return stageType switch
+            {
+                StageType.Lobby => "ロビー",
+                StageType.Battle => "戦闘:通常",
+                StageType.Defence => "戦闘:防衛",
+                StageType.Shop => "ショップ",
+                StageType.Credit => "賞金稼ぎ",
+                StageType.Elite => "精鋭",
+                StageType.Boss => "ボス",
+                _=> ""
+            };
+        }
     }
 }

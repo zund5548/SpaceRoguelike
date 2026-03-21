@@ -1,12 +1,6 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UniRx;
-using UniRx.Triggers;
-using System.Collections.Generic;
-using Ships;
-using TMPro;
 using System;
-using System.Collections;
 using Managers;
 namespace Items
 {

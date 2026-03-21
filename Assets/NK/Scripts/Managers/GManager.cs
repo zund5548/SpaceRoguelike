@@ -17,6 +17,7 @@ public class GManager : MonoBehaviour
     public List<ShipData> playerShipDataList = new List<ShipData>();
     public List<ShipData> enemyShipDataList = new List<ShipData>(); 
     public List<Item> itemList = new();
+    public int credit{get;private set;}
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -49,5 +50,17 @@ public class GManager : MonoBehaviour
     public void SetGameState(GameState gameState)
     {
         CurrentState.Value = gameState;
+    }
+    public void AddCredit(int value)
+    {
+        credit += value;
+    }
+    public void UseCredit(int value)
+    {
+        credit -= value;
+    }
+    public int GetCredit()
+    {
+        return credit;
     }
 }

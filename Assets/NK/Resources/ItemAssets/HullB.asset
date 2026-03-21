@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
+  m_Name: HullB
+  m_EditorClassIdentifier: Assembly-CSharp::Items.Item
+  itemName: "\u88C5\u7532\u5F37\u53162"
+  itemIcon: {fileID: 0}
+  itemTier: 0
+  itemEffectList:
+  - {fileID: 11400000, guid: cebfd0c4fb372e849b45c9d06208a049, type: 2}
