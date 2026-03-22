@@ -17,6 +17,7 @@ public class GManager : MonoBehaviour
     public List<ShipData> playerShipDataList = new List<ShipData>();
     public List<ShipData> enemyShipDataList = new List<ShipData>(); 
     public List<Item> itemList = new();
+    public List<(Ship,int)> currentShipHull = new();
     public int credit{get;private set;}
     void Awake()
     {

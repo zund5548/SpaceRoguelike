@@ -48,7 +48,10 @@ namespace Stats
         Power,
         Shield,
         Hull,
-        shotInterval,
+        ShieldResistance,
+        HullResistance,
+        ShotInterval,
+        ProjectileNum,
     }
     [Serializable]
     public enum ModType

@@ -20,7 +20,10 @@ namespace Ships
         
         public int maxHullPoint;
         public int maxShieldPoint;
+        public int hullResistance;
+        public int shieldResistance;
         public int power;
+        public int projectileNum;
         public float speed;
         [SerializeReference,SubclassSelector]
         public List<WeaponData> weaponDataList = new();

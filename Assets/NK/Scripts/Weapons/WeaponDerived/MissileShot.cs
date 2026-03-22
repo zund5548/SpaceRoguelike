@@ -17,7 +17,6 @@ namespace Weapons
         public float range;
         public float projectileSpeed;
         public float shotInterval;
-        public int burstNum;
         public float hitTime;
         public float errorRadius;
         public float ExplosionRadius;
@@ -42,7 +41,7 @@ namespace Weapons
             float targetRad = Mathf.Atan2(v.y,v.x);
             float initRad = (isRight? -Mathf.PI/2f:Mathf.PI/2f) + targetRad;
             float initBurstRad = isRight? -Mathf.PI/6f:Mathf.PI/6f;
-            for(int i = 0;i < burstNum;i++)
+            for(int i = 0;i < (int)applyingShip.projectileNum.Value;i++)
             {
                 var missileProjectile = UnityEngine.Object.Instantiate(projectile);
                 missileProjectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";

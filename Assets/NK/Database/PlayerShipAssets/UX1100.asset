@@ -16,18 +16,21 @@ MonoBehaviour:
   shipType: 0
   maxHullPoint: 200
   maxShieldPoint: 100
+  hullResistance: 5
+  shieldResistance: 5
   power: 20
+  projectileNum: 3
   speed: 10
   weaponDataList:
-  - rid: 8997316205329514913
+  - rid: 8997316256302366990
   references:
     version: 2
     RefIds:
-    - rid: 8997316205329514913
-      type: {class: SingleShot, ns: Weapons, asm: Assembly-CSharp}
+    - rid: 8997316256302366990
+      type: {class: BulletShot, ns: Weapons, asm: Assembly-CSharp}
       data:
-        _projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
-        _range: 10
-        _projectileSpeed: 10
-        _shotInterval: 0.5
-        _errorDeg: 1
+        projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
+        range: 10
+        projectileSpeed: 10
+        shotInterval: 0.5
+        angleDif: 5

@@ -24,16 +24,23 @@ namespace Ships
 
         public bool isAbleToMove = true;//falseで移動不可
         public Stat currentPower;
-        /// <summary>パーセント</summary>
+        /// <summary>単位:パーセント</summary>
         public Stat shotIntervalReduction;
+        public Stat shieldResistance;
+        public Stat hullResistance;
+        /// <summary>一度に発射する弾の数</summary>
+        public Stat projectileNum;
         public Stat GetStat(StatType type)
         {
             return type switch
             {
                 StatType.Power => currentPower,
-                StatType.Hull => maxHullPoint,
                 StatType.Shield => maxShieldPoint,
-                StatType.shotInterval => shotIntervalReduction,
+                StatType.Hull => maxHullPoint,
+                StatType.ShieldResistance => shieldResistance,
+                StatType.HullResistance => hullResistance,
+                StatType.ProjectileNum => projectileNum,
+                StatType.ShotInterval => shotIntervalReduction,
                 _ => null
             };
         }
@@ -81,9 +88,13 @@ namespace Ships
                 Debug.Log("shipData is null");
                 return;
             }
+            currentPower = new Stat(shipData.power);
             maxShieldPoint = new Stat(shipData.maxShieldPoint); 
             maxHullPoint = new Stat(shipData.maxHullPoint);
+            shieldResistance = new Stat(shipData.shieldResistance);
+            hullResistance = new Stat(shipData.hullResistance);
             currentPower = new Stat(shipData.power);
+            projectileNum = new Stat(shipData.projectileNum);
             shotIntervalReduction = new Stat(0f);
         }
         
@@ -108,6 +119,7 @@ namespace Ships
             }
             foreach(var weapon in shipData.weaponDataList)
             {
+                Debug.Log("a");
                 weapon.ShootAction(gameObject,this);
             }
         }
@@ -139,11 +151,13 @@ namespace Ships
         /// <param name="dealtShip">ダメージを与えた船</param>
         public void DealDamage(int power,Ship dealtShip = null)
         {
+            bool isShieldDamaged = false;
             if(dealtShip != null)EventManager.Instance.PublishDamaged(new EventManager.ShipDamageEvent{targetShip = this,dealingShip = dealtShip,delatDamageValue = power});
             //Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
             int actualPower = power;
             if(currentShieldPoint > 0)
             {
+                actualPower = (int)(actualPower  - shieldResistance.Value) > 0 ? (int)(actualPower - shieldResistance.Value) : 0;
                 if(currentShieldPoint > actualPower)
                 {
                     ShipManager.Instance.SetDamagevalue(actualPower,transform.position,true);
@@ -156,11 +170,12 @@ namespace Ships
                     actualPower -= currentShieldPoint;
                     currentShieldPoint = 0;
                 }
-
+                isShieldDamaged = true;
             }
-            if(actualPower <= 0)return;
             if(currentHullPoint > 0)
             {
+                actualPower = (int)(actualPower - hullResistance.Value) > 0 ? (int)(actualPower - hullResistance.Value) : 0;
+                if(isShieldDamaged && actualPower <= 0)return;
                 if(currentHullPoint > actualPower)
                 {
                     ShipManager.Instance.SetDamagevalue(actualPower,transform.position,false);

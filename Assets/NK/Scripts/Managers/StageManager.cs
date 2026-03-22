@@ -168,33 +168,59 @@ namespace Managers
         }
         private void SetItemBanner(int n)
         {
-           
             var buttonList = new List<Button>();
-            for(int i = 0;i < n;i++)
+            var itemList = GetRandomItem(allItemList,GManager.Instance.itemList,n);
+            foreach(var item in itemList)
             {
                 var banner = Instantiate(_ItemBannerButton);
-                var randomItem = allItemList[UnityEngine.Random.Range(0,allItemList.Count)];
+                var button = banner.transform.GetChild(0).GetComponent<Button>();
+                buttonList.Add(button);
                 banner.transform.SetParent(_RewardContent,false);
-                banner.GetComponent<ItemBanner>().SetBanner(randomItem.itemName,randomItem.GetDescription());
-                banner.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable()
+                banner.GetComponent<ItemBanner>().SetBanner(item.itemName,item.GetDescription());
+                button.OnClickAsObservable()
                     .Where(_=>!isBannerPushed)
                     .Subscribe(_=>
                     {
-                        var item = randomItem;
                         var buttonObject = banner;
                         isBannerPushed = true;
                         GManager.Instance.itemList.Add(item);
-                        //ItemBannerCanvas.SetActive(false);
                         foreach(var button in buttonList)
                         {
-                            button.GetComponent<Button>().interactable = false;
+                            button.interactable = false;
                         }
                         buttonObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("BannerUp");
                     })
                     .AddTo(banner);
-            }   
+            }
+            // for(int i = 0;i < n;i++)
+            // {
+            //     var banner = Instantiate(_ItemBannerButton);
+            //     var randomItem = allItemList[UnityEngine.Random.Range(0,allItemList.Count)]
+            //     banner.transform.SetParent(_RewardContent,false);
+            //     banner.GetComponent<ItemBanner>().SetBanner(randomItem.itemName,randomItem.GetDescription());
+            //     banner.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable()
+            //         .Where(_=>!isBannerPushed)
+            //         .Subscribe(_=>
+            //         {
+            //             var item = randomItem;
+            //             var buttonObject = banner;
+            //             isBannerPushed = true;
+            //             GManager.Instance.itemList.Add(item);
+            //             //ItemBannerCanvas.SetActive(false);
+            //             foreach(var button in buttonList)
+            //             {
+            //                 button.GetComponent<Button>().interactable = false;
+            //             }
+            //             buttonObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("BannerUp");
+            //         })
+            //         .AddTo(banner);
+            // }   
+            
         }
-
+        private List<Item>  GetRandomItem(List<Item> allItems,List<Item> ownedItems,int count)
+        {
+            return allItems.Except(ownedItems).OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
+        }
         private void SetCredit(int value)
         {
             

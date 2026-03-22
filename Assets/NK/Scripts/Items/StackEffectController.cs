@@ -18,7 +18,7 @@ namespace Items
             return status as T;
         }
         //新しいstackを与える
-        public T AddStackEffect<T>(Ship ownerShip) where T : StackEffect, new()
+        public T AddStack<T>(Ship ownerShip) where T : StackEffect, new()
         {
             var type = typeof(T);
             if (!stackDic.TryGetValue(type, out var status))
@@ -32,7 +32,7 @@ namespace Items
         //stackを指定した数与える
         public void AddStackNum<T>(Ship ownerShip,int value) where T : StackEffect, new()
         {
-            var status = AddStackEffect<T>(ownerShip);
+            var status = AddStack<T>(ownerShip);
             status.AddStack(value);
             status.OnStackChanged();
         }

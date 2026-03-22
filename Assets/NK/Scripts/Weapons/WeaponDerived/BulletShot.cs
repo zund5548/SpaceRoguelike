@@ -10,23 +10,18 @@ namespace Weapons
 {
     //[CreateAssetMenu( menuName = "WeaponData/ScatterShot")]
     [Serializable]
-    public class ScatterShot : WeaponData
+    public class BulletShot : WeaponData
     {
         public GameObject projectile;
         public float range;
         public float projectileSpeed;
         public float shotInterval;
-        public int bulletNum;
         public float angleDif;//弾と弾の間の角(deg)
-        public void Shoot()
-        {
-            
-        }
         public override void Shoot(GameObject applyingdShipObject, Ship applyingShip)
         {
-            float currentDeg = -angleDif * (bulletNum -1) /2f;
+            float currentDeg = -angleDif * ((int)applyingShip.projectileNum.Value -1) /2f;
             
-            for(int i = 0;i < bulletNum;i++)
+            for(int i = 0;i < (int)applyingShip.projectileNum.Value;i++)
             {
                 var bullet = UnityEngine.Object.Instantiate(projectile);
                 bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
@@ -46,7 +41,8 @@ namespace Weapons
         }
         public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
-            if(applyingShip == null)return;
+             if(applyingShip == null)return;
+            bool isRight = true;
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             applyingdShipObject.UpdateAsObservable()
                 .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
@@ -55,9 +51,9 @@ namespace Weapons
                 {
                     applyingShip.GetNearestOpponet();
                     if(!applyingdShipObject || !applyingShip.targetObject)return;
-                    if(Vector2.Distance(applyingdShipObject.transform.position,applyingShip.targetObject.transform.position) > range)return;
-                    //EventManager.Instance.PublishShoot(new EventManager.ShipShotEvent{dealingShip = applyingShip});
+                    if(Vector2.Distance(applyingdShipObject.transform.position, applyingShip.targetObject.transform.position) > range) return;
                     Shoot(applyingdShipObject,applyingShip);
+                    isRight = !isRight;
                 })
                 .AddTo(applyingdShipObject);
         }
