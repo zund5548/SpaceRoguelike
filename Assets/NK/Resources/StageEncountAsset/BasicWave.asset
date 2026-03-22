@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BasicWave
   m_EditorClassIdentifier: Assembly-CSharp::Maps.BattleEncount
   stageType: 1
-  icon: {fileID: -3602890240908364024, guid: 219c94b218fb72245bc6512895d6fb82, type: 3}
+  icon: {fileID: 8189583078808796246, guid: 3098e6223e85e494789dc162d8279763, type: 3}
   oneWaveLimit: 5
   enemyWaveList:
   - shipDataList:

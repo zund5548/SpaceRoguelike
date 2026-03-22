@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Shop
   m_EditorClassIdentifier: Assembly-CSharp::Maps.ShopEncount
   stageType: 3
-  icon: {fileID: 6840857970483876212, guid: 120a2cc03b9073143b6a09a7349708c2, type: 3}
+  icon: {fileID: 3939620569157023844, guid: c2f4a61449ebca040b4acd5da7f8800d, type: 3}
   _ItemBannerButton: {fileID: 5537610097911331643, guid: 180bf10402688e54b998326e93414b13, type: 3}
   _PriceDisplay: {fileID: 6487634700125135845, guid: 340e9e88713d3a64982f2a762e5fbb34, type: 3}

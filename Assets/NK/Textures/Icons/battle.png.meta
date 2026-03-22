@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 219c94b218fb72245bc6512895d6fb82
+guid: 3098e6223e85e494789dc162d8279763
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2284105083916309070
-    second: battle2_0
+      213: 8189583078808796246
+    second: battle3_0
   - first:
-      213: -1688537670257299839
-    second: battle2_1
+      213: 8274338959232048886
+    second: battle3_1
   - first:
-      213: -8428911091958475352
-    second: battle2_2
+      213: 9015372048890587203
+    second: battle3_2
   - first:
-      213: 317689767520497229
-    second: battle2_3
+      213: 1063007069426499391
+    second: battle3_3
   - first:
-      213: -3602890240908364024
-    second: battle2_4
+      213: -1828143053579484023
+    second: battle3_4
   - first:
-      213: 8280434186716474885
-    second: battle2_5
+      213: -8810241142632041768
+    second: battle3_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -63,10 +63,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 1024
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -90,7 +90,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: battle2
+      name: battle
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8077fe13a66fffdc0800000000000000
-      internalID: -3602890240908364024
+      spriteID: 65cb2fe7b6e37a170800000000000000
+      internalID: 8189583078808796246
       vertices: []
       indices: 
       edges: []
@@ -140,7 +140,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 77512a5b46509934bb8018115f13d9aa
+    spriteID: 1d99682936e23234cb401b8448cd5f5d
     internalID: 0
     vertices: []
     indices: 
@@ -150,13 +150,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      2: -3602890240908364024
-      battle2: -3602890240908364024
-      battle2_0: -2284105083916309070
-      battle2_1: -1688537670257299839
-      battle2_2: -8428911091958475352
-      battle2_3: 317689767520497229
-      battle2_5: 8280434186716474885
+      battle: 8189583078808796246
+      battle3_1: 8274338959232048886
+      battle3_2: 9015372048890587203
+      battle3_3: 1063007069426499391
+      battle3_4: -1828143053579484023
+      battle3_5: -8810241142632041768
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

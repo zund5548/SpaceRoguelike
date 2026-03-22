@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using Items;
+using UnityEngine.Rendering;
 namespace Managers
 {
     public class MapManager : MonoBehaviour
@@ -149,7 +150,8 @@ namespace Managers
                     {
                         stageName = GetRandomStageName(2,4),
                         floorStageNum = i + 1,
-                        buttonLocalPos = new Vector2(UnityEngine.Random.Range(left+30f,right-30f),0f),
+                        //buttonLocalPos = new Vector2(UnityEngine.Random.Range(left+30f,right-30f),0f),
+                        buttonLocalPos = new Vector2((left + right)/2f,0f),
                         //stageType = StageNode.StageType.battle,
                         starList = GetRandomStars(1),
                         planetList = GetRandomPlanet(UnityEngine.Random.Range(3,6)),
@@ -317,8 +319,14 @@ namespace Managers
                         .AddTo(button);
                     //ボタン配下のアイコン変更
                     var buttonObject = _buttonObjectFloorList[p][q];
-                    if(_floorList[p][q].stageEncount && _floorList[p][q].stageEncount.icon)buttonObject.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = _floorList[p][q].stageEncount.icon;
-                    else buttonObject.transform.GetChild(0).gameObject.SetActive(false);
+                    // if(_floorList[p][q].stageEncount && _floorList[p][q].stageEncount.icon)buttonObject.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = _floorList[p][q].stageEncount.icon;
+                    // else buttonObject.transform.GetChild(0).gameObject.SetActive(false);
+                    if(_floorList[p][q].stageEncount && _floorList[p][q].stageEncount.icon)buttonObject.GetComponent<UnityEngine.UI.Image>().sprite = _floorList[p][q].stageEncount.icon;
+                    else
+                    {
+                        var color =  buttonObject.GetComponent<UnityEngine.UI.Image>().color;
+                        buttonObject.GetComponent<UnityEngine.UI.Image>().color = new Color(color.r,color.g,color.b,color.a);
+                    }
                 }
             }
         }
