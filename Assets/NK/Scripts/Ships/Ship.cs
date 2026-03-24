@@ -12,17 +12,17 @@ namespace Ships
     public class Ship : MonoBehaviour
     {
         public bool isPlayer = true;
+        public bool isAbleToMove = true;//falseで移動不可
         public ShipData shipData;
         public int currentShieldPoint;
-        public Stat maxShieldPoint{get; private set;}
         public int currentHullPoint;
-        public Stat maxHullPoint{get; private set;}
 
         public GameObject targetObject;
         public List<GameObject> allyShipObjectList = new List<GameObject>();
         public List<GameObject> opponentShipObjectList = new List<GameObject>();
 
-        public bool isAbleToMove = true;//falseで移動不可
+        public Stat maxShieldPoint{get; private set;}
+        public Stat maxHullPoint{get; private set;}
         public Stat currentPower;
         /// <summary>単位:パーセント</summary>
         public Stat shotIntervalReduction;
@@ -30,6 +30,7 @@ namespace Ships
         public Stat hullResistance;
         /// <summary>一度に発射する弾の数</summary>
         public Stat projectileNum;
+        public UniqueStatController uniqueStatController = new();
         public Stat GetStat(StatType type)
         {
             return type switch
@@ -65,11 +66,6 @@ namespace Ships
                 })
                 .AddTo(gameObject);
         }
-        // public void SetStat()
-        // {
-        //     SetSPHP();
-        //     SetWeapon();
-        // }
         public void SetMaxSPHP()
         {
             if(shipData == null)
@@ -88,6 +84,7 @@ namespace Ships
                 Debug.Log("shipData is null");
                 return;
             }
+            Debug.Log("woa");
             currentPower = new Stat(shipData.power);
             maxShieldPoint = new Stat(shipData.maxShieldPoint); 
             maxHullPoint = new Stat(shipData.maxHullPoint);
@@ -117,11 +114,7 @@ namespace Ships
                 Debug.Log("shipData is null");
                 return;
             }
-            foreach(var weapon in shipData.weaponDataList)
-            {
-                Debug.Log("a");
-                weapon.ShootAction(gameObject,this);
-            }
+            shipData.weaponData.ShootAction(gameObject,this);
         }
 
         public void SetShipList(List<GameObject> ally,List<GameObject> opponet)

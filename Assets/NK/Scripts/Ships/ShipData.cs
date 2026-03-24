@@ -26,7 +26,7 @@ namespace Ships
         public int projectileNum;
         public float speed;
         [SerializeReference,SubclassSelector]
-        public List<WeaponData> weaponDataList = new();
+        public WeaponData weaponData;
     }
 }
 

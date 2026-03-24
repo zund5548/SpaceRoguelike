@@ -16,6 +16,10 @@ namespace Weapons
         public float shotInterval;
         public int burstNum;
         public float burstInterval;
+        public override void SetUniqueStat(Ship applyingShip)
+        {
+
+        }
         public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
@@ -33,7 +37,7 @@ namespace Weapons
                     bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
                     bullet.transform.position = applyingdShipObject.transform.position;
 
-                    bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,false);
+                    bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,false,true);
 
                     var v = applyingShip.targetObject.transform.position - applyingdShipObject.transform.position;
                     bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg);

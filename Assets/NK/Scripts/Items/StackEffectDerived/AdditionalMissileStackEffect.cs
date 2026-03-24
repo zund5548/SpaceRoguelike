@@ -34,7 +34,7 @@ namespace Items
                     //burstNum
                     hitTime = 0.8f,
                     errorRadius = 0f,
-                    ExplosionRadius = 2f,
+                    explosionRadius = 2f,
                 };
             }
             if(stackNum >= threshold)

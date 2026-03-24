@@ -18,6 +18,10 @@ namespace Weapons
         public float shotInterval = 2f;
         public float chainInterval = 0.1f;
         public int maxChainNum = 5;
+        public override void SetUniqueStat(Ship applyingShip)
+        {
+
+        }
         private void  SetChainLine(GameObject start,GameObject end)
         {
             

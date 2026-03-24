@@ -6,6 +6,7 @@ using Ships;
 using Projectiles;
 using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
+using Stats;
 namespace Weapons
 {
     //[CreateAssetMenu(menuName = "WeaponData/MissileShot")]
@@ -19,8 +20,9 @@ namespace Weapons
         public float shotInterval;
         public float hitTime;
         public float errorRadius;
-        public float ExplosionRadius;
-       
+        [Header("Unique Stat")]
+        public float explosionRadius;
+        public float explosionDamageMod;
         private struct MissileState
         {    
             public Vector2 targetPos;
@@ -28,6 +30,15 @@ namespace Weapons
             public Vector2 velocity;
             public Vector2 pos;
             public float period;
+        }
+        public override void SetUniqueStat(Ship applyingShip)
+        {
+            applyingShip.uniqueStatController.AddUniqueStat(
+                new MissileStatSet
+                {
+                    explosionRadius = new(explosionRadius),
+                    explosionDamageMod = new(explosionDamageMod)
+                });
         }
         private Vector2 RandomUnitVector()
         {
@@ -41,18 +52,22 @@ namespace Weapons
             float targetRad = Mathf.Atan2(v.y,v.x);
             float initRad = (isRight? -Mathf.PI/2f:Mathf.PI/2f) + targetRad;
             float initBurstRad = isRight? -Mathf.PI/6f:Mathf.PI/6f;
+            
+            Vector2 currentTargetPos = applyingShip.targetObject.transform.position;
+            GameObject targetShip = applyingShip.targetObject;
             for(int i = 0;i < (int)applyingShip.projectileNum.Value;i++)
             {
+                Vector2 errorOffset =  UnityEngine.Random.Range(0f,errorRadius) * RandomUnitVector();
                 var missileProjectile = UnityEngine.Object.Instantiate(projectile);
                 missileProjectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
                 missileProjectile.transform.position = applyingdShipObject.transform.position;
                 //missileProjectile.GetComponent<Projectile>().enabled = false;
-                missileProjectile.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,true);
+                missileProjectile.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,true,false);
                 missileProjectile.UpdateAsObservable()
                     .Scan(
                         new MissileState
                         {
-                            targetPos = initTargetPos + UnityEngine.Random.Range(0f,errorRadius) * RandomUnitVector(),
+                            targetPos = initTargetPos + errorOffset,
                             acceleration = Vector2.zero,
                             velocity = projectileSpeed * new Vector3(Mathf.Cos(initRad + initBurstRad * i),Mathf.Sin(initRad+ initBurstRad * i),0f),
                             pos = applyingdShipObject.transform.position,
@@ -63,6 +78,11 @@ namespace Weapons
                                 if(state.period > 0)
                                 {
                                     //加速度計算
+                                    if(applyingShip && targetShip)
+                                    {
+                                        currentTargetPos = targetShip.transform.position;
+                                    }
+                                    state.targetPos = currentTargetPos + errorOffset;
                                     state.acceleration = (state.targetPos - state.pos - state.velocity * state.period)  * 2f / (state.period * state.period);
                                     state.period -= Time.deltaTime;
                                     state.velocity += state.acceleration * Time.deltaTime;
@@ -94,11 +114,15 @@ namespace Weapons
             // float initRad = (isRight? -Mathf.PI/2f:Mathf.PI/2f) + targetRad;
             // float initBurstRad = isRight? -Mathf.PI/6f:Mathf.PI/6f;
             float initRad =  Mathf.Pow(-1,UnityEngine.Random.Range(0,2)) * Mathf.PI/2f;
+            
+            Vector2 errorOffset =  UnityEngine.Random.Range(0f,errorRadius) * RandomUnitVector();
+            Vector2 currentTargetPos = applyingShip.targetObject.transform.position;
+            GameObject targetShip = applyingShip.targetObject;
             var missileProjectile = UnityEngine.Object.Instantiate(projectile);
                 missileProjectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
                 missileProjectile.transform.position = applyingdShipObject.transform.position;
                 //missileProjectile.GetComponent<Projectile>().enabled = false;
-                missileProjectile.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,true);
+                missileProjectile.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,true,false);
                 missileProjectile.UpdateAsObservable()
                     .Scan(
                         new MissileState
@@ -114,6 +138,11 @@ namespace Weapons
                                 if(state.period > 0)
                                 {
                                     //加速度計算
+                                    if(applyingShip && targetShip)
+                                    {
+                                        currentTargetPos = targetShip.transform.position;
+                                    }
+                                    state.targetPos = currentTargetPos + errorOffset;
                                     state.acceleration = (state.targetPos - state.pos - state.velocity * state.period)  * 2f / (state.period * state.period);
                                     state.period -= Time.deltaTime;
                                     state.velocity += state.acceleration * Time.deltaTime;
@@ -160,7 +189,7 @@ namespace Weapons
             if(applyingShip.isPlayer)explosionRadiusObject.tag = "PlayerExplosion";
             else if(!applyingShip.isPlayer)explosionRadiusObject.tag = "EnemyExplosion";
             var E = explosionRadiusObject.GetComponent<Explosion>();
-            E.SetExplosion(applyingShip,(int)applyingShip.currentPower.Value,ExplosionRadius);
+            E.SetExplosion(applyingShip,(int)applyingShip.currentPower.Value,applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value);
         }
         
         

@@ -6,6 +6,7 @@ using Ships;
 using Projectiles;
 using Managers;
 using System.Collections;
+using Stats;
 namespace Weapons
 {
     //[CreateAssetMenu( menuName = "WeaponData/ScatterShot")]
@@ -17,16 +18,25 @@ namespace Weapons
         public float projectileSpeed;
         public float shotInterval;
         public float angleDif;//弾と弾の間の角(deg)
+        [Header("unique stat")]
+        public float burstNum;
+        public override void SetUniqueStat(Ship applyingShip)
+        {
+            applyingShip.uniqueStatController.AddUniqueStat(
+                new BulletStatSet
+                {
+                    burstNum = new(burstNum),
+                });
+        }
         public override void Shoot(GameObject applyingdShipObject, Ship applyingShip)
         {
             float currentDeg = -angleDif * ((int)applyingShip.projectileNum.Value -1) /2f;
-            
             for(int i = 0;i < (int)applyingShip.projectileNum.Value;i++)
             {
                 var bullet = UnityEngine.Object.Instantiate(projectile);
                 bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
                 bullet.transform.position = applyingdShipObject.transform.position;
-                bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,false);
+                bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,false,true);
                 var v = applyingShip.targetObject.transform.position - applyingdShipObject.transform.position;
                 bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg + currentDeg);
                 bullet.UpdateAsObservable()
@@ -37,16 +47,17 @@ namespace Weapons
                     })
                     .AddTo(bullet);
                 currentDeg += angleDif;
-            }
+            } 
         }
         public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
              if(applyingShip == null)return;
             bool isRight = true;
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
-            applyingdShipObject.UpdateAsObservable()
-                .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
-                .ThrottleFirst(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+            int burstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().burstNum.Value;
+            Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+                .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.1f)).Take(burstNum))
+                .Repeat()
                 .Subscribe(_ =>
                 {
                     applyingShip.GetNearestOpponet();

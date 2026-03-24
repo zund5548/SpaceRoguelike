@@ -13,6 +13,10 @@ namespace Weapons
         public float range;
         public float projectileSpeed;
         public float shotInterval;
+        public override void SetUniqueStat(Ship applyingShip)
+        {
+
+        }
         public  override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
@@ -31,7 +35,7 @@ namespace Weapons
                     railgunBullet.transform.position = applyingdShipObject.transform.position;
 
                     var PR = railgunBullet.GetComponent<Projectile>();
-                    PR.SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,true);
+                    PR.SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,true,true);
 
                     var v = applyingShip.targetObject.transform.position - applyingdShipObject.transform.position;
                     railgunBullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg);

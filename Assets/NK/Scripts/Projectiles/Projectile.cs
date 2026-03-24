@@ -19,11 +19,12 @@ namespace Projectiles
             if(gameObject.CompareTag("PlayerProjectile"))GetComponent<SpriteRenderer>().color = Color.turquoise;
             else if(gameObject.CompareTag("EnemyProjectile"))GetComponent<SpriteRenderer>().color = Color.orange;
         }
-        public void SetProjectile(Ship ship,int power,bool isPiercing)
+        public void SetProjectile(Ship ship,int power,bool isPiercing,bool isDamaging)
         {
             _power = power;
             _isPiercing = isPiercing;
             _dealtShip = ship;
+            _isDamaging = isDamaging;
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {

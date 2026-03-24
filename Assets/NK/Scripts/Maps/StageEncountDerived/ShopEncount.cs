@@ -31,30 +31,57 @@ namespace Maps
         }
         private void SetShopBanner(int n)
         {
-            var buttonList = new List<Button>();
-            List<Item> allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();
-            //アイテムボタンの設定
-            for(int i = 0;i < n;i++)
+            // var buttonList = new List<Button>();
+            // List<Item> allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();
+            // //アイテムボタンの設定
+            // for(int i = 0;i < n;i++)
+            // {
+            //     var banner = UnityEngine.Object.Instantiate(_ItemBannerButton);
+            //     var randomItem = allItemList[UnityEngine.Random.Range(0,allItemList.Count)];
+            //     banner.transform.SetParent(StageManager.Instance._ShopScrollContent,false);
+            //     banner.GetComponent<ItemBanner>().SetBanner(randomItem.itemName,randomItem.GetDescription());
+            //     var priceDisplay = UnityEngine.Object.Instantiate(_PriceDisplay);
+            //     priceDisplay.transform.SetParent(banner.transform,false);
+            //     ((RectTransform)priceDisplay.transform).anchoredPosition = new Vector2(0,300f);
+            //     banner.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable()
+            //         .Subscribe(_=>
+            //         {
+            //             var item = randomItem;
+            //             var buttonObject = banner;
+            //             GManager.Instance.itemList.Add(item);
+            //             buttonObject.transform.GetChild(0).GetComponent<Button>().interactable = false;
+            //         })
+            //         .AddTo(banner);
+            // }   
+            //var buttonList = new List<Button>();
+            var itemList = StageManager.Instance.GetRandomItem(GManager.Instance.itemList,n);
+            foreach(var item in itemList)
             {
-                var banner = UnityEngine.Object.Instantiate(_ItemBannerButton);
-                var randomItem = allItemList[UnityEngine.Random.Range(0,allItemList.Count)];
+                var banner = Instantiate(_ItemBannerButton);
+                var button = banner.transform.GetChild(0).GetComponent<Button>();
+                //buttonList.Add(button);
                 banner.transform.SetParent(StageManager.Instance._ShopScrollContent,false);
-                banner.GetComponent<ItemBanner>().SetBanner(randomItem.itemName,randomItem.GetDescription());
+                banner.GetComponent<ItemBanner>().SetBanner(item.itemName,item.GetItemDescription());
                 var priceDisplay = UnityEngine.Object.Instantiate(_PriceDisplay);
                 priceDisplay.transform.SetParent(banner.transform,false);
                 ((RectTransform)priceDisplay.transform).anchoredPosition = new Vector2(0,300f);
-                banner.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable()
+                button.OnClickAsObservable()
                     .Subscribe(_=>
                     {
-                        var item = randomItem;
                         var buttonObject = banner;
                         GManager.Instance.itemList.Add(item);
                         buttonObject.transform.GetChild(0).GetComponent<Button>().interactable = false;
                     })
                     .AddTo(banner);
-            }   
+            }
             //ショップを退出するボタンの設定
             var leaveShopButton =  StageManager.Instance._LeaveShopButton.GetComponent<Button>();
+            if(itemList == null || itemList.Count == 0)
+            {
+                StageManager.Instance._ShopItemBannerCanvas.SetActive(false);
+                leaveShopButton.interactable = false;
+                EventManager.Instance.PublishClear();
+            }
             leaveShopButton.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
@@ -63,7 +90,7 @@ namespace Maps
                     EventManager.Instance.PublishClear();
                 })
                 .AddTo(leaveShopButton.gameObject);
-        }
-    }   
+        }   
+    }
 }
 

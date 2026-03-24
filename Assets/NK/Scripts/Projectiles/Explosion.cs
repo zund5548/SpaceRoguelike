@@ -34,7 +34,6 @@ namespace Projectiles
             expCol = GetComponent<Collider2D>();
             filter.useTriggers = true;
             int n = expCol.Overlap(filter,hitCols);
-            Debug.Log(transform.localScale);
             for(int i = 0;i < n;i++)
             {
                 if(!hitCols[i])continue;

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: PowerB
+  m_Name: ExpRadA
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u5F3E\u982D\u5F37\u53162"
+  itemName: "\u5727\u529B\u89E3\u653E1"
   itemIcon: {fileID: 0}
-  itemTier: 1
+  itemTier: 0
   maxNum: 1
   itemEffectList:
-  - {fileID: 11400000, guid: 19a863809333a4b4086e2c67a9cd8a95, type: 2}
+  - {fileID: 11400000, guid: 188b162117fed084b8887ad016a208bb, type: 2}

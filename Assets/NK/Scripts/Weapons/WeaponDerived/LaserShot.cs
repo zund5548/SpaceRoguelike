@@ -17,6 +17,10 @@ namespace Weapons
         public float damageInterval = 0.5f;
         public float laserLastTime = 3f;
         public float laserTurnRate = 90f;
+        public override void SetUniqueStat(Ship applyingShip)
+        {
+
+        }
         private void SetLaser(GameObject applyingdShipObject,Ship applyingShip)
         {
             var laser = UnityEngine.Object.Instantiate(laserObject);

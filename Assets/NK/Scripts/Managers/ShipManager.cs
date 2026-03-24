@@ -153,6 +153,7 @@ namespace Managers
             ship.SetShipList(playerShipObjectList,enemyShipObjectList);
             //Shipをinstantiate → SetSPHPでStatのインスタンスをつくる →　Statにmodifier追加 →　Statを反映
             ship.SetStats();
+            ship.shipData.weaponData.SetUniqueStat(ship);
             return shipObject;
         }   
         float separationDist = 1f;
@@ -165,8 +166,9 @@ namespace Managers
 
             float randDeg = UnityEngine.Random.Range(-180f,180f);
             var pos = 10f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
+            float deg = Mathf.Atan2(-pos.y,-pos.x) * Mathf.Rad2Deg;
             shipObject.transform.position = pos;
-            shipObject.transform.eulerAngles = new Vector3(0f,0f,0f);
+            shipObject.transform.eulerAngles = new Vector3(0f,0f,deg);
             shipObject.UpdateAsObservable()
             .Subscribe(_ =>
             {
@@ -202,9 +204,9 @@ namespace Managers
             ship.tag = "EnemyShip";
             ship.shipData = shipData;
             ship.SetShipList(enemyShipObjectList,playerShipObjectList);
-            
             //Shipをinstantiate → SetSPHPでStatのインスタンスをつくる →　Statにmodifier追加 →　Statを反映
             ship.SetStats();
+            ship.shipData.weaponData.SetUniqueStat(ship);
             return shipObject;
         }   
         public void SetDamagevalue(int value,Vector2 worldPos,bool onShield)

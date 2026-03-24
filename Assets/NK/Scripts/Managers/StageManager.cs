@@ -169,14 +169,15 @@ namespace Managers
         private void SetItemBanner(int n)
         {
             var buttonList = new List<Button>();
-            var itemList = GetRandomItem(allItemList,GManager.Instance.itemList,n);
+            var itemList = GetRandomItem(GManager.Instance.itemList,n);
+            if(itemList == null || itemList.Count == 0)isBannerPushed = true;
             foreach(var item in itemList)
             {
                 var banner = Instantiate(_ItemBannerButton);
                 var button = banner.transform.GetChild(0).GetComponent<Button>();
                 buttonList.Add(button);
                 banner.transform.SetParent(_RewardContent,false);
-                banner.GetComponent<ItemBanner>().SetBanner(item.itemName,item.GetDescription());
+                banner.GetComponent<ItemBanner>().SetBanner(item.itemName,item.GetItemDescription());
                 button.OnClickAsObservable()
                     .Where(_=>!isBannerPushed)
                     .Subscribe(_=>
@@ -217,9 +218,9 @@ namespace Managers
             // }   
             
         }
-        private List<Item>  GetRandomItem(List<Item> allItems,List<Item> ownedItems,int count)
+        public List<Item>  GetRandomItem(List<Item> ownedItems,int count)
         {
-            return allItems.Except(ownedItems).OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
+            return allItemList.Except(ownedItems).OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
         }
         private void SetCredit(int value)
         {

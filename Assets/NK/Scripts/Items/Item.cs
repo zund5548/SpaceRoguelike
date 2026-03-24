@@ -15,7 +15,8 @@ namespace Items
         public int maxNum = 1;//最大所持数
         [SerializeReference]
         public List<ItemEffect> itemEffectList;
-        public string GetDescription()
+        /// <summary>すべてのitemEffectの説明をstringで返す</summary>
+        public string GetItemDescription()
         {
             string result = "";
             foreach(var itemEffect in itemEffectList)
