@@ -17,14 +17,14 @@ namespace Ships
         public int currentShieldPoint;
         public int currentHullPoint;
 
-        public GameObject targetObject;
+        //public GameObject targetObject;
         public List<GameObject> allyShipObjectList = new List<GameObject>();
         public List<GameObject> opponentShipObjectList = new List<GameObject>();
 
         public Stat maxShieldPoint{get; private set;}
         public Stat maxHullPoint{get; private set;}
         public Stat currentPower;
-        /// <summary>単位:パーセント</summary>
+        /// <summary>砲撃間隔の減少(%)</summary>
         public Stat shotIntervalReduction;
         public Stat shieldResistance;
         public Stat hullResistance;
@@ -84,7 +84,6 @@ namespace Ships
                 Debug.Log("shipData is null");
                 return;
             }
-            Debug.Log("woa");
             currentPower = new Stat(shipData.power);
             maxShieldPoint = new Stat(shipData.maxShieldPoint); 
             maxHullPoint = new Stat(shipData.maxHullPoint);
@@ -136,7 +135,6 @@ namespace Ships
                     mindist = dist;
                 }
             }
-            targetObject = result;
             return result;
         }
         /// <summary>このshipにダメージを与える</summary>
@@ -195,6 +193,11 @@ namespace Ships
                     }
                 }
                 if(isPlayer && allyShipObjectList.Count == 0)EventManager.Instance.PublishFalse();
+                if(!isPlayer)
+                {
+                    GManager.Instance.AddCredit(shipData.shipType);
+                }
+                
                 Destroy(gameObject);
             }
         }

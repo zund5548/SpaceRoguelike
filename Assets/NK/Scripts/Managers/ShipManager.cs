@@ -8,10 +8,7 @@ using TMPro;
 using System;
 using System.Collections;
 using Maps;
-using Managers;
-using Items;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 namespace Managers
 {
     public class ShipManager : MonoBehaviour
@@ -30,7 +27,7 @@ namespace Managers
         //public List<ShipData> enemyShipDataList = new List<ShipData>();
         public List<GameObject> playerShipObjectList = new List<GameObject>();
         public List<GameObject> enemyShipObjectList = new List<GameObject>();
-        public InputActionAsset inputAction;
+        
         //public List<Item> itemList = new();
         [Header("Canvas")]
         public RectTransform DamageValueCanvas;
@@ -41,24 +38,18 @@ namespace Managers
         public TextMeshProUGUI damageValueDisplay;
         public GameObject playerShipBanner;
         //input
+        public InputActionAsset inputAction;
         private InputAction clickAction;
         private InputAction positionAction;
         private Vector2 worldPos;
         private void OnEnable()
         {
-            //clickAction.performed += OnClick;
             positionAction.performed += OnCursorMoved;
         }
         private void OnDisable()
         {
-            //clickAction.performed -= OnClick;
             positionAction.performed -= OnCursorMoved;
         }
-        // private void OnClick(InputAction.CallbackContext ctx)
-        // {
-        //     Vector2 screenPos = positionAction.ReadValue<Vector2>();
-        //     worldPos = _cam.ScreenToWorldPoint(new Vector2(screenPos.x,screenPos.y));
-        // }
         private void OnCursorMoved(InputAction.CallbackContext ctx)
         {
             Vector2 screenPos = positionAction.ReadValue<Vector2>();

@@ -21,7 +21,9 @@ namespace Managers
         [Header("prefab")]
         public GameObject NoticeObject;
         [Header("UI")]
+        public TextMeshProUGUI _CurrentFloorText;
         public TextMeshProUGUI _StageNameText;
+        public TextMeshProUGUI _CreditText;
         public RectTransform _RewardContent;
         public RectTransform _ShopScrollContent;
         public GameObject _LeaveShopButton;
@@ -68,6 +70,8 @@ namespace Managers
                 })
                 .AddTo(EventManager.Instance);
             SetNotice(GManager.Instance.currentStageNode.stageName);
+            SetFloorDisplay();
+            GManager.Instance.SetCreditDisplay();
         }
         private void SetToMapButton()
         {
@@ -86,6 +90,11 @@ namespace Managers
             var notice = Instantiate(NoticeObject);
             notice.transform.SetParent(_UICanvas.transform,false);
             notice.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = message;
+        }
+        private void SetFloorDisplay()
+        {
+            string floorNum = GManager.Instance.currentStageNode.floorStageNum.ToString();
+            _CurrentFloorText.text = "セクター"+floorNum;
         }
         private void InstantiateStage(StageNode stageNode)
         {
@@ -193,39 +202,12 @@ namespace Managers
                     })
                     .AddTo(banner);
             }
-            // for(int i = 0;i < n;i++)
-            // {
-            //     var banner = Instantiate(_ItemBannerButton);
-            //     var randomItem = allItemList[UnityEngine.Random.Range(0,allItemList.Count)]
-            //     banner.transform.SetParent(_RewardContent,false);
-            //     banner.GetComponent<ItemBanner>().SetBanner(randomItem.itemName,randomItem.GetDescription());
-            //     banner.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable()
-            //         .Where(_=>!isBannerPushed)
-            //         .Subscribe(_=>
-            //         {
-            //             var item = randomItem;
-            //             var buttonObject = banner;
-            //             isBannerPushed = true;
-            //             GManager.Instance.itemList.Add(item);
-            //             //ItemBannerCanvas.SetActive(false);
-            //             foreach(var button in buttonList)
-            //             {
-            //                 button.GetComponent<Button>().interactable = false;
-            //             }
-            //             buttonObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("BannerUp");
-            //         })
-            //         .AddTo(banner);
-            // }   
-            
         }
         public List<Item>  GetRandomItem(List<Item> ownedItems,int count)
         {
             return allItemList.Except(ownedItems).OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
         }
-        private void SetCredit(int value)
-        {
-            
-        }
+        
     }
 }
 

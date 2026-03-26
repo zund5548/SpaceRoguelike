@@ -1,14 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Items;
-using Maps;
-using TMPro;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.UI;
 using Weapons;
 
 namespace Items

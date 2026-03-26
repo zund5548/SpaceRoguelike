@@ -17,7 +17,7 @@ namespace Items
             foreach(var shipObject in  ShipManager.Instance.playerShipObjectList)
             {
                 var ship = shipObject.GetComponent<Ship>();
-                //もうstatは入っている
+                if(ship.uniqueStatController.GetUniqueStat<BulletStatSet>() == null)ship.uniqueStatController.AddUniqueStat(new BulletStatSet{});
                 ship.uniqueStatController.GetUniqueStat<BulletStatSet>().GetStat(bulletShotStatType).AddModifier(new StatModifier(value,modType));
                 ship.SetCurrentSPHP();
             }

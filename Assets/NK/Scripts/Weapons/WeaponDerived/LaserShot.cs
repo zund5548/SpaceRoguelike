@@ -25,7 +25,7 @@ namespace Weapons
         {
             var laser = UnityEngine.Object.Instantiate(laserObject);
             laser.tag = applyingShip.isPlayer?"PlayerProjectile":"EnemyProjectile";
-            var v = applyingShip.targetObject.transform.position - applyingdShipObject.transform.position;
+            var v = applyingShip.GetNearestOpponet().transform.position - applyingdShipObject.transform.position;
             float initDeg = Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg;
             laser.transform.eulerAngles = new Vector3(0f,0f,initDeg);
             laser.transform.position = applyingdShipObject.transform.position;
@@ -65,11 +65,12 @@ namespace Weapons
                         .TakeUntil(Observable.Timer(duration))
                         .Do(_ =>
                         {
-                            if(!applyingShip.targetObject)
+                            var targetObject = applyingShip.GetNearestOpponet();
+                            if(!targetObject)
                             {
                                 UnityEngine.Object.Destroy(laser);
                             }
-                            else targetPos = applyingShip.targetObject.transform.position;
+                            else targetPos = targetObject.transform.position;
                             var w = targetPos - (Vector2)applyingdShipObject.transform.position;
                             float targetDeg = Mathf.Atan2(w.y,w.x) * Mathf.Rad2Deg;
                             float nextDeg = Mathf.MoveTowardsAngle(laser.transform.eulerAngles.z,targetDeg,laserTurnRate * Time.deltaTime);
@@ -111,16 +112,15 @@ namespace Weapons
         public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
-
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             applyingdShipObject.UpdateAsObservable()
                 .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
                 .ThrottleFirst(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
                 .Subscribe(_ =>
                 {
-                    applyingShip.GetNearestOpponet();
-                    if(!applyingShip.targetObject)return;
-                    if(Vector2.Distance(applyingdShipObject.transform.position,applyingShip.targetObject.transform.position) > range)return;
+                    var targetObject = applyingShip.GetNearestOpponet();
+                    if(!targetObject)return;
+                    if(Vector2.Distance(applyingdShipObject.transform.position,targetObject.transform.position) > range)return;
                     SetLaser(applyingdShipObject,applyingShip);
                 })
                 .AddTo(applyingdShipObject);

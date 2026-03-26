@@ -27,8 +27,8 @@ namespace Weapons
                 .Subscribe(_ =>
                 {
                     applyingShip.GetNearestOpponet();
-                    if(!applyingdShipObject || !applyingShip.targetObject)return;
-                    if(Vector2.Distance(applyingdShipObject.transform.position,applyingShip.targetObject.transform.position) > range)return;
+                    if(!applyingdShipObject || !applyingShip.GetNearestOpponet())return;
+                    if(Vector2.Distance(applyingdShipObject.transform.position,applyingShip.GetNearestOpponet().transform.position) > range)return;
                     
                     var railgunBullet = UnityEngine.Object.Instantiate(projectile);
                     railgunBullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
@@ -37,7 +37,7 @@ namespace Weapons
                     var PR = railgunBullet.GetComponent<Projectile>();
                     PR.SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,true,true);
 
-                    var v = applyingShip.targetObject.transform.position - applyingdShipObject.transform.position;
+                    var v = applyingShip.GetNearestOpponet().transform.position - applyingdShipObject.transform.position;
                     railgunBullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg);
                     var SR = railgunBullet.GetComponent<SpriteRenderer>();
                     float t = 0f;

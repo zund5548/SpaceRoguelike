@@ -6,62 +6,148 @@ using UniRx;
 using Maps;
 using Ships;
 using Items;
-public class GManager : MonoBehaviour
+using TMPro;
+using UnityEngine.InputSystem;
+
+namespace Managers
 {
-    public static GManager Instance{get;private set;}
-    public ReactiveProperty<GameState> CurrentState = new ReactiveProperty<GameState>();
-    public bool isMapCreated = false;
-    public List<List<StageNode>> _stageFloorList = new();
-    public StageNode currentStageNode;
-    public List<StageNode> passsedStageNodes = new();
-    public List<ShipData> playerShipDataList = new List<ShipData>();
-    public List<ShipData> enemyShipDataList = new List<ShipData>(); 
-    public List<Item> itemList = new();
-    public List<(Ship,int)> currentShipHull = new();
-    public int credit{get;private set;}
-    void Awake()
+    public class GManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        public static GManager Instance{get;private set;}
+        public ReactiveProperty<GameState> CurrentState = new ReactiveProperty<GameState>();
+        public bool isMapCreated = false;
+        public List<List<StageNode>> _stageFloorList = new();
+        public StageNode currentStageNode;
+        public List<StageNode> passsedStageNodes = new();
+        public List<ShipData> playerShipDataList = new List<ShipData>();
+        public List<ShipData> enemyShipDataList = new List<ShipData>(); 
+        public List<Item> itemList = new();
+        public List<(Ship,int)> currentShipHull = new();
+        public int credit{get;private set;}
+        private bool isInvOpen = false;
+        //input
+        public InputActionAsset inputAction;
+        private InputAction inventoryAction;
+        [Header("UI")]
+        public TextMeshProUGUI _CreditDisplay;
+        [Header("Canvas")]
+        public GameObject InventoryCanvas;
+        public Camera inventoryWorldCamera;
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(InventoryCanvas);
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            switch(SceneManager.GetActiveScene().name)
+            {
+                case "LobbyScene":
+                    CurrentState.Value = GameState.OnLobby;
+                    break;
+                case "MapScene":
+                    CurrentState.Value = GameState.OnMap;
+                    break;
+                case "StageScene":
+                    CurrentState.Value = GameState.OnStage;
+                    break;
+            }
+            DontDestroyOnLoad(InventoryCanvas);
+            // inventoryAction = inputAction["Inventory"];
         }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        switch(SceneManager.GetActiveScene().name)
+        private void SetInventoryInput()
         {
-            case "LobbyScene":
-                CurrentState.Value = GameState.OnLobby;
-                break;
-            case "MapScene":
-                CurrentState.Value = GameState.OnMap;
-                break;
-            case "StageScene":
-                CurrentState.Value = GameState.OnStage;
-                break;
+            inventoryAction = inputAction["Inventory"];
+            inventoryAction.performed += OnInventoryAccess;
         }
-    }
-    [Serializable]
-    public enum GameState
-    {
-         OnLobby,
-         OnMap,
-         OnStage
-    }
-    public void SetGameState(GameState gameState)
-    {
-        CurrentState.Value = gameState;
-    }
-    public void AddCredit(int value)
-    {
-        credit += value;
-    }
-    public void UseCredit(int value)
-    {
-        credit -= value;
-    }
-    public int GetCredit()
-    {
-        return credit;
+        // private void OnEnable(){inventoryAction.performed += OnInventoryAccess;}
+        // private void OnDisable(){inventoryAction.performed -= OnInventoryAccess;}
+        private void OnInventoryAccess(InputAction.CallbackContext ctx)
+        {
+            var inventory = InventoryCanvas.transform.GetChild(1).gameObject;
+            var inventoryFade = InventoryCanvas.transform.GetChild(0).gameObject;
+            if(CurrentState.Value == GameState.OnLobby)return;
+            if(inventoryWorldCamera == null)
+            {
+                inventoryWorldCamera = Camera.main;
+                InventoryCanvas.GetComponent<Canvas>().worldCamera = inventoryWorldCamera;
+            }
+            var animator = inventory.GetComponent<Animator>();
+            if(!isInvOpen)
+            {
+                animator.SetTrigger("Open");
+                inventoryFade.SetActive(true);
+            }
+            else
+            {
+                animator.SetTrigger("Close");
+                inventoryFade.SetActive(false);
+            }
+            isInvOpen = !isInvOpen;
+        }
+        private void Start() 
+        {
+            credit = 0;   
+            SetInventoryInput();
+        }
+        [Serializable]
+        public enum GameState
+        {
+            OnLobby,
+            OnMap,
+            OnStage
+        }
+        public void SetGameState(GameState gameState)
+        {
+            CurrentState.Value = gameState;
+        }
+        
+        public void AddCredit(int value)
+        {
+            credit += value;
+        }
+        private Dictionary<ShipData.ShipType,(int,int)> CreditTable = new Dictionary<ShipData.ShipType, (int, int)>
+        {
+            {ShipData.ShipType.Frigate,(90,111)},
+            {ShipData.ShipType.EliteFrigate,(290,310)},
+            {ShipData.ShipType.Destroyer,(490,511)},
+            {ShipData.ShipType.EliteDestroyer,(790,811)},
+        };
+        public void AddCredit(ShipData.ShipType shipType)
+        {
+            var creditmm = CreditTable[shipType];
+            //var addValue = UnityEngine.Random.Range(creditmm.Item1,creditmm.Item2); 
+            credit += UnityEngine.Random.Range(creditmm.Item1,creditmm.Item2);
+            SetCreditDisplay();
+        }
+        public void UseCredit(int value)
+        {
+            if(credit < value)
+            {
+                Debug.Log("not enough credit");
+                return;
+            }
+            credit -= value;
+            SetCreditDisplay();
+        }
+        public void SetCreditDisplay()
+        {
+            _CreditDisplay.SetText(credit.ToString() + "C");
+        }
+        public  void ResetManager()
+        {
+            credit = 0;
+            _stageFloorList.Clear();
+            currentStageNode = null;
+            passsedStageNodes.Clear();
+            passsedStageNodes.Clear();
+            playerShipDataList.Clear();
+            enemyShipDataList.Clear();
+            itemList.Clear();
+        }
     }
 }
+

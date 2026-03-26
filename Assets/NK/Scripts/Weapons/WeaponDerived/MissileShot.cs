@@ -47,14 +47,15 @@ namespace Weapons
         }
         private void ShootMissile(GameObject applyingdShipObject,Ship applyingShip,bool isRight)
         {
-            Vector2 initTargetPos = (Vector2)applyingShip.targetObject.transform.position;
+            GameObject targetObject = applyingShip.GetNearestOpponet();
+            Vector2 initTargetPos = (Vector2)targetObject.transform.position;
             var v = initTargetPos - (Vector2)applyingdShipObject.transform.position;
             float targetRad = Mathf.Atan2(v.y,v.x);
             float initRad = (isRight? -Mathf.PI/2f:Mathf.PI/2f) + targetRad;
             float initBurstRad = isRight? -Mathf.PI/6f:Mathf.PI/6f;
             
-            Vector2 currentTargetPos = applyingShip.targetObject.transform.position;
-            GameObject targetShip = applyingShip.targetObject;
+            Vector2 currentTargetPos = targetObject.transform.position;
+            GameObject targetShip = targetObject;
             for(int i = 0;i < (int)applyingShip.projectileNum.Value;i++)
             {
                 Vector2 errorOffset =  UnityEngine.Random.Range(0f,errorRadius) * RandomUnitVector();
@@ -108,7 +109,8 @@ namespace Weapons
         }
         public override void Shoot(GameObject applyingdShipObject,Ship applyingShip)
         {
-            Vector2 initTargetPos = (Vector2)applyingShip.targetObject.transform.position;
+            var targetShipObject = applyingShip.GetNearestOpponet();
+            Vector2 initTargetPos = (Vector2)targetShipObject.transform.position;
             var v = initTargetPos - (Vector2)applyingdShipObject.transform.position;
             float targetRad = Mathf.Atan2(v.y,v.x);
             // float initRad = (isRight? -Mathf.PI/2f:Mathf.PI/2f) + targetRad;
@@ -116,8 +118,7 @@ namespace Weapons
             float initRad =  Mathf.Pow(-1,UnityEngine.Random.Range(0,2)) * Mathf.PI/2f;
             
             Vector2 errorOffset =  UnityEngine.Random.Range(0f,errorRadius) * RandomUnitVector();
-            Vector2 currentTargetPos = applyingShip.targetObject.transform.position;
-            GameObject targetShip = applyingShip.targetObject;
+            Vector2 currentTargetPos = targetShipObject.transform.position;
             var missileProjectile = UnityEngine.Object.Instantiate(projectile);
                 missileProjectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
                 missileProjectile.transform.position = applyingdShipObject.transform.position;
@@ -138,9 +139,9 @@ namespace Weapons
                                 if(state.period > 0)
                                 {
                                     //加速度計算
-                                    if(applyingShip && targetShip)
+                                    if(applyingShip && targetShipObject)
                                     {
-                                        currentTargetPos = targetShip.transform.position;
+                                        currentTargetPos = targetShipObject.transform.position;
                                     }
                                     state.targetPos = currentTargetPos + errorOffset;
                                     state.acceleration = (state.targetPos - state.pos - state.velocity * state.period)  * 2f / (state.period * state.period);
@@ -167,6 +168,7 @@ namespace Weapons
         }
         public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
+            var targetObject = applyingShip.GetNearestOpponet();
             if(applyingShip == null)return;
             bool isRight = true;
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
@@ -176,8 +178,8 @@ namespace Weapons
                 .Subscribe(_ =>
                 {
                     applyingShip.GetNearestOpponet();
-                    if(!applyingdShipObject || !applyingShip.targetObject)return;
-                    if(Vector2.Distance(applyingdShipObject.transform.position, applyingShip.targetObject.transform.position) > range) return;
+                    if(!applyingdShipObject || targetObject)return;
+                    if(Vector2.Distance(applyingdShipObject.transform.position,targetObject.transform.position) > range) return;
                     ShootMissile(applyingdShipObject,applyingShip,isRight);
                     isRight = !isRight;
                 })

@@ -14,8 +14,10 @@ namespace Ships
         [Serializable]
         public enum ShipType
         {
-            frigate,
-            destroyer
+            Frigate,
+            EliteFrigate,
+            Destroyer,
+            EliteDestroyer
         }
         
         public int maxHullPoint;

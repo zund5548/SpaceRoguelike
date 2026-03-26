@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
+  m_Name: Chain
+  m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
+  shipName: UX1100
+  shipType: 0
+  maxHullPoint: 200
+  maxShieldPoint: 100
+  hullResistance: 5
+  shieldResistance: 5
+  power: 30
+  projectileNum: 1
+  speed: 10
+  weaponData:
+    rid: 8997316341899985022
+  references:
+    version: 2
+    RefIds:
+    - rid: 8997316341899985022
+      type: {class: ChainShot, ns: Weapons, asm: Assembly-CSharp}
+      data:
+        ChianLineObject: {fileID: 3562957314161690254, guid: 332f9659690b8734cb0a7e5a43f05dbd, type: 3}
+        range: 10
+        chainRange: 5
+        shotInterval: 1
+        chainInterval: 0.1
+        maxChainNum: 10
