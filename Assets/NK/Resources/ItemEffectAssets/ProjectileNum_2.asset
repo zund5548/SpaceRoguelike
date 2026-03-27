@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ProjectileNum_2
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
   description: "\u5F3E\u6570\u304C2\u5897\u52A0\u3059\u308B"
+  isPlayers: 1
   value: 2
   statType: 6
   modType: 0

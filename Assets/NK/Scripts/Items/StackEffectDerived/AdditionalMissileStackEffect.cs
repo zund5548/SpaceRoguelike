@@ -1,3 +1,5 @@
+using Ships;
+using Stats;
 using UnityEngine;
 using Weapons;
 
@@ -26,12 +28,12 @@ namespace Items
                     errorRadius = 0f,
                     explosionRadius = 2f,
                 };
+                missileShot.SetUniqueStat(ownerShip);
             }
             if(stackNum >= threshold)
             {
                 stackNum %= threshold;
                 missileShot.Shoot(ownerShip.gameObject,ownerShip);
-                //ship.stackEffectController.AddStackNum<AdditionalShotStackEffect>(ship,1);
             }
         }
     }

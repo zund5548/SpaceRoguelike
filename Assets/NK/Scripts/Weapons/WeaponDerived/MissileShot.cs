@@ -45,11 +45,11 @@ namespace Weapons
             float rad = UnityEngine.Random.Range(-Mathf.PI,Mathf.PI);
             return new Vector2(Mathf.Cos(rad),Mathf.Sin(rad));
         }
-        private void ShootMissile(GameObject applyingdShipObject,Ship applyingShip,bool isRight)
+        private void ShootMissile(GameObject applyingShipObject,Ship applyingShip,bool isRight)
         {
             GameObject targetObject = applyingShip.GetNearestOpponet();
             Vector2 initTargetPos = (Vector2)targetObject.transform.position;
-            var v = initTargetPos - (Vector2)applyingdShipObject.transform.position;
+            var v = initTargetPos - (Vector2)applyingShipObject.transform.position;
             float targetRad = Mathf.Atan2(v.y,v.x);
             float initRad = (isRight? -Mathf.PI/2f:Mathf.PI/2f) + targetRad;
             float initBurstRad = isRight? -Mathf.PI/6f:Mathf.PI/6f;
@@ -61,7 +61,7 @@ namespace Weapons
                 Vector2 errorOffset =  UnityEngine.Random.Range(0f,errorRadius) * RandomUnitVector();
                 var missileProjectile = UnityEngine.Object.Instantiate(projectile);
                 missileProjectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
-                missileProjectile.transform.position = applyingdShipObject.transform.position;
+                missileProjectile.transform.position = applyingShipObject.transform.position;
                 //missileProjectile.GetComponent<Projectile>().enabled = false;
                 missileProjectile.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,true,false);
                 missileProjectile.UpdateAsObservable()
@@ -71,7 +71,7 @@ namespace Weapons
                             targetPos = initTargetPos + errorOffset,
                             acceleration = Vector2.zero,
                             velocity = projectileSpeed * new Vector3(Mathf.Cos(initRad + initBurstRad * i),Mathf.Sin(initRad+ initBurstRad * i),0f),
-                            pos = applyingdShipObject.transform.position,
+                            pos = applyingShipObject.transform.position,
                             period = hitTime + UnityEngine.Random.Range(-0.05f,0.05f)
                         },
                         (MissileState state, UniRx.Unit _)=>
@@ -107,11 +107,11 @@ namespace Weapons
                     .AddTo(missileProjectile);
             }
         }
-        public override void Shoot(GameObject applyingdShipObject,Ship applyingShip)
+        public override void Shoot(GameObject applyingShipObject,Ship applyingShip)
         {
             var targetShipObject = applyingShip.GetNearestOpponet();
             Vector2 initTargetPos = (Vector2)targetShipObject.transform.position;
-            var v = initTargetPos - (Vector2)applyingdShipObject.transform.position;
+            var v = initTargetPos - (Vector2)applyingShipObject.transform.position;
             float targetRad = Mathf.Atan2(v.y,v.x);
             // float initRad = (isRight? -Mathf.PI/2f:Mathf.PI/2f) + targetRad;
             // float initBurstRad = isRight? -Mathf.PI/6f:Mathf.PI/6f;
@@ -121,7 +121,7 @@ namespace Weapons
             Vector2 currentTargetPos = targetShipObject.transform.position;
             var missileProjectile = UnityEngine.Object.Instantiate(projectile);
                 missileProjectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
-                missileProjectile.transform.position = applyingdShipObject.transform.position;
+                missileProjectile.transform.position = applyingShipObject.transform.position;
                 //missileProjectile.GetComponent<Projectile>().enabled = false;
                 missileProjectile.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,true,false);
                 missileProjectile.UpdateAsObservable()
@@ -131,7 +131,7 @@ namespace Weapons
                             targetPos = initTargetPos + UnityEngine.Random.Range(0f,errorRadius) * RandomUnitVector(),
                             acceleration = Vector2.zero,
                             velocity = projectileSpeed * new Vector3(Mathf.Cos(initRad),Mathf.Sin(initRad),0f),
-                            pos = applyingdShipObject.transform.position,
+                            pos = applyingShipObject.transform.position,
                             period = hitTime + UnityEngine.Random.Range(-0.05f,0.05f)
                         },
                         (MissileState state, UniRx.Unit _)=>
@@ -160,38 +160,41 @@ namespace Weapons
                         if(state.period <= 0f)
                         {
                             var p = state.targetPos;
+                            Debug.Log(applyingShip);
                             UnityEngine.Object.Destroy(missileProjectile);
                             SetExplosion(applyingShip,p);
+                            
                         }
                     })
                     .AddTo(missileProjectile);
         }
-        public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
+        public override void ShootAction(GameObject applyingShipObject,Ship applyingShip)
         {
             var targetObject = applyingShip.GetNearestOpponet();
             if(applyingShip == null)return;
             bool isRight = true;
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
-            applyingdShipObject.UpdateAsObservable()
+            applyingShipObject.UpdateAsObservable()
                 .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
                 .ThrottleFirst(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
                 .Subscribe(_ =>
                 {
                     applyingShip.GetNearestOpponet();
-                    if(!applyingdShipObject || targetObject)return;
-                    if(Vector2.Distance(applyingdShipObject.transform.position,targetObject.transform.position) > range) return;
-                    ShootMissile(applyingdShipObject,applyingShip,isRight);
+                    if(!applyingShipObject || targetObject)return;
+                    if(Vector2.Distance(applyingShipObject.transform.position,targetObject.transform.position) > range) return;
+                    applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{dealingShip = applyingShip});
+                    ShootMissile(applyingShipObject,applyingShip,isRight);
                     isRight = !isRight;
                 })
-                .AddTo(applyingdShipObject);
+                .AddTo(applyingShipObject);
         }
         private void SetExplosion(Ship applyingShip,Vector2 pos)
         {
             var explosionRadiusObject = UnityEngine.Object.Instantiate(explosion,pos,Quaternion.identity);
             if(applyingShip.isPlayer)explosionRadiusObject.tag = "PlayerExplosion";
             else if(!applyingShip.isPlayer)explosionRadiusObject.tag = "EnemyExplosion";
-            var E = explosionRadiusObject.GetComponent<Explosion>();
-            E.SetExplosion(applyingShip,(int)applyingShip.currentPower.Value,applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value);
+            var ExplosionSc = explosionRadiusObject.GetComponent<Explosion>();
+            ExplosionSc.SetExplosion(applyingShip,(int)applyingShip.currentPower.Value,applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value);
         }
         
         

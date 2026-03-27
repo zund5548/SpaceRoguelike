@@ -11,13 +11,13 @@ namespace Items
         public int power;
         public override void OnApply()
         {
-            EventManager.OnDamage
-                .Subscribe(damageEvent =>
-                {
-                    //反射時はONDamageを発行しない
-                    damageEvent.dealingShip.DealDamage(power);
-                })
-                .AddTo(EventManager.Instance);
+            // EventManager.OnDamage
+            //     .Subscribe(damageEvent =>
+            //     {
+            //         //反射時はONDamageを発行しない
+            //         damageEvent.dealingShip.DealDamage(power);
+            //     })
+            //     .AddTo(EventManager.Instance);
         }
     }
 }

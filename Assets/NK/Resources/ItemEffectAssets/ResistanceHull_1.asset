@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ResistanceHull_1
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
   description: "\u8239\u4F53\u62B5\u6297\u304C1\u5897\u52A0\u3059\u308B"
+  isPlayers: 1
   value: 1
   statType: 4
   modType: 0

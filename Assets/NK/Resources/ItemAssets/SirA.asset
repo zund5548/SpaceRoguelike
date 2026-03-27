@@ -15,5 +15,6 @@ MonoBehaviour:
   itemName: "\u7167\u6E96\u6539\u826F1"
   itemIcon: {fileID: 0}
   itemTier: 0
+  maxNum: 1
   itemEffectList:
   - {fileID: 11400000, guid: 00a011cabf6540346911d446f0e92931, type: 2}

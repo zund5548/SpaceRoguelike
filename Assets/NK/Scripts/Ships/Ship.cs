@@ -31,6 +31,7 @@ namespace Ships
         /// <summary>一度に発射する弾の数</summary>
         public Stat projectileNum;
         public UniqueStatController uniqueStatController = new();
+        public ShipEventController shipEventController = new();
         public Stat GetStat(StatType type)
         {
             return type switch
@@ -143,7 +144,6 @@ namespace Ships
         public void DealDamage(int power,Ship dealtShip = null)
         {
             bool isShieldDamaged = false;
-            if(dealtShip != null)EventManager.Instance.PublishDamaged(new EventManager.ShipDamageEvent{targetShip = this,dealingShip = dealtShip,delatDamageValue = power});
             //Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
             int actualPower = power;
             if(currentShieldPoint > 0)
@@ -181,25 +181,22 @@ namespace Ships
                 }
             }
 
-            if(currentHullPoint == 0)
+            if(currentHullPoint == 0)Kill();
+        }
+        public void Kill()
+        {
+            int n = allyShipObjectList.Count;
+            for(int i = 0;i < n;i++)
             {
-                int n = allyShipObjectList.Count;
-                for(int i = 0;i < n;i++)
+                if(allyShipObjectList[i] == gameObject)
                 {
-                    if(allyShipObjectList[i] == gameObject)
-                    {
-                        allyShipObjectList.RemoveAt(i);
-                        break;
-                    }
+                    allyShipObjectList.RemoveAt(i);
+                    break;
                 }
-                if(isPlayer && allyShipObjectList.Count == 0)EventManager.Instance.PublishFalse();
-                if(!isPlayer)
-                {
-                    GManager.Instance.AddCredit(shipData.shipType);
-                }
-                
-                Destroy(gameObject);
             }
+            if(isPlayer && allyShipObjectList.Count == 0)EventManager.Instance.PublishFalse();
+            if(!isPlayer)GManager.Instance.AddCredit(shipData.shipType);
+            Destroy(gameObject);
         }
     }
 }

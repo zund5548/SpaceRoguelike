@@ -1,9 +1,11 @@
 using UnityEngine;
 using UniRx;
+using UniRx.Triggers;
 using System;
+using System.Collections.Generic;
 using Managers;
 using Unity.VisualScripting;
-
+using Ships;
 namespace Items
 {
     [CreateAssetMenu(menuName = "ItemEffect/ReflectionShot")]
@@ -12,13 +14,17 @@ namespace Items
     {
         public override void OnApply()
         {
-            EventManager.OnDamage
-                .Subscribe(damageEvent =>
-                {
-                    //反射時はONDamageを発行しない
-                    damageEvent.dealingShip.stackEffectController.AddStackNum<AdditionalMissileStackEffect>(damageEvent.dealingShip,1);
-                })
-                .AddTo(EventManager.Instance);
+            // EventManager.OnDamage
+            List<Ship> shipList = isPlayers?ShipManager.Instance.playerShipList:ShipManager.Instance.enemyShipList;
+            foreach(var ship in shipList)
+            {
+                ship.shipEventController.OnShoot
+                    .Subscribe(_ =>
+                    {
+                        ship.stackEffectController.AddStackNum<AdditionalMissileStackEffect>(ship,1);
+                    })
+                    .AddTo(ship.gameObject);
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Stats
     {
         public Dictionary<Type,UniqueStatSet> statDic = new();
         //statの情報を読む
-        public T GetUniqueStat<T>() where T : UniqueStatSet
+        public T GetUniqueStat<T>() where T : UniqueStatSet, new()
         {
             statDic.TryGetValue(typeof(T), out var stat);
             return stat as T;
@@ -20,6 +20,16 @@ namespace Stats
             if (!statDic.TryGetValue(type, out var stat))
             {
                 stat = addedStat;
+                statDic.Add(type, stat);
+            }
+            return (T)stat;
+        }
+        public T AddUniqueStat<T>() where T : UniqueStatSet, new()
+        {
+            var type = typeof(T);
+            if (!statDic.TryGetValue(type, out var stat))
+            {
+                stat = new T();
                 statDic.Add(type, stat);
             }
             return (T)stat;

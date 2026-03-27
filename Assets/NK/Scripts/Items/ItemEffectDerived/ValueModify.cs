@@ -3,18 +3,21 @@ using UnityEngine;
 using Managers;
 using Stats;
 using System;
+using System.Collections.Generic;
 namespace Items
 {
-    [CreateAssetMenu(menuName = "ItemEffect/PlayerValueModify")]
+    [CreateAssetMenu(menuName = "ItemEffect/ValueModify")]
     [Serializable]
-    public class PlayerValueModify:ItemEffect
+    public class ValueModify:ItemEffect
     {
         public float value;
         public StatType statType;
         public ModType modType;
         public override void OnApply()
         {
-            foreach(var shipObject in  ShipManager.Instance.playerShipObjectList)
+            List<GameObject> shipObjectList = isPlayers?ShipManager.Instance.playerShipObjectList:ShipManager.Instance.enemyShipObjectList;
+            //List<GameObject> shipObjectList = ShipManager.Instance.enemyShipObjectList;
+            foreach(var shipObject in  shipObjectList)
             {
                 var ship = shipObject.GetComponent<Ship>();
                 //もうstatは入っている

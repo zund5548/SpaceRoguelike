@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Power_10
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
   description: "\u653B\u6483\u529B\u304C10\u5897\u52A0\u3059\u308B"
+  isPlayers: 1
   value: 10
   statType: 0
   modType: 0

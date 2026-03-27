@@ -27,7 +27,8 @@ namespace Managers
         //public List<ShipData> enemyShipDataList = new List<ShipData>();
         public List<GameObject> playerShipObjectList = new List<GameObject>();
         public List<GameObject> enemyShipObjectList = new List<GameObject>();
-        
+        public List<Ship> playerShipList = new List<Ship>();
+        public List<Ship> enemyShipList = new List<Ship>();
         //public List<Item> itemList = new();
         [Header("Canvas")]
         public RectTransform DamageValueCanvas;
@@ -102,9 +103,8 @@ namespace Managers
                     itemEffect.OnApply();
                 }
             }
-            foreach(var shipObject in playerShipObjectList)
+            foreach(var ship in playerShipList)
             {
-                var ship = shipObject.GetComponent<Ship>();
                 ship.SetCurrent();
                 SetPlayerShipBanner(ship);
             }   
@@ -114,13 +114,11 @@ namespace Managers
         private GameObject InstantiatePlayerShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
-            Ship ship = shipObject.GetComponent<Ship>();
-            float deg = (float)playerShipObjectList.Count/playerShipDataList.Count * 360f;
-            //Debug.Log(playerShipObjectList.Count.ToString()+"/"+playerShipDataList.Count.ToString());
-            //Debug.Log(playerShipObjectList.Count.ToString()+"/"+playerShipDataList.Count.ToString());
-            var offset = 0.5f * new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg  * Mathf.Deg2Rad));
             playerShipObjectList.Add(shipObject);
-
+            Ship ship = shipObject.GetComponent<Ship>();
+            playerShipList.Add(ship);
+            float deg = (float)playerShipObjectList.Count/playerShipDataList.Count * 360f;
+            var offset = 0.5f * new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg  * Mathf.Deg2Rad));
             shipObject.transform.position = _currentFleetPos;
             shipObject.transform.eulerAngles = new Vector3(0f,0f,_currentFleetDeg);
             shipObject.UpdateAsObservable()

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: AdditionalMissile_5
   m_EditorClassIdentifier: Assembly-CSharp::Items.ReflectionShot
   description: "5\u56DE\u7832\u6483\u3057\u305F\u3068\u304D\u3001\u8FFD\u52A0\u30671\u56DE\u30DF\u30B5\u30A4\u30EB\u3092\u6483\u3064"
+  isPlayers: 1

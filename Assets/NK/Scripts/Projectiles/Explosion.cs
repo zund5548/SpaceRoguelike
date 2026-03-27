@@ -23,12 +23,14 @@ namespace Projectiles
             _power = power;
             _dealtShip = ship;
             _radius = radius;
+            //Debug.Log("Set:"+_radius.ToString());
         }
         IEnumerator Start()
         {
             if(gameObject.CompareTag("PlayerExplosion"))GetComponent<SpriteRenderer>().color = Color.turquoise;
             else if(gameObject.CompareTag("EnemyExplosion"))GetComponent<SpriteRenderer>().color = Color.orange;
             transform.localScale = _radius * Vector3.one;
+            //Debug.Log("Start:"+_radius.ToString());
             //1フレーム待つとコライダーの大きさが反映される
             yield return null;
             expCol = GetComponent<Collider2D>();

@@ -64,6 +64,7 @@ namespace Weapons
                     if(!applyingdShipObject || !applyingShip.GetNearestOpponet())return;
                     if(Vector2.Distance(applyingdShipObject.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
                     Shoot(applyingdShipObject,applyingShip);
+                    applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{dealingShip = applyingShip});
                     isRight = !isRight;
                 })
                 .AddTo(applyingdShipObject);

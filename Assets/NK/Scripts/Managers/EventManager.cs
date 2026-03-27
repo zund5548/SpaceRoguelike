@@ -35,31 +35,31 @@ namespace Managers
         {
             onStageFalse.OnNext(Unit.Default);
         }
-        //ダメージを受けたとき
-        private static Subject<ShipDamageEvent> onDamage = new Subject<ShipDamageEvent>();
-        public static IObservable<ShipDamageEvent> OnDamage => onDamage;
-        public struct ShipDamageEvent
-        {
-            public Ship targetShip;//受けた船
-            public Ship dealingShip;//与えた船
-            public int delatDamageValue;//与えたダメージ
-        }
-        public void PublishDamaged(ShipDamageEvent shipDamageEvent)
-        {
-            onDamage.OnNext(shipDamageEvent);
-            //Debug.Log("a");
-        }
-        //攻撃したとき
-        private static Subject<ShipShotEvent> onShoot = new Subject<ShipShotEvent>();
-        public static IObservable<ShipShotEvent> OnShoot => onShoot;
-        public struct ShipShotEvent
-        {
-            public Ship  dealingShip;//攻撃した船
-        }
-        public void PublishShoot(ShipShotEvent shipShotEvent)
-        {
-            onShoot.OnNext(shipShotEvent);
-        }
+        // //ダメージを受けたとき
+        // private static Subject<ShipDamageEvent> onDamage = new Subject<ShipDamageEvent>();
+        // public static IObservable<ShipDamageEvent> OnDamage => onDamage;
+        // public struct ShipDamageEvent
+        // {
+        //     public Ship targetShip;//受けた船
+        //     public Ship dealingShip;//与えた船
+        //     public int delatDamageValue;//与えたダメージ
+        // }
+        // public void PublishDamaged(ShipDamageEvent shipDamageEvent)
+        // {
+        //     onDamage.OnNext(shipDamageEvent);
+        //     //Debug.Log("a");
+        // }
+        // //攻撃したとき
+        // private static Subject<ShipShotEvent> onShoot = new Subject<ShipShotEvent>();
+        // public static IObservable<ShipShotEvent> OnShoot => onShoot;
+        // public struct ShipShotEvent
+        // {
+        //     public Ship  dealingShip;//攻撃した船
+        // }
+        // public void PublishShoot(ShipShotEvent shipShotEvent)
+        // {
+        //     onShoot.OnNext(shipShotEvent);
+        // }
         //攻撃がヒットしたとき
         // private static Subject<ShipDamageEvent> onHit = new Subject<ShipDamageEvent>();
         // public static IObservable<ShipDamageEvent> OnHit => onHit;
