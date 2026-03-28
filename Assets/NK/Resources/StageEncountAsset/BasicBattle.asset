@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8569698ca67d4be499f8e2e990b634df, type: 3}
-  m_Name: BasicWave
+  m_Name: BasicBattle
   m_EditorClassIdentifier: Assembly-CSharp::Maps.BattleEncount
   stageType: 1
   icon: {fileID: 8189583078808796246, guid: 3098e6223e85e494789dc162d8279763, type: 3}
   oneWaveLimit: 5
   enemyWaveList:
   - shipDataList:
+    - {fileID: 11400000, guid: 66dcd10a52923f94fbc413384adffdfe, type: 2}
+    - {fileID: 11400000, guid: 66dcd10a52923f94fbc413384adffdfe, type: 2}
+    - {fileID: 11400000, guid: 66dcd10a52923f94fbc413384adffdfe, type: 2}
+    - {fileID: 11400000, guid: 66dcd10a52923f94fbc413384adffdfe, type: 2}
     - {fileID: 11400000, guid: 66dcd10a52923f94fbc413384adffdfe, type: 2}
   - shipDataList:
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}

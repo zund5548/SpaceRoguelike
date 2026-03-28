@@ -4,6 +4,8 @@ using Maps;
 using Ships;
 using Managers;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 using System.Collections;
 namespace Maps
 {
@@ -15,10 +17,16 @@ namespace Maps
         public List<EnemyWave> enemyWaveList = new();
         public override IEnumerator SetStageEncount()
         {
+            EventManager.OnStageClear
+                .Subscribe(_ =>
+                {
+                    Debug.Log("Clear");
+                    StageManager.Instance.StageClear();
+                })
+                .AddTo(EventManager.Instance);
             yield return ShipManager.Instance.BattleEncountWave(enemyWaveList,oneWaveLimit);
             EventManager.Instance.PublishClear();
         }
-
     }
     [Serializable]
     public class EnemyWave

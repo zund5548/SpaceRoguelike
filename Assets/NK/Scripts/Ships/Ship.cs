@@ -95,16 +95,30 @@ namespace Ships
             shotIntervalReduction = new Stat(0f);
         }
         
-        public void SetCurrent()
-        {
-            SetCurrentSPHP();
-            SetCurrentWeapon();
-        }
+        // public void SetCurrent()
+        // {
+        //     SetCurrentSPHP();
+        //     SetCurrentUniqueStat();
+        //     SetCurrentWeapon();
+        // }
         
         public void SetCurrentSPHP()
         {
             currentShieldPoint = (int)maxShieldPoint.Value;
             currentHullPoint = (int)maxHullPoint.Value;
+        }
+
+        public void SetCurrentUniqueStat()
+        {
+            if(shipData == null)
+            {
+                Debug.Log("shipData is null");
+                return;
+            }
+            if(shipData.weaponData != null)
+            {
+                shipData.weaponData.SetUniqueStat(this);
+            }
         }
 
         public void SetCurrentWeapon()
@@ -114,7 +128,11 @@ namespace Ships
                 Debug.Log("shipData is null");
                 return;
             }
-            shipData.weaponData.ShootAction(gameObject,this);
+            if(shipData.weaponData != null)
+            {
+                shipData.weaponData.ShootAction(gameObject,this);
+            }
+            
         }
 
         public void SetShipList(List<GameObject> ally,List<GameObject> opponet)
@@ -180,8 +198,11 @@ namespace Ships
                     currentHullPoint = 0;
                 }
             }
-
-            if(currentHullPoint == 0)Kill();
+            if(currentHullPoint == 0)
+            {
+                if(!isPlayer)GManager.Instance.AddCredit(shipData.shipType);
+                Kill();
+            }
         }
         public void Kill()
         {
@@ -195,7 +216,7 @@ namespace Ships
                 }
             }
             if(isPlayer && allyShipObjectList.Count == 0)EventManager.Instance.PublishFalse();
-            if(!isPlayer)GManager.Instance.AddCredit(shipData.shipType);
+            
             Destroy(gameObject);
         }
     }

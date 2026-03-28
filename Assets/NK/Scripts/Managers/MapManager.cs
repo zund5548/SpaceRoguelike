@@ -219,10 +219,12 @@ namespace Managers
             SetStageType();
             GManager.Instance._stageFloorList = _floorList;
         }
+        /// <summary>StageEncountAssetに入っているstageEncountの中から条件に当てはまるものをランダムで選ぶ</summary>
         public void SetStageType()
         {
             //allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();StageEncountAsset
             List<StageEncount> encountList = Resources.LoadAll<StageEncount>("StageEncountAsset").ToList();
+            List<StageEncount> filteredEncountList;
             for(int i = 1;i < _floorList.Count-1;i++)
             {
                 for(int j = 0;j < _floorList[i].Count;j++)
@@ -231,10 +233,13 @@ namespace Managers
                     if(r < 0.9f)_floorList[i][j].stageType = StageNode.StageType.Battle;
                     else _floorList[i][j].stageType = StageNode.StageType.Shop;
                     //stageEncount代入
-                    var filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
+                    filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
                     _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];
                 }
             }
+            //bossStageNode
+            filteredEncountList = encountList.Where(e=>e.stageType == _floorList[_floorList.Count-1][0].stageType).ToList();
+            _floorList[_floorList.Count-1][0].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];
         }
         /// <summary>mapを元にボタンと線を生成</summary>
         void InstantiateMap()

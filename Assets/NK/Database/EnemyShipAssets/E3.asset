@@ -30,7 +30,7 @@ MonoBehaviour:
       type: {class: SelfDestruction, ns: Weapons, asm: Assembly-CSharp}
       data:
         explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
-        warningSymbol: {fileID: 0}
+        warningSymbol: {fileID: 6353168423622975401, guid: b4eee8a219d91cf4d8e794f125c21784, type: 3}
         reactionRange: 2
         explosionRadius: 5
         chargeTime: 1

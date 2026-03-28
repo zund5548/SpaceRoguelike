@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using Maps;
 using UnityEngine.UI;
+using Stats;
 namespace Managers
 {
     public class ShipManager : MonoBehaviour
@@ -17,6 +18,7 @@ namespace Managers
         private Camera _cam;
 
         private GameObject _shipObject;
+        private GameObject _bossObject;
         //艦隊の基準点と回転
         private Vector2 _currentFleetPos = Vector2.zero;
         private float _currentFleetDeg = 0f;
@@ -72,6 +74,7 @@ namespace Managers
             if(GManager.Instance.playerShipDataList.Count != 0)playerShipDataList = GManager.Instance.playerShipDataList;
             //if(GManager.Instance.enemyShipDataList.Count != 0)enemyShipDataList = GManager.Instance.enemyShipDataList;
             _shipObject = (GameObject)Resources.Load("Ship");
+            _bossObject = (GameObject)Resources.Load("BossShip");
             _cam = Camera.main;
             gameObject.UpdateAsObservable()
                 //.Where(_=>Input.GetMouseButton(0))
@@ -96,16 +99,18 @@ namespace Managers
             {
                 var shipObject = InstantiatePlayerShip(shipData);
             }   
+            foreach(var ship in playerShipList)
+            {
+                ship.SetCurrentUniqueStat();
+            }   
             foreach(var item in GManager.Instance.itemList)
             {
-                foreach(var itemEffect in  item.itemEffectList)
-                {
-                    itemEffect.OnApply();
-                }
+                foreach(var itemEffect in  item.itemEffectList)itemEffect.OnApply();
             }
             foreach(var ship in playerShipList)
             {
-                ship.SetCurrent();
+                ship.SetCurrentSPHP();
+                ship.SetCurrentWeapon();
                 SetPlayerShipBanner(ship);
             }   
         }
@@ -134,15 +139,13 @@ namespace Managers
                     shipObject.transform.eulerAngles = new Vector3(0f,0f,_currentFleetDeg);
                 })
                 .AddTo(shipObject);
-
-            
             ship.isPlayer = true;
             ship.tag = "PlayerShip";
             ship.shipData = shipData;
             ship.SetShipList(playerShipObjectList,enemyShipObjectList);
             //Shipをinstantiate → SetSPHPでStatのインスタンスをつくる →　Statにmodifier追加 →　Statを反映
             ship.SetStats();
-            ship.shipData.weaponData.SetUniqueStat(ship);
+            //ship.shipData.weaponData.SetUniqueStat(ship);
             return shipObject;
         }   
         float separationDist = 1f;
@@ -161,12 +164,7 @@ namespace Managers
             shipObject.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                if(!ship.isAbleToMove)
-                {
-                    // Debug.Log("cant move");
-                    return;
-                }
-                //var s = shipObject;
+                if(!ship.isAbleToMove)return;
                 if(Vector2.Distance(shipObject.transform.position,_currentFleetPos) < 0.1f)return;
                 var v = _currentFleetPos - (Vector2)shipObject.transform.position;
                 Vector2 moveDir = v.normalized;
@@ -188,16 +186,38 @@ namespace Managers
             })
             .AddTo(shipObject);
 
-           
             ship.isPlayer = false;
             ship.tag = "EnemyShip";
             ship.shipData = shipData;
             ship.SetShipList(enemyShipObjectList,playerShipObjectList);
             //Shipをinstantiate → SetSPHPでStatのインスタンスをつくる →　Statにmodifier追加 →　Statを反映
             ship.SetStats();
-            ship.shipData.weaponData.SetUniqueStat(ship);
+            //ship.shipData.weaponData.SetUniqueStat(ship);
             return shipObject;
         }   
+
+        public GameObject InstantiateBossShip(ShipData shipData,BossType bossType)
+        {
+            GameObject bossShipObject = Instantiate(_bossObject);
+            BossShip bossShip = bossShipObject.GetComponent<BossShip>();
+            enemyShipObjectList.Add(bossShipObject);
+            bossShipObject.transform.position = new Vector2(5f,0f);
+
+            bossShip.isPlayer = false;
+            bossShip.tag = "EnemyShip";
+            bossShip.shipData = shipData;
+            bossShip.SetShipList(enemyShipObjectList,playerShipObjectList);
+            //Shipをinstantiate → SetSPHPでStatのインスタンスをつくる →　Statにmodifier追加 →　Statを反映
+            bossShip.SetStats();
+            //
+            bossShip.bossType = bossType;
+            bossShip.SetCurrentSPHP();
+            bossShip.SetCurrentWeapon();
+            StartCoroutine(bossShip.bossType.BossAttack(bossShip));
+            bossType.SetMove(bossShip);
+            return bossShipObject;
+        }
+
         public void SetDamagevalue(int value,Vector2 worldPos,bool onShield)
         {
             var display = Instantiate(damageValueDisplay);
@@ -276,9 +296,17 @@ namespace Managers
             foreach(var shipObject in enemyShipObjectList)
             {
                 var ship = shipObject.GetComponent<Ship>();
-                ship.SetCurrent();
+                ship.SetCurrentSPHP();
+                ship.SetCurrentUniqueStat();
+                ship.SetCurrentWeapon();
             }   
             yield return new WaitUntil(()=>enemyShipObjectList.Count == 0);
+        }
+
+        public IEnumerator BossEncountCoroutine(ShipData shipData,BossType bossType)
+        {
+            var bossShipObject = InstantiateBossShip(shipData,bossType);
+            yield return new WaitUntil(()=>!bossShipObject);
         }
 
         public void DeleteAllEnemy()

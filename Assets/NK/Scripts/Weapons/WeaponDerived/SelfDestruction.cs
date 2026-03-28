@@ -47,12 +47,10 @@ namespace Weapons
         {
             applyingShip.isAbleToMove = false;
             var warning = UnityEngine.Object.Instantiate(warningSymbol,applyingShip.transform.position,Quaternion.identity);
+            warning.transform.SetParent(applyingShip.transform);
             Observable.Timer(TimeSpan.FromSeconds(chargeTime))
                 .Subscribe(_ =>
                 {
-                    //warningを消す
-                    UnityEngine.Object.Destroy(warning);
-                    //
                     var explosionRadiusObject = UnityEngine.Object.Instantiate(explosion,pos,Quaternion.identity);
                     if(applyingShip.isPlayer)explosionRadiusObject.tag = "PlayerExplosion";
                     else explosionRadiusObject.tag = "EnemyExplosion";
@@ -64,6 +62,7 @@ namespace Weapons
                     applyingShip.Kill();
                 })
                 .AddTo(applyingShip.gameObject);
+            
         }
     }
 }

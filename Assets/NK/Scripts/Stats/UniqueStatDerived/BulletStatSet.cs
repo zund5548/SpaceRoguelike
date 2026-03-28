@@ -12,7 +12,7 @@ namespace Stats
         {
             BurstNum,
         }
-        public Stat burstNum;
+        public Stat burstNum = new(0);
         public Stat GetStat(BulletStatType type)
         {
             return type switch

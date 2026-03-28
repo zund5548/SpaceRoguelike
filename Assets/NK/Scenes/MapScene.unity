@@ -467,7 +467,8 @@ MonoBehaviour:
   playerShipDataList:
   - {fileID: 11400000, guid: 34553048b1b190345b011b3836a2aecd, type: 2}
   enemyShipDataList: []
-  itemList: []
+  itemList:
+  - {fileID: 11400000, guid: 2f102a41264b96c42ae83b316080e348, type: 2}
   inputAction: {fileID: -944628639613478452, guid: 836744da074f51e41adc85c738fc1322, type: 3}
   _CreditDisplay: {fileID: 1127608793}
   InventoryCanvas: {fileID: 250725625}
@@ -2653,7 +2654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddcac6ea0449d540b1b4f411246513e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.MapManager
-  _floorNum: 10
+  _floorNum: 1
   scrollVerticalSize: 1080
   stageButtonSize: 50
   _toStageButton: {fileID: 1681470752}

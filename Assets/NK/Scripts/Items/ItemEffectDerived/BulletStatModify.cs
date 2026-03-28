@@ -19,6 +19,7 @@ namespace Items
                 var ship = shipObject.GetComponent<Ship>();
                 if(ship.uniqueStatController.GetUniqueStat<BulletStatSet>() == null)ship.uniqueStatController.AddUniqueStat(new BulletStatSet{});
                 ship.uniqueStatController.GetUniqueStat<BulletStatSet>().GetStat(bulletShotStatType).AddModifier(new StatModifier(value,modType));
+                //Debug.Log(ship.uniqueStatController.GetUniqueStat<BulletStatSet>().GetStat(bulletShotStatType).Value);
                 ship.SetCurrentSPHP();
             }
         }

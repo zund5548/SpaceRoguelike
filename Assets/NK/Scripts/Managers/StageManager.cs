@@ -62,13 +62,6 @@ namespace Managers
                 .AddTo(gameObject);
             _ItemBannerCanvas.SetActive(false);
             ResultCanvas.SetActive(false);
-            EventManager.OnStageClear
-                .Subscribe(_ =>
-                {
-                    Debug.Log("Clear");
-                    StageClear();
-                })
-                .AddTo(EventManager.Instance);
             SetNotice(GManager.Instance.currentStageNode.stageName);
             SetFloorDisplay();
             GManager.Instance.SetCreditDisplay();
@@ -146,10 +139,15 @@ namespace Managers
             }
             planetObjectList.Clear();
         }
-        private void StageClear()
+        public void StageClear()
         {
             StartCoroutine(ClearCoroutine());
             ShipManager.Instance.DeleteAllPlayer();
+        }
+        public void BossBeat()
+        {
+            ShipManager.Instance.DeleteAllPlayer();
+            ResultCanvas.SetActive(true);
         }
         private IEnumerator ClearCoroutine()
         {

@@ -28,16 +28,16 @@ namespace Weapons
                     burstNum = new(burstNum),
                 });
         }
-        public override void Shoot(GameObject applyingdShipObject, Ship applyingShip)
+        public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
             float currentDeg = -angleDif * ((int)applyingShip.projectileNum.Value -1) /2f;
             for(int i = 0;i < (int)applyingShip.projectileNum.Value;i++)
             {
                 var bullet = UnityEngine.Object.Instantiate(projectile);
                 bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
-                bullet.transform.position = applyingdShipObject.transform.position;
+                bullet.transform.position = applyingShipObject.transform.position;
                 bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,false,true);
-                var v = applyingShip.GetNearestOpponet().transform.position - applyingdShipObject.transform.position;
+                var v = applyingShip.GetNearestOpponet().transform.position - applyingShipObject.transform.position;
                 bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg + currentDeg);
                 bullet.UpdateAsObservable()
                     .Subscribe(_=>
@@ -49,7 +49,7 @@ namespace Weapons
                 currentDeg += angleDif;
             } 
         }
-        public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
+        public override void ShootAction(GameObject applyingShipObject,Ship applyingShip)
         {
              if(applyingShip == null)return;
             bool isRight = true;
@@ -61,13 +61,13 @@ namespace Weapons
                 .Subscribe(_ =>
                 {
                     applyingShip.GetNearestOpponet();
-                    if(!applyingdShipObject || !applyingShip.GetNearestOpponet())return;
-                    if(Vector2.Distance(applyingdShipObject.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
-                    Shoot(applyingdShipObject,applyingShip);
+                    if(!applyingShipObject || !applyingShip.GetNearestOpponet())return;
+                    if(Vector2.Distance(applyingShipObject.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
+                    Shoot(applyingShipObject,applyingShip);
                     applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{dealingShip = applyingShip});
                     isRight = !isRight;
                 })
-                .AddTo(applyingdShipObject);
+                .AddTo(applyingShipObject);
         }
     }
 }
