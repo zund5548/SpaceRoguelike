@@ -15,6 +15,8 @@ namespace Managers
     {
         public static GManager Instance{get;private set;}
         public ReactiveProperty<GameState> CurrentState = new ReactiveProperty<GameState>();
+        public int _floorNum;
+        [HideInInspector]
         public bool isMapCreated = false;
         public List<List<StageNode>> _stageFloorList = new();
         public StageNode currentStageNode;

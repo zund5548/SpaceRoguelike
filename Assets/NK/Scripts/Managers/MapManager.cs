@@ -19,6 +19,7 @@ namespace Managers
     public class MapManager : MonoBehaviour
     {
         public static MapManager Instance{get;private set;}
+        [HideInInspector]
         public int _floorNum;
         public float scrollVerticalSize;
         public float stageButtonSize;
@@ -55,6 +56,7 @@ namespace Managers
         }
         void Start()
         {
+            _floorNum = GManager.Instance._floorNum;
             if(!GManager.Instance.isMapCreated)CreateMap(_floorNum,4,6);
             else _floorList = GManager.Instance._stageFloorList;
             InstantiateMap();

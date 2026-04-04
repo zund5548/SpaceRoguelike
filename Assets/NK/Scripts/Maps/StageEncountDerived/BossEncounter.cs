@@ -25,8 +25,7 @@ namespace Maps
             EventManager.OnBossBeat
                 .Subscribe(_ =>
                 {
-                    Debug.Log("Clear");
-                    StageManager.Instance.BossBeat();
+                    StageManager.Instance.GameClear();
                 })
                 .AddTo(EventManager.Instance);
             yield return ShipManager.Instance.BossEncountCoroutine(shipData,bossType);

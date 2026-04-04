@@ -453,6 +453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GManager
   CurrentState:
     value: 0
+  _floorNum: 1
   isMapCreated: 0
   currentStageNode:
     stageName: 

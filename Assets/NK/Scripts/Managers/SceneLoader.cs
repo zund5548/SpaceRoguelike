@@ -32,7 +32,7 @@ namespace Managers
         }
         public void ToLobby()
         {
-            StartCoroutine(MoveScene("LobbyeScene"));
+            StartCoroutine(MoveScene("LobbyScene"));
         }
         IEnumerator MoveScene(string sceneName)
         {

@@ -16,6 +16,7 @@ namespace Managers
     {
         public static StageManager Instance{get;private set;}
         public Button ToMapButton;
+        public Button GameClearButton;
         //private bool isBannerPushed = false;
         private bool isBannerPushed = false;
         [Header("prefab")]
@@ -23,12 +24,12 @@ namespace Managers
         [Header("UI")]
         public TextMeshProUGUI _CurrentFloorText;
         public TextMeshProUGUI _StageNameText;
-        public TextMeshProUGUI _CreditText;
         public RectTransform _RewardContent;
         public RectTransform _ShopScrollContent;
         public GameObject _LeaveShopButton;
         [Header("Canvas")]
-        public GameObject ResultCanvas;
+        public GameObject _ResultCanvas;
+        public GameObject _GameClearCanvas;
         public GameObject _ItemBannerCanvas;
         public GameObject _ShopItemBannerCanvas;
         public GameObject _UICanvas;
@@ -49,7 +50,8 @@ namespace Managers
         {
             // _planetObject = (GameObject)Resources.Load("PlanetObject");
             // _ItemBannerButton = (GameObject)Resources.Load("ItemBannerButton");
-            SetToMapButton();
+            if(GManager.Instance.currentStageNode.stageType == StageNode.StageType.Boss)SetGameClear();
+            else SetToMapButton();
             allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();
             InstantiateStage(GManager.Instance.currentStageNode);
             gameObject.UpdateAsObservable()
@@ -61,7 +63,8 @@ namespace Managers
                 })
                 .AddTo(gameObject);
             _ItemBannerCanvas.SetActive(false);
-            ResultCanvas.SetActive(false);
+            _ResultCanvas.SetActive(false);
+
             SetNotice(GManager.Instance.currentStageNode.stageName);
             SetFloorDisplay();
             GManager.Instance.SetCreditDisplay();
@@ -77,6 +80,17 @@ namespace Managers
                     SceneLoader.Instance.ToMap();
                 })
                 .AddTo(ToMapButton.gameObject);
+        }
+        private void SetGameClear()
+        {
+            if(GameClearButton == null)return;
+            GameClearButton.OnClickAsObservable()
+                .Subscribe(_ =>
+                {
+                    GameClearButton.interactable = false;
+                    SceneLoader.Instance.ToLobby();
+                })
+                .AddTo(GameClearButton.gameObject);
         }
         private void SetNotice(string message)
         {
@@ -144,10 +158,10 @@ namespace Managers
             StartCoroutine(ClearCoroutine());
             ShipManager.Instance.DeleteAllPlayer();
         }
-        public void BossBeat()
+        public void GameClear()
         {
             ShipManager.Instance.DeleteAllPlayer();
-            ResultCanvas.SetActive(true);
+            _GameClearCanvas.SetActive(true);
         }
         private IEnumerator ClearCoroutine()
         {
@@ -155,7 +169,7 @@ namespace Managers
             yield return SetItemCoroutine();
             //ボタンを押したら続行
             DeleteAllPlanet();
-            ResultCanvas.SetActive(true);
+            _ResultCanvas.SetActive(true);
             yield break;
         }
         private IEnumerator SetItemCoroutine()

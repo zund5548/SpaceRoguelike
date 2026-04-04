@@ -56,7 +56,7 @@ namespace Weapons
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             int burstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().burstNum.Value;
             Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
-                .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.1f)).Take(burstNum))
+                .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.05f)).Take(burstNum))
                 .Repeat()
                 .Subscribe(_ =>
                 {
