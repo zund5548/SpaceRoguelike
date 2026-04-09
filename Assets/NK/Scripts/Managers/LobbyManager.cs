@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -78,6 +79,10 @@ namespace Managers
             {
                 var buttonObject = Instantiate(_DifficultyButtonObject);
                 buttonObject.transform.SetParent(_DifficultyButtonScrollContent,false);
+                //文字設定
+                var buttonText = buttonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                buttonText.text =  "Level" + i.ToString() + "\n" + stageNumDic[i].ToString() + "Floors";
+                //
                 var button = buttonObject.GetComponent<Button>();
                 int j = i;
                 button.OnClickAsObservable()
