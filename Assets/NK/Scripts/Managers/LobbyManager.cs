@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace Managers
@@ -25,6 +26,14 @@ namespace Managers
         public GameObject _DifficultyArea;
         public GameObject _TechTreeArea;
         //
+        Dictionary<int, int> stageNumDic = new Dictionary<int, int>
+        {
+            {0,10},
+            {1,15},
+            {2,20},
+            {3,25},
+            {4,30}
+        }; 
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -66,38 +75,47 @@ namespace Managers
                     _TechTreeArea.SetActive(true);
                 })
                 .AddTo(gameObject);
-            var stageNumDic = new Dictionary<int, int>
-            {
-                {0,10},
-                {1,15},
-                {2,20},
-                {3,25},
-                {4,30}
-            }; 
-            GManager.Instance._floorNum = stageNumDic[0];
             for(int i = 0;i < stageNumDic.Count;i++)
             {
                 var buttonObject = Instantiate(_DifficultyButtonObject);
                 buttonObject.transform.SetParent(_DifficultyButtonScrollContent,false);
                 //文字設定
-                var buttonText = buttonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                buttonText.text =  "Level" + i.ToString() + "\n" + stageNumDic[i].ToString() + "Floors";
+                var buttonText = buttonObject.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+                buttonText.text =  "Level " + (i + 1).ToString() + "\n" + stageNumDic[i].ToString() + " Floors";
                 //
-                var button = buttonObject.GetComponent<Button>();
+                var button = buttonObject.transform.GetChild(0).GetComponent<Button>();
                 int j = i;
                 button.OnClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        GManager.Instance._floorNum = stageNumDic[j];
+                        SetDifficulty(j);
                     })
                     .AddTo(buttonObject);
             }
+            SetDifficulty(0);
             _ToMapButton.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
                     SceneLoader.Instance.ToMap();
                 })
                 .AddTo(gameObject);
+        }
+        //表示する難易度はlevel+1
+        public void SetDifficulty(int level)
+        {
+            if(level >= stageNumDic.Count)level = stageNumDic.Count - 1;
+            foreach(Transform buttonObject in _DifficultyButtonScrollContent.transform)
+            {
+                var image = buttonObject.GetComponent<Image>();
+                var c = image.color;
+                c.a = 0f;
+                image.color = c;
+            }
+            var buttonImage = _DifficultyButtonScrollContent.transform.GetChild(level).GetComponent<Image>();
+            var newColor = buttonImage.color;
+            newColor.a = 1f;
+            buttonImage.color = newColor;
+            GManager.Instance._floorNum = stageNumDic[level];
         }
     }
 }
