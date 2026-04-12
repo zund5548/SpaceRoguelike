@@ -18,6 +18,7 @@ namespace Maps
     {
         public GameObject _ItemBannerButton;
         public GameObject _PriceDisplay;
+        private List<TextMeshProUGUI> _PriceDisplayTexts = new();
         public override IEnumerator SetStageEncount()
         {
             yield return ShopCoroutine();
@@ -29,6 +30,12 @@ namespace Maps
             StageManager.Instance._ShopItemBannerCanvas.SetActive(true);
             yield return null;
         }
+        private Dictionary<int,int> itemPriceDic = new Dictionary<int, int>
+        {
+            {0,600},
+            {1,1200},
+            {2,1800}
+        };
         private void SetShopBanner(int n)
         {
             var itemList = StageManager.Instance.GetRandomItem(GManager.Instance.itemList,n);
@@ -39,15 +46,30 @@ namespace Maps
                 //buttonList.Add(button);
                 banner.transform.SetParent(StageManager.Instance._ShopScrollContent,false);
                 banner.GetComponent<ItemBanner>().SetBanner(item.itemName,item.GetItemDescription());
+                //金額表示
                 var priceDisplay = UnityEngine.Object.Instantiate(_PriceDisplay);
                 priceDisplay.transform.SetParent(banner.transform,false);
                 ((RectTransform)priceDisplay.transform).anchoredPosition = new Vector2(0,300f);
+                var priceDisplayMesh = priceDisplay.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+                _PriceDisplayTexts.Add(priceDisplayMesh);
+                priceDisplayMesh.text = itemPriceDic[item.itemTier].ToString();
+                if(GManager.Instance.credit < itemPriceDic[item.itemTier])priceDisplayMesh.color = Color.red;
+                else priceDisplayMesh.color = Color.white;
+                //
                 button.OnClickAsObservable()
                     .Subscribe(_=>
                     {
+                        int itemPrice = itemPriceDic[item.itemTier];
+                        if(GManager.Instance.credit < itemPrice)return;
+                        GManager.Instance.UseCredit(itemPrice);
                         var buttonObject = banner;
                         GManager.Instance.itemList.Add(item);
                         buttonObject.transform.GetChild(0).GetComponent<Button>().interactable = false;
+                        for(int i = 0;i < itemList.Count;i++)
+                        {
+                            if(GManager.Instance.credit < itemPriceDic[itemList[i].itemTier])_PriceDisplayTexts[i].color = Color.red;
+                            else _PriceDisplayTexts[i].color = Color.white;
+                        }
                     })
                     .AddTo(banner);
             }

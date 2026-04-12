@@ -24,7 +24,7 @@ namespace Managers
         public List<ShipData> playerShipDataList = new List<ShipData>();
         public List<ShipData> enemyShipDataList = new List<ShipData>(); 
         public List<Item> itemList = new();
-        public List<(Ship,int)> currentShipHull = new();
+        public List<int> currentShipHullPoint = new();
         public int credit{get;private set;}
         private bool isInvOpen = false;
         //input
@@ -60,6 +60,18 @@ namespace Managers
             DontDestroyOnLoad(InventoryCanvas);
             // inventoryAction = inputAction["Inventory"];
         }
+        public  void ResetManager()
+        {
+            credit = 0;
+            _stageFloorList.Clear();
+            currentStageNode = null;
+            passsedStageNodes.Clear();
+            passsedStageNodes.Clear();
+            playerShipDataList.Clear();
+            enemyShipDataList.Clear();
+            itemList.Clear();
+            currentShipHullPoint.Clear();
+        }
         private void SetInventoryInput()
         {
             inventoryAction = inputAction["Inventory"];
@@ -92,7 +104,8 @@ namespace Managers
         }
         private void Start() 
         {
-            credit = 0;   
+            credit = 0;
+            AddCredit(1000);
             SetInventoryInput();
         }
         [Serializable]
@@ -106,7 +119,6 @@ namespace Managers
         {
             CurrentState.Value = gameState;
         }
-        
         public void AddCredit(int value)
         {
             credit += value;
@@ -139,17 +151,24 @@ namespace Managers
         {
             _CreditDisplay.SetText(credit.ToString() + "C");
         }
-        public  void ResetManager()
-        {
-            credit = 0;
-            _stageFloorList.Clear();
-            currentStageNode = null;
-            passsedStageNodes.Clear();
-            passsedStageNodes.Clear();
-            playerShipDataList.Clear();
-            enemyShipDataList.Clear();
-            itemList.Clear();
-        }
+        // public void AddCurrentHullPoint(Ship ship)
+        // {
+        //     currentShipHullPoint.Add(ship.currentHullPoint);
+        // }
+        // public void SetCurrentHullPoints(List<Ship> playerShips)
+        // {
+        //     for(int i = 0;i < playerShips.Count;i++)
+        //     {
+        //         currentShipHullPoint[i] = playerShips[i].currentHullPoint;
+        //     }
+        // }
+        // public void GetCurrentHullPoints(List<Ship> playerShips)
+        // {
+        //     for(int i = 0;i < playerShips.Count;i++)
+        //     {
+        //         playerShips[i].currentHullPoint = currentShipHullPoint[i];
+        //     }
+        // }
     }
 }
 

@@ -2523,6 +2523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GManager
   CurrentState:
     value: 0
+  _floorNum: 0
   isMapCreated: 0
   currentStageNode:
     stageName: 
@@ -2538,6 +2539,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 34553048b1b190345b011b3836a2aecd, type: 2}
   enemyShipDataList: []
   itemList: []
+  currentShipHullPoint: 
   inputAction: {fileID: -944628639613478452, guid: 836744da074f51e41adc85c738fc1322, type: 3}
   _CreditDisplay: {fileID: 5989246726018207520}
   InventoryCanvas: {fileID: 58058995018182442}
@@ -4781,7 +4783,7 @@ SceneRoots:
   - {fileID: 1133996237}
   - {fileID: 1080116893}
   - {fileID: 2071527176}
+  - {fileID: 6009786870923773469}
   - {fileID: 2046980414}
   - {fileID: 1150318158}
-  - {fileID: 6009786870923773469}
   - {fileID: 692744188}

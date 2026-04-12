@@ -97,6 +97,7 @@ namespace Managers
                 .Subscribe(_ =>
                 {
                     SceneLoader.Instance.ToMap();
+                    _ToMapButton.interactable = false;
                 })
                 .AddTo(gameObject);
         }

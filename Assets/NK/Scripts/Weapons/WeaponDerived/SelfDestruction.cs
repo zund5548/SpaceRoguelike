@@ -47,7 +47,6 @@ namespace Weapons
         {
             applyingShip.isAbleToMove = false;
             var warning = UnityEngine.Object.Instantiate(warningSymbol,applyingShip.transform.position,Quaternion.identity);
-            warning.transform.SetParent(applyingShip.transform);
             Observable.Timer(TimeSpan.FromSeconds(chargeTime))
                 .Subscribe(_ =>
                 {
@@ -59,9 +58,15 @@ namespace Weapons
                     int power = (int)applyingShip.currentPower.Value;
                     float radius = applyingShip.uniqueStatController.GetUniqueStat<SelfDestructionStat>().explosionRadius.Value;
                     ExplosionSc.SetExplosion(applyingShip,power,radius);
+                    
                     applyingShip.Kill();
                 })
                 .AddTo(applyingShip.gameObject);
+            applyingShip.gameObject.OnDestroyAsObservable()
+                .Subscribe(_ =>
+                {
+                    UnityEngine.Object.Destroy(warning);
+                });
             
         }
     }

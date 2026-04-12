@@ -57,7 +57,7 @@ namespace Managers
         IEnumerator Fading(float start,float end)
         {
             float t = 0f;
-            float fadeTime = 0.5f;
+            float fadeTime = 0.25f;
             fadeImage.color = new Color(fadeImage.color.r,fadeImage.color.g,fadeImage.color.b,start);
             Color fadeColor = fadeImage.color;
             while(true)
