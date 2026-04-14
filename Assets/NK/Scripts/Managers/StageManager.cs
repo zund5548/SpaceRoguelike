@@ -209,6 +209,7 @@ namespace Managers
                         foreach(var button in buttonList)
                         {
                             button.interactable = false;
+                            //buttonObject.transform.GetChild(1).gameObject.SetActive(true);
                         }
                         buttonObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("BannerUp");
                     })

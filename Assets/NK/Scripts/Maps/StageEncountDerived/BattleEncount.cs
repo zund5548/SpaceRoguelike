@@ -20,7 +20,6 @@ namespace Maps
             EventManager.OnStageClear
                 .Subscribe(_ =>
                 {
-                    Debug.Log("Clear");
                     StageManager.Instance.StageClear();
                 })
                 .AddTo(EventManager.Instance);

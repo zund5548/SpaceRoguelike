@@ -3575,7 +3575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b38dbeed06e39a45a837df2f00c4dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.ShipManager
-  playerSpeed: 4
+  initPlayerSpeed: 3
   turnRate: 180
   playerShipDataList:
   - {fileID: 11400000, guid: c37e5a359d6925e46b121778ba812b06, type: 2}

@@ -23,7 +23,8 @@ namespace Managers
         private Vector2 _currentFleetPos = Vector2.zero;
         private float _currentFleetDeg = 0f;
         //
-        public float playerSpeed;
+        public float initPlayerSpeed;
+        Stat _playerSpeed;
         public float turnRate;
         public List<ShipData> playerShipDataList = new List<ShipData>();
         //public List<ShipData> enemyShipDataList = new List<ShipData>();
@@ -76,6 +77,7 @@ namespace Managers
             _shipObject = (GameObject)Resources.Load("Ship");
             _bossObject = (GameObject)Resources.Load("BossShip");
             _cam = Camera.main;
+            _playerSpeed = new(initPlayerSpeed);
             gameObject.UpdateAsObservable()
                 //.Where(_=>Input.GetMouseButton(0))
                 .Subscribe(_ =>
@@ -86,7 +88,7 @@ namespace Managers
                     if(!clickAction.IsPressed())return;
                     var v = destination - _currentFleetPos;
                     _currentFleetDeg = Mathf.MoveTowardsAngle(_currentFleetDeg,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg,turnRate * Time.deltaTime);
-                    _currentFleetPos += new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)) * playerSpeed * Time.deltaTime;
+                    _currentFleetPos += new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)) * _playerSpeed.Value * Time.deltaTime;
                     
                     //Debug.DrawRay(_currentFleetPos,new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)));
                 })
@@ -148,8 +150,9 @@ namespace Managers
             //ship.shipData.weaponData.SetUniqueStat(ship);
             return shipObject;
         }   
-        float separationDist = 1f;
-        float separationStrength = 0.5f;
+        
+        float separationDist = 1f;//敵艦同士の間隔
+        float separationStrength = 0.5f;//敵艦同士の間隔以下に近づいたときにこの速度で遠ざける
         private GameObject InstantiateEnemyShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
@@ -192,10 +195,20 @@ namespace Managers
             ship.SetShipList(enemyShipObjectList,playerShipObjectList);
             //Shipをinstantiate → SetSPHPでStatのインスタンスをつくる →　Statにmodifier追加 →　Statを反映
             ship.SetStats();
+            SetEnemyStatBuff(ship);
             //ship.shipData.weaponData.SetUniqueStat(ship);
+            
             return shipObject;
         }   
-
+        /// <summary>ステージを経るにつれて敵艦を強化</summary>
+        public void SetEnemyStatBuff(Ship enemyShip)
+        {
+            int k = GManager.Instance.currentStageNode.floorStageNum % 2;
+            if(k == 0)return;
+            enemyShip.GetStat(StatType.Hull).AddModifier(new StatModifier(k * 50f,ModType.Percent));
+            enemyShip.GetStat(StatType.Shield).AddModifier(new StatModifier(k * 50f,ModType.Percent));
+            enemyShip.GetStat(StatType.Power).AddModifier(new StatModifier(k * 50f,ModType.Percent));
+        }
         public GameObject InstantiateBossShip(ShipData shipData,BossType bossType)
         {
             GameObject bossShipObject = Instantiate(_bossObject);

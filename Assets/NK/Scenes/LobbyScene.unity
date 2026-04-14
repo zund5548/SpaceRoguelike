@@ -1515,6 +1515,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 34553048b1b190345b011b3836a2aecd, type: 2}
   enemyShipDataList: []
   itemList: []
+  currentShipHullPoint: 
   inputAction: {fileID: -944628639613478452, guid: 836744da074f51e41adc85c738fc1322, type: 3}
   _CreditDisplay: {fileID: 30204351}
   InventoryCanvas: {fileID: 1475840757}
@@ -2474,7 +2475,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 320124305
-  m_SortingOrder: 10
+  m_SortingOrder: 20
   m_TargetDisplay: 0
 --- !u!224 &1475840761
 RectTransform:

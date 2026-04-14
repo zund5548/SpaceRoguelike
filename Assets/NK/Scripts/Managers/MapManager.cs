@@ -247,7 +247,6 @@ namespace Managers
         /// <summary>mapを元にボタンと線を生成</summary>
         void InstantiateMap()
         {
-            
             for(int i = 0;i < _floorList.Count;i++)
             {
                 var floor = Instantiate(FloorObject);

@@ -21,6 +21,12 @@ namespace Maps
         private List<TextMeshProUGUI> _PriceDisplayTexts = new();
         public override IEnumerator SetStageEncount()
         {
+            EventManager.OnStageClear
+            .Subscribe(_ =>
+            {
+                StageManager.Instance.StageClear();
+            })
+            .AddTo(EventManager.Instance);
             yield return ShopCoroutine();
         }
         public IEnumerator ShopCoroutine()
@@ -53,6 +59,7 @@ namespace Maps
                 var priceDisplayMesh = priceDisplay.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
                 _PriceDisplayTexts.Add(priceDisplayMesh);
                 priceDisplayMesh.text = itemPriceDic[item.itemTier].ToString();
+                //文字の色変更
                 if(GManager.Instance.credit < itemPriceDic[item.itemTier])priceDisplayMesh.color = Color.red;
                 else priceDisplayMesh.color = Color.white;
                 //
@@ -65,6 +72,7 @@ namespace Maps
                         var buttonObject = banner;
                         GManager.Instance.itemList.Add(item);
                         buttonObject.transform.GetChild(0).GetComponent<Button>().interactable = false;
+                        buttonObject.transform.GetChild(1).gameObject.SetActive(true);
                         for(int i = 0;i < itemList.Count;i++)
                         {
                             if(GManager.Instance.credit < itemPriceDic[itemList[i].itemTier])_PriceDisplayTexts[i].color = Color.red;
@@ -87,8 +95,8 @@ namespace Maps
                     StageManager.Instance._ShopItemBannerCanvas.SetActive(false);
                     leaveShopButton.interactable = false;
                     EventManager.Instance.PublishClear();
-                })
-                .AddTo(leaveShopButton.gameObject);
+                });
+                //.AddTo(leaveShopButton.gameObject);
         }   
     }
 }

@@ -17,7 +17,7 @@ namespace Items
         {
             List<GameObject> shipObjectList = isPlayers?ShipManager.Instance.playerShipObjectList:ShipManager.Instance.enemyShipObjectList;
             //List<GameObject> shipObjectList = ShipManager.Instance.enemyShipObjectList;
-            foreach(var shipObject in  shipObjectList)
+            foreach(var shipObject in shipObjectList)
             {
                 var ship = shipObject.GetComponent<Ship>();
                 //もうstatは入っている
