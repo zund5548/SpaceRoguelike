@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
+  m_Name: DroneShip
+  m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
+  shipName: 
+  shipType: 0
+  maxHullPoint: 150
+  maxShieldPoint: 200
+  hullResistance: 5
+  shieldResistance: 5
+  power: 10
+  projectileNum: 0
+  speed: 5
+  weaponData:
+    rid: 5911334380801359948
+  references:
+    version: 2
+    RefIds:
+    - rid: 5911334380801359948
+      type: {class: DroneLaunch, ns: Weapons, asm: Assembly-CSharp}
+      data:
+        droneObject: {fileID: 5459487165565507037, guid: 1f5761bf836c797469816aa9a04b9d2a, type: 3}
+        range: 10
+        projectileSpeed: 10
+        shotInterval: 6
+        orbitRadius: 2
+        droneNum: 3
+        droneLifetime: 5

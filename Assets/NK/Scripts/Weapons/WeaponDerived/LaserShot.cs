@@ -66,10 +66,7 @@ namespace Weapons
                         .Do(_ =>
                         {
                             var targetObject = applyingShip.GetNearestOpponet();
-                            if(!targetObject)
-                            {
-                                UnityEngine.Object.Destroy(laser);
-                            }
+                            if(!targetObject)UnityEngine.Object.Destroy(laser);
                             else targetPos = targetObject.transform.position;
                             var w = targetPos - (Vector2)applyingdShipObject.transform.position;
                             float targetDeg = Mathf.Atan2(w.y,w.x) * Mathf.Rad2Deg;
@@ -89,13 +86,13 @@ namespace Weapons
                         });
                     // 両方同時に動かす
                     return Observable.Merge(everyFrame, interval);
-                    })
-                    .Last() // 全部終わるのを待つ
-                    .Subscribe(_ =>
-                    {
-                         UnityEngine.Object.Destroy(laser);
-                    })
-                    .AddTo(laser);
+                })
+                .Last() // 全部終わるのを待つ
+                .Subscribe(_ =>
+                {
+                    UnityEngine.Object.Destroy(laser);
+                })
+                .AddTo(laser);
         }
         private void LaserHit(GameObject laserObject,ContactFilter2D filter,Ship applyingShip)
         {

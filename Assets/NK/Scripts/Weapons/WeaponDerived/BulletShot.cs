@@ -23,10 +23,10 @@ namespace Weapons
         public override void SetUniqueStat(Ship applyingShip)
         {
             applyingShip.uniqueStatController.AddUniqueStat(
-                new BulletStatSet
-                {
-                    burstNum = new(burstNum),
-                });
+            new BulletStatSet
+            {
+                burstNum = new(burstNum),
+            });
         }
         public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
@@ -54,9 +54,9 @@ namespace Weapons
              if(applyingShip == null)return;
             bool isRight = true;
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
-            int burstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().burstNum.Value;
+            int currentBurstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().burstNum.Value;
             Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
-                .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.05f)).Take(burstNum))
+                .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.05f)).Take(currentBurstNum))
                 .Repeat()
                 .Subscribe(_ =>
                 {

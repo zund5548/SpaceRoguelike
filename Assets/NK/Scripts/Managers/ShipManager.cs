@@ -20,8 +20,8 @@ namespace Managers
         private GameObject _shipObject;
         private GameObject _bossObject;
         //艦隊の基準点と回転
-        private Vector2 _currentFleetPos = Vector2.zero;
-        private float _currentFleetDeg = 0f;
+        public Vector2 _currentFleetPos = Vector2.zero;
+        public float _currentFleetDeg = 0f;
         //
         public float initPlayerSpeed;
         Stat _playerSpeed;
