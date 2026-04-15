@@ -51,7 +51,7 @@ namespace Weapons
         }
         public override void ShootAction(GameObject applyingShipObject,Ship applyingShip)
         {
-             if(applyingShip == null)return;
+            if(applyingShip == null)return;
             bool isRight = true;
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             int currentBurstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().burstNum.Value;

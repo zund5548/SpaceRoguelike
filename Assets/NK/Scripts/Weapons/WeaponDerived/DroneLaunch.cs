@@ -21,6 +21,7 @@ namespace Weapons
         [Header("unique stat")]
         public int droneNum;
         public int droneLifetime;
+        public int droneShotInterval;
         public override void SetUniqueStat(Ship applyingShip)
         {
             applyingShip.uniqueStatController.AddUniqueStat(
@@ -28,13 +29,14 @@ namespace Weapons
                 {
                     droneNum = new(droneNum),
                     droneLifetime = new(droneLifetime),
+                    droneShotInterval = new(droneShotInterval)
                 });
         }
         public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
             for(int i = 0;i < droneNum;i++)
             {
-                SetDroneMove(i,applyingShip);
+                SetDroneFeature(i,applyingShip);
             }
         }
         public override void ShootAction(GameObject applyingShipObject, Ship applyingShip)
@@ -49,7 +51,7 @@ namespace Weapons
                 })
                 .AddTo(applyingShipObject);
         }
-        public void SetDroneMove(int k,Ship applyingShip)
+        public void SetDroneFeature(int k,Ship applyingShip)
         {
             float deg = 360f / droneNum * k;
             float currentDeg = deg;
@@ -69,6 +71,14 @@ namespace Weapons
                     if(currentDeg >= 360f)currentDeg -= 360f;
                     var currentDronePos = orbitRadius * new Vector2(Mathf.Cos(currentDeg * Mathf.Deg2Rad),Mathf.Sin(currentDeg * Mathf.Deg2Rad)) + (Vector2)applyingShip.transform.position;
                     drone.transform.position = currentDronePos;
+                })
+                .AddTo(drone);
+            float currentDroneShotInterval = (int)applyingShip.uniqueStatController.GetUniqueStat<DroneStatSet>().droneShotInterval.Value;
+            Observable.Timer(TimeSpan.FromSeconds(currentDroneShotInterval))
+                .Repeat()
+                .Subscribe(_=>
+                {
+                    
                 })
                 .AddTo(drone);
             }
