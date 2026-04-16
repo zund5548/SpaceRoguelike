@@ -28,8 +28,6 @@ namespace Ships
         public Stat shotIntervalReduction;
         public Stat shieldResistance;
         public Stat hullResistance;
-        /// <summary>一度に発射する弾の数</summary>
-        public Stat projectileNum;
         public UniqueStatController uniqueStatController = new();
         public ShipEventController shipEventController = new();
         public Stat GetStat(StatType type)
@@ -41,8 +39,7 @@ namespace Ships
                 StatType.Hull => maxHullPoint,
                 StatType.ShieldResistance => shieldResistance,
                 StatType.HullResistance => hullResistance,
-                StatType.ProjectileNum => projectileNum,
-                StatType.ShotInterval => shotIntervalReduction,
+                StatType.ShotIntervalReduction => shotIntervalReduction,
                 _ => null
             };
         }
@@ -91,7 +88,6 @@ namespace Ships
             shieldResistance = new Stat(shipData.shieldResistance);
             hullResistance = new Stat(shipData.hullResistance);
             currentPower = new Stat(shipData.power);
-            projectileNum = new Stat(shipData.projectileNum);
             shotIntervalReduction = new Stat(0f);
         }
         

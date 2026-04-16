@@ -18,7 +18,7 @@ MonoBehaviour:
   maxShieldPoint: 200
   hullResistance: 5
   shieldResistance: 5
-  power: 10
+  power: 5
   projectileNum: 0
   speed: 5
   weaponData:
@@ -30,9 +30,11 @@ MonoBehaviour:
       type: {class: DroneLaunch, ns: Weapons, asm: Assembly-CSharp}
       data:
         droneObject: {fileID: 5459487165565507037, guid: 1f5761bf836c797469816aa9a04b9d2a, type: 3}
+        projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
         range: 10
         projectileSpeed: 10
         shotInterval: 6
-        orbitRadius: 2
+        orbitRadius: 1
         droneNum: 3
         droneLifetime: 5
+        droneShotInterval: 1

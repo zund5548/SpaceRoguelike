@@ -21,6 +21,7 @@ namespace Weapons
         public float hitTime;
         public float errorRadius;
         [Header("Unique Stat")]
+        public int missileNum;
         public float explosionRadius;
         public float explosionDamageMod;
         private struct MissileState
@@ -36,6 +37,7 @@ namespace Weapons
             applyingShip.uniqueStatController.AddUniqueStat(
                 new MissileStatSet
                 {
+                    missileNum = new(missileNum),
                     explosionRadius = new(explosionRadius),
                     explosionDamageMod = new(explosionDamageMod)
                 });
@@ -56,7 +58,8 @@ namespace Weapons
             
             Vector2 currentTargetPos = targetObject.transform.position;
             GameObject targetShip = targetObject;
-            for(int i = 0;i < (int)applyingShip.projectileNum.Value;i++)
+            int currentMissileNum = (int)applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().missileNum.Value;
+            for(int i = 0;i < currentMissileNum;i++)
             {
                 Vector2 errorOffset =  UnityEngine.Random.Range(0f,errorRadius) * RandomUnitVector();
                 var missileProjectile = UnityEngine.Object.Instantiate(projectile);

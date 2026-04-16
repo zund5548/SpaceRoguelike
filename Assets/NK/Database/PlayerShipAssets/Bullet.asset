@@ -35,3 +35,4 @@ MonoBehaviour:
         shotInterval: 0.5
         angleDif: 3
         burstNum: 1
+        projectileNum: 1

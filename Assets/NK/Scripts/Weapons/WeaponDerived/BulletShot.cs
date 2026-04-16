@@ -20,18 +20,21 @@ namespace Weapons
         public float angleDif;//弾と弾の間の角(deg)
         [Header("unique stat")]
         public float burstNum;
+        public int projectileNum;
         public override void SetUniqueStat(Ship applyingShip)
         {
             applyingShip.uniqueStatController.AddUniqueStat(
             new BulletStatSet
             {
+                projectileNum = new(projectileNum),
                 burstNum = new(burstNum),
             });
         }
         public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
-            float currentDeg = -angleDif * ((int)applyingShip.projectileNum.Value -1) /2f;
-            for(int i = 0;i < (int)applyingShip.projectileNum.Value;i++)
+            int currentProjectileNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().projectileNum.Value;
+            float currentDeg = -angleDif * (currentProjectileNum -1) /2f;
+            for(int i = 0;i < currentProjectileNum;i++)
             {
                 var bullet = UnityEngine.Object.Instantiate(projectile);
                 bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
@@ -52,22 +55,42 @@ namespace Weapons
         public override void ShootAction(GameObject applyingShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
-            bool isRight = true;
+            // //bool isRight = true;
+            // var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            // int currentBurstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().burstNum.Value;
+            // Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+            //     .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.05f)).Take(currentBurstNum))
+            //     .Repeat()
+            //     .Subscribe(_ =>
+            //     {
+            //         //applyingShip.GetNearestOpponet();
+            //         if(!applyingShipObject || !applyingShip.GetNearestOpponet())return;
+            //         if(Vector2.Distance(applyingShipObject.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
+            //         Shoot(applyingShipObject,applyingShip);
+            //         applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{dealingShip = applyingShip});
+            //         //isRight = !isRight;
+            //     })
+            //     .AddTo(applyingShipObject);
+            ShootLoop(applyingShip).Subscribe().AddTo(applyingShipObject);
+            
+        }
+        private IObservable<long> ShootLoop(Ship applyingShip)
+        {
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             int currentBurstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().burstNum.Value;
-            Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
-                .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.05f)).Take(currentBurstNum))
-                .Repeat()
-                .Subscribe(_ =>
+            return Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+                .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.05f)).Take(currentBurstNum).Do(i =>
                 {
-                    applyingShip.GetNearestOpponet();
-                    if(!applyingShipObject || !applyingShip.GetNearestOpponet())return;
-                    if(Vector2.Distance(applyingShipObject.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
-                    Shoot(applyingShipObject,applyingShip);
+                    if(!applyingShip.gameObject || !applyingShip.GetNearestOpponet())return;
+                    if(Vector2.Distance(applyingShip.gameObject.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
+                    Shoot(applyingShip.gameObject,applyingShip);
                     applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{dealingShip = applyingShip});
-                    isRight = !isRight;
+                }).Last())
+                .Do(_ =>
+                {
+                    
                 })
-                .AddTo(applyingShipObject);
+                .SelectMany(_=> ShootLoop(applyingShip));
         }
     }
 }

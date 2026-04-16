@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
   m_Name: PnA
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u88C5\u586B1"
+  itemName: "\u88C5\u586B\uFF11"
   itemIcon: {fileID: 0}
-  itemTier: 0
+  itemTier: 1
   maxNum: 1
   itemEffectList:
-  - {fileID: 11400000, guid: c5aaf6fa13d533f4a9d290081a11a28a, type: 2}
+  - {fileID: 11400000, guid: d32e20df68bf98d4ebb59dcc593a3fc5, type: 2}

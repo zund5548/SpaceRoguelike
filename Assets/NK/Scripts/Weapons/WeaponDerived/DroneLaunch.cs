@@ -14,6 +14,7 @@ namespace Weapons
     public class DroneLaunch : WeaponData
     {
         public GameObject droneObject;
+        public GameObject projectile;
         public float range;
         public float projectileSpeed;
         public float shotInterval;
@@ -78,10 +79,28 @@ namespace Weapons
                 .Repeat()
                 .Subscribe(_=>
                 {
-                    
+                    if(!applyingShip.gameObject || !applyingShip.GetNearestOpponet())return;
+                    if(Vector2.Distance(applyingShip.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
+                    DroneShoot(drone.transform.position,applyingShip);
                 })
                 .AddTo(drone);
-            }
+        }
+        private void DroneShoot(Vector2 dronePos,Ship applyingShip)
+        {
+            var bullet = UnityEngine.Object.Instantiate(projectile);
+            bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
+            bullet.transform.position = dronePos;
+            bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,false,true);
+            var v = (Vector2)applyingShip.GetNearestOpponet().transform.position - dronePos;
+            bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg);
+            bullet.UpdateAsObservable()
+                .Subscribe(_=>
+                {
+                    bullet.transform.position += projectileSpeed * bullet.transform.right * Time.deltaTime; 
+                    if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
+                })
+                .AddTo(bullet);
+        }
     }
 }
 
