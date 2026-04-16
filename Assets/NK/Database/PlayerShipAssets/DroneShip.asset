@@ -18,8 +18,8 @@ MonoBehaviour:
   maxShieldPoint: 200
   hullResistance: 5
   shieldResistance: 5
-  power: 5
-  projectileNum: 0
+  power: 10
+  critRate: 10
   speed: 5
   weaponData:
     rid: 5911334380801359948
@@ -34,7 +34,7 @@ MonoBehaviour:
         range: 10
         projectileSpeed: 10
         shotInterval: 6
-        orbitRadius: 1
+        orbitRadius: 0.75
         droneNum: 3
         droneLifetime: 5
         droneShotInterval: 1

@@ -62,6 +62,7 @@ namespace Managers
         }
         public  void ResetManager()
         {
+            isMapCreated = false;
             credit = 0;
             _stageFloorList.Clear();
             currentStageNode = null;

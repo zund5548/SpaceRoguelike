@@ -58,8 +58,8 @@ namespace Weapons
                     
                     if(endShipObject)
                     {
-                        if(startShipObject == applyingdShipObject)endShipObject.GetComponent<Ship>().DealDamage((int)applyingShip.currentPower.Value,applyingShip);
-                        else endShipObject.GetComponent<Ship>().DealDamage((int)(applyingShip.currentPower.Value / 2f),applyingShip);
+                        if(startShipObject == applyingdShipObject)endShipObject.GetComponent<Ship>().DealDamage((int)applyingShip.currentPower.Value,false,applyingShip);
+                        else endShipObject.GetComponent<Ship>().DealDamage((int)(applyingShip.currentPower.Value / 2f),false,applyingShip);
                         targetObjectList.Add(endShipObject);
                         SetChainLine(startShipObject,endShipObject);
                         startShipObject = endShipObject;

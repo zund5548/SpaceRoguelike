@@ -22,6 +22,7 @@ namespace Weapons
         public float errorRadius;
         [Header("Unique Stat")]
         public int missileNum;
+        public int missileBurstNum;
         public float explosionRadius;
         public float explosionDamageMod;
         private struct MissileState
@@ -38,6 +39,7 @@ namespace Weapons
                 new MissileStatSet
                 {
                     missileNum = new(missileNum),
+                    missileBurstNum = new(missileBurstNum),
                     explosionRadius = new(explosionRadius),
                     explosionDamageMod = new(explosionDamageMod)
                 });
@@ -47,8 +49,10 @@ namespace Weapons
             float rad = UnityEngine.Random.Range(-Mathf.PI,Mathf.PI);
             return new Vector2(Mathf.Cos(rad),Mathf.Sin(rad));
         }
+
         private void ShootMissile(GameObject applyingShipObject,Ship applyingShip,bool isRight)
         {
+            Debug.Log("a");
             GameObject targetObject = applyingShip.GetNearestOpponet();
             Vector2 initTargetPos = (Vector2)targetObject.transform.position;
             var v = initTargetPos - (Vector2)applyingShipObject.transform.position;
@@ -73,7 +77,7 @@ namespace Weapons
                         {
                             targetPos = initTargetPos + errorOffset,
                             acceleration = Vector2.zero,
-                            velocity = projectileSpeed * new Vector3(Mathf.Cos(initRad + initBurstRad * i),Mathf.Sin(initRad+ initBurstRad * i),0f),
+                            velocity = projectileSpeed * new Vector3(Mathf.Cos(initRad + initBurstRad * i),Mathf.Sin(initRad + initBurstRad * i),0f),
                             pos = applyingShipObject.transform.position,
                             period = hitTime + UnityEngine.Random.Range(-0.05f,0.05f)
                         },
@@ -163,7 +167,6 @@ namespace Weapons
                         if(state.period <= 0f)
                         {
                             var p = state.targetPos;
-                            Debug.Log(applyingShip);
                             UnityEngine.Object.Destroy(missileProjectile);
                             SetExplosion(applyingShip,p);
                             
@@ -173,23 +176,26 @@ namespace Weapons
         }
         public override void ShootAction(GameObject applyingShipObject,Ship applyingShip)
         {
-            var targetObject = applyingShip.GetNearestOpponet();
-            if(applyingShip == null)return;
             bool isRight = true;
+            ShootMissileLoop(isRight,applyingShip).Subscribe().AddTo(applyingShipObject);
+        }
+        private IObservable<long> ShootMissileLoop(bool isRight,Ship applyingShip)
+        {
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
-            applyingShipObject.UpdateAsObservable()
-                .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
-                .ThrottleFirst(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
-                .Subscribe(_ =>
+            int currentBurstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().missileBurstNum.Value;
+            applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{dealingShip = applyingShip});
+            return Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+                .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.1f)).Take(currentBurstNum).Do(i =>
                 {
-                    applyingShip.GetNearestOpponet();
-                    if(!applyingShipObject || targetObject)return;
-                    if(Vector2.Distance(applyingShipObject.transform.position,targetObject.transform.position) > range) return;
-                    applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{dealingShip = applyingShip});
-                    ShootMissile(applyingShipObject,applyingShip,isRight);
+                    if(!applyingShip.gameObject || !applyingShip.GetNearestOpponet())return;
+                    if(Vector2.Distance(applyingShip.gameObject.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
+                    ShootMissile(applyingShip.gameObject,applyingShip,isRight);
+                }).Last())
+                .Do(_ =>
+                {
                     isRight = !isRight;
                 })
-                .AddTo(applyingShipObject);
+                .SelectMany(_=> ShootMissileLoop(isRight,applyingShip));
         }
         private void SetExplosion(Ship applyingShip,Vector2 pos)
         {
@@ -199,8 +205,6 @@ namespace Weapons
             var ExplosionSc = explosionRadiusObject.GetComponent<Explosion>();
             ExplosionSc.SetExplosion(applyingShip,(int)applyingShip.currentPower.Value,applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value);
         }
-        
-        
     }
 }
 

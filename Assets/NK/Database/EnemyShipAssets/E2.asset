@@ -19,7 +19,6 @@ MonoBehaviour:
   hullResistance: 5
   shieldResistance: 5
   power: 10
-  projectileNum: 3
   speed: 1
   weaponData:
     rid: 8997316271938470205
@@ -35,3 +34,4 @@ MonoBehaviour:
         shotInterval: 1
         angleDif: 5
         burstNum: 1
+        projectileNum: 3

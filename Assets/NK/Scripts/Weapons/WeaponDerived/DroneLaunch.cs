@@ -22,7 +22,7 @@ namespace Weapons
         [Header("unique stat")]
         public int droneNum;
         public int droneLifetime;
-        public int droneShotInterval;
+        public float droneShotInterval;
         public override void SetUniqueStat(Ship applyingShip)
         {
             applyingShip.uniqueStatController.AddUniqueStat(
@@ -35,7 +35,8 @@ namespace Weapons
         }
         public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
-            for(int i = 0;i < droneNum;i++)
+            int currentDroneNum = (int)applyingShip.uniqueStatController.GetUniqueStat<DroneStatSet>().droneNum.Value;
+            for(int i = 0;i < currentDroneNum;i++)
             {
                 SetDroneFeature(i,applyingShip);
             }
@@ -54,7 +55,8 @@ namespace Weapons
         }
         public void SetDroneFeature(int k,Ship applyingShip)
         {
-            float deg = 360f / droneNum * k;
+            int currentDroneNum = (int)applyingShip.uniqueStatController.GetUniqueStat<DroneStatSet>().droneNum.Value;
+            float deg = 360f / currentDroneNum * k;
             float currentDeg = deg;
             var drone = UnityEngine.Object.Instantiate(droneObject);
             drone.transform.position = orbitRadius  * new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg * Mathf.Deg2Rad)) + (Vector2)applyingShip.transform.position;
@@ -68,22 +70,24 @@ namespace Weapons
                 })
                 .Subscribe(_ =>
                 {
+                    if(!applyingShip)return;
                     currentDeg += 90f * Time.deltaTime;
                     if(currentDeg >= 360f)currentDeg -= 360f;
                     var currentDronePos = orbitRadius * new Vector2(Mathf.Cos(currentDeg * Mathf.Deg2Rad),Mathf.Sin(currentDeg * Mathf.Deg2Rad)) + (Vector2)applyingShip.transform.position;
                     drone.transform.position = currentDronePos;
                 })
                 .AddTo(drone);
-            float currentDroneShotInterval = (int)applyingShip.uniqueStatController.GetUniqueStat<DroneStatSet>().droneShotInterval.Value;
+            float currentDroneShotInterval = applyingShip.uniqueStatController.GetUniqueStat<DroneStatSet>().droneShotInterval.Value;
             Observable.Timer(TimeSpan.FromSeconds(currentDroneShotInterval))
                 .Repeat()
                 .Subscribe(_=>
                 {
                     if(!applyingShip.gameObject || !applyingShip.GetNearestOpponet())return;
                     if(Vector2.Distance(applyingShip.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
+                    if(!drone)return;
                     DroneShoot(drone.transform.position,applyingShip);
                 })
-                .AddTo(drone);
+                .AddTo(applyingShip.gameObject);
         }
         private void DroneShoot(Vector2 dronePos,Ship applyingShip)
         {

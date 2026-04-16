@@ -24,6 +24,7 @@ namespace Ships
         public Stat maxShieldPoint{get; private set;}
         public Stat maxHullPoint{get; private set;}
         public Stat currentPower;
+        public Stat critRate;
         /// <summary>砲撃間隔の減少(%)</summary>
         public Stat shotIntervalReduction;
         public Stat shieldResistance;
@@ -35,6 +36,7 @@ namespace Ships
             return type switch
             {
                 StatType.Power => currentPower,
+                StatType.CritRate => critRate,
                 StatType.Shield => maxShieldPoint,
                 StatType.Hull => maxHullPoint,
                 StatType.ShieldResistance => shieldResistance,
@@ -83,6 +85,7 @@ namespace Ships
                 return;
             }
             currentPower = new Stat(shipData.power);
+            critRate = new Stat(shipData.critRate);
             maxShieldPoint = new Stat(shipData.maxShieldPoint); 
             maxHullPoint = new Stat(shipData.maxHullPoint);
             shieldResistance = new Stat(shipData.shieldResistance);
@@ -155,23 +158,24 @@ namespace Ships
         /// <summary>このshipにダメージを与える</summary>
         /// <param name="power">ダメージ量</param>
         /// <param name="dealtShip">ダメージを与えた船</param>
-        public void DealDamage(int power,Ship dealtShip = null)
+        public void DealDamage(int power,bool isCrit,Ship dealtShip = null)
         {
             bool isShieldDamaged = false;
             //Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
             int actualPower = power;
             if(currentShieldPoint > 0)
             {
-                actualPower = (int)(actualPower  - shieldResistance.Value) > 0 ? (int)(actualPower - shieldResistance.Value) : 0;
+                //actualPower = (int)(actualPower  - shieldResistance.Value) > 0 ? (int)(actualPower - shieldResistance.Value) : 0;
+                actualPower = (int)(actualPower * (100f - shieldResistance.Value)/100f) > 0 ?  (int)(actualPower * (100f - shieldResistance.Value)/100f):0;
                 if(currentShieldPoint > actualPower)
                 {
-                    ShipManager.Instance.SetDamagevalue(actualPower,transform.position,true);
+                    ShipManager.Instance.SetDamagevalue(actualPower,transform.position,true,isCrit);
                     currentShieldPoint -= actualPower;
                     actualPower = 0;
                 }
                 else
                 {
-                    ShipManager.Instance.SetDamagevalue(currentShieldPoint,transform.position,true);
+                    ShipManager.Instance.SetDamagevalue(currentShieldPoint,transform.position,true,isCrit);
                     actualPower -= currentShieldPoint;
                     currentShieldPoint = 0;
                 }
@@ -179,17 +183,18 @@ namespace Ships
             }
             if(currentHullPoint > 0)
             {
-                actualPower = (int)(actualPower - hullResistance.Value) > 0 ? (int)(actualPower - hullResistance.Value) : 0;
+                //actualPower = (int)(actualPower - hullResistance.Value) > 0 ? (int)(actualPower - hullResistance.Value) : 0;
+                actualPower = (int)(actualPower * (100f - hullResistance.Value)/100f) > 0 ?  (int)(actualPower * (100f - hullResistance.Value)/100f):0;
                 if(isShieldDamaged && actualPower <= 0)return;
                 if(currentHullPoint > actualPower)
                 {
-                    ShipManager.Instance.SetDamagevalue(actualPower,transform.position,false);
+                    ShipManager.Instance.SetDamagevalue(actualPower,transform.position,false,isCrit);
                     currentHullPoint -= actualPower;
                     actualPower = 0;
                 }
                 else
                 {
-                    ShipManager.Instance.SetDamagevalue(currentHullPoint,transform.position,false);
+                    ShipManager.Instance.SetDamagevalue(currentHullPoint,transform.position,false,isCrit);
                     actualPower -= currentHullPoint;
                     currentHullPoint = 0;
                 }

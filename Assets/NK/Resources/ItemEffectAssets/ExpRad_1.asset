@@ -15,5 +15,5 @@ MonoBehaviour:
   description: "\u7206\u767A\u534A\u5F84\u304C1\u5897\u52A0\u3059\u308B"
   isPlayers: 1
   value: 1
-  missileShotStatType: 0
+  missileShotStatType: 2
   modType: 0

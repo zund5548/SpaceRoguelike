@@ -43,7 +43,9 @@ namespace Projectiles
                 bool b2 = gameObject.CompareTag("EnemyExplosion") && hitCols[i].gameObject.CompareTag("PlayerShip");
                 if(b1 || b2)
                 {
-                    hitCols[i].gameObject.GetComponent<Ship>().DealDamage(_power,_dealtShip);
+                    bool isCrit = UnityEngine.Random.Range(1,1000) < _dealtShip.critRate.Value * 10;
+                    int truePower = isCrit ? _power * 2 : _power;
+                    hitCols[i].gameObject.GetComponent<Ship>().DealDamage(truePower,isCrit,_dealtShip);
                     Debug.DrawLine(transform.position,hitCols[i].gameObject.transform.position,Color.red,1f);
                 }
             }

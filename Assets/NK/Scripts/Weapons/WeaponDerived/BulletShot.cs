@@ -72,7 +72,6 @@ namespace Weapons
             //     })
             //     .AddTo(applyingShipObject);
             ShootLoop(applyingShip).Subscribe().AddTo(applyingShipObject);
-            
         }
         private IObservable<long> ShootLoop(Ship applyingShip)
         {

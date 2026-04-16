@@ -162,6 +162,7 @@ namespace Managers
         {
             ShipManager.Instance.DeleteAllPlayer();
             _GameClearCanvas.SetActive(true);
+            GManager.Instance.ResetManager();
         }
         private IEnumerator ClearCoroutine()
         {
@@ -219,6 +220,7 @@ namespace Managers
         public List<Item>  GetRandomItem(List<Item> ownedItems,int count)
         {
             return allItemList.Except(ownedItems).OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
+            //return allItemList.OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
         }
         
     }

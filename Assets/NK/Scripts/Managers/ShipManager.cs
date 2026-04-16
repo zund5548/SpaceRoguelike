@@ -203,7 +203,7 @@ namespace Managers
         /// <summary>ステージを経るにつれて敵艦を強化</summary>
         public void SetEnemyStatBuff(Ship enemyShip)
         {
-            int k = GManager.Instance.currentStageNode.floorStageNum % 2;
+            int k = GManager.Instance.currentStageNode.floorStageNum / 2;
             if(k == 0)return;
             enemyShip.GetStat(StatType.Hull).AddModifier(new StatModifier(k * 50f,ModType.Percent));
             enemyShip.GetStat(StatType.Shield).AddModifier(new StatModifier(k * 50f,ModType.Percent));
@@ -231,7 +231,7 @@ namespace Managers
             return bossShipObject;
         }
 
-        public void SetDamagevalue(int value,Vector2 worldPos,bool onShield)
+        public void SetDamagevalue(int value,Vector2 worldPos,bool onShield,bool isCrit)
         {
             var display = Instantiate(damageValueDisplay);
             //位置
@@ -242,7 +242,8 @@ namespace Managers
             display.rectTransform.anchoredPosition = localPos + 25f * new Vector2(Mathf.Cos(randDeg * Mathf.Deg2Rad),Mathf.Sin(randDeg * Mathf.Deg2Rad));
             //色と値
             var textMesh = display.GetComponent<TextMeshProUGUI>();
-            textMesh.text = onShield?$"<color={"#1EE3DA"}>{value}</color>":value.ToString();
+            string txt = onShield?$"<color={"#1EE3DA"}>{value}</color>":value.ToString();
+            textMesh.text = isCrit ? txt + (onShield ? $"<color={"#1EE3DA"}>{"!"}</color>" : "!") : txt;
             display.UpdateAsObservable()
                 .Delay(TimeSpan.FromSeconds(0.5f))
                 .Subscribe(_ =>

@@ -15,5 +15,5 @@ MonoBehaviour:
   description: "\u901A\u5E38\u5F3E\u306E\u30D0\u30FC\u30B9\u30C8\u56DE\u6570\u304C1\u5897\u52A0\u3059\u308B"
   isPlayers: 1
   value: 1
-  bulletShotStatType: 0
+  bulletShotStatType: 1
   modType: 0

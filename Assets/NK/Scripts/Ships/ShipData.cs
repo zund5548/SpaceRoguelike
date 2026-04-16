@@ -25,7 +25,7 @@ namespace Ships
         public int hullResistance;
         public int shieldResistance;
         public int power;
-        public int projectileNum;
+        public float critRate;
         public float speed;
         [SerializeReference,SubclassSelector]
         public WeaponData weaponData;

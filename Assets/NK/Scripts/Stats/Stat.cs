@@ -46,6 +46,7 @@ namespace Stats
     public enum StatType
     {
         Power,
+        CritRate,
         Shield,
         Hull,
         ShieldResistance,

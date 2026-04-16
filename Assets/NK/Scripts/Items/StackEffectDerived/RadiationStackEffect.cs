@@ -30,7 +30,7 @@ namespace Items
                     .TakeUntil(Observable.Timer(TimeSpan.FromSeconds(lastTime)))
                     .Subscribe(_ =>
                     {
-                        ownerShip.DealDamage((int)dotDamage);
+                        ownerShip.DealDamage((int)dotDamage,false);
                     })
                     .AddTo(ownerShip);
             }

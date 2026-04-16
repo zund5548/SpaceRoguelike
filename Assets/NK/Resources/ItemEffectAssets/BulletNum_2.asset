@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a97b8b36a3e9747a1f5e7efb5549c9, type: 3}
   m_Name: BulletNum_2
   m_EditorClassIdentifier: Assembly-CSharp::Items.BulletStatModify
-  description: "\u5F3E\u6570\u304C2\u5897\u52A0\u3059\u308B"
+  description: "\u901A\u5E38\u5F3E\u306E\u5F3E\u6570\u304C2\u5897\u52A0\u3059\u308B"
   isPlayers: 1
   value: 2
   bulletShotStatType: 0

@@ -103,7 +103,10 @@ namespace Weapons
                 if(!hitCols[i])continue;
                 bool b1 = laserObject.CompareTag("PlayerProjectile") && hitCols[i].gameObject.CompareTag("EnemyShip");
                 bool b2 = laserObject.CompareTag("EnemyProjectile") && hitCols[i].gameObject.CompareTag("PlayerShip");
-                if(b1 || b2)hitCols[i].gameObject.GetComponent<Ship>().DealDamage((int)applyingShip.currentPower.Value,applyingShip);
+                int power = (int)applyingShip.currentPower.Value;
+                bool isCrit = UnityEngine.Random.Range(1,1000) < applyingShip.critRate.Value * 10;
+                int truePower =  isCrit ? power * 2 : power;
+                if(b1 || b2)hitCols[i].gameObject.GetComponent<Ship>().DealDamage(truePower,isCrit,applyingShip);
             }
         }
         public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)

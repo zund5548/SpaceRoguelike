@@ -37,7 +37,9 @@ namespace Projectiles
                 if(!isDamagedOnce)
                 {
                     var ship = collision.gameObject.GetComponent<Ship>();
-                    ship.DealDamage(_power,_dealtShip);
+                    bool isCrit = Random.Range(1,1000) < _dealtShip.critRate.Value * 10;
+                    int truePower =  isCrit? _power * 2 : _power;
+                    ship.DealDamage(truePower,isCrit,_dealtShip);
                     if(!_isPiercing)isDamagedOnce = true;
                 }
                 if(!_isPiercing)Destroy(gameObject);

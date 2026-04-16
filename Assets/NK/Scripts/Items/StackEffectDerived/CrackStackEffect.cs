@@ -22,7 +22,7 @@ namespace Items
             if(stackNum >= threshold)
             {
                 stackNum %= threshold;
-                ownerShip.DealDamage((int)(constantDamage + (ownerShip.currentHullPoint + ownerShip.currentShieldPoint) * 0.1f));
+                ownerShip.DealDamage((int)(constantDamage + (ownerShip.currentHullPoint + ownerShip.currentShieldPoint) * 0.1f),false);
             }
         }
     }

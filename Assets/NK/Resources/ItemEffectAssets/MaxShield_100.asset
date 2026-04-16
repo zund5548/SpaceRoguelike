@@ -15,5 +15,5 @@ MonoBehaviour:
   description: "\u30B7\u30FC\u30EB\u30C9\u5024\u304C100\u5897\u52A0\u3059\u308B\u3002"
   isPlayers: 1
   value: 100
-  statType: 1
+  statType: 2
   modType: 0
