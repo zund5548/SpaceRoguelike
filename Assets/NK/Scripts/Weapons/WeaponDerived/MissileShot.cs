@@ -86,10 +86,10 @@ namespace Weapons
                                 if(state.period > 0)
                                 {
                                     //加速度計算
-                                    if(applyingShip && targetShip)
-                                    {
-                                        currentTargetPos = targetShip.transform.position;
-                                    }
+                                    // if(applyingShip && targetShip)
+                                    // {
+                                    //     currentTargetPos = targetShip.transform.position;
+                                    // }
                                     state.targetPos = currentTargetPos + errorOffset;
                                     state.acceleration = (state.targetPos - state.pos - state.velocity * state.period)  * 2f / (state.period * state.period);
                                     state.period -= Time.deltaTime;
@@ -146,10 +146,10 @@ namespace Weapons
                                 if(state.period > 0)
                                 {
                                     //加速度計算
-                                    if(applyingShip && targetShipObject)
-                                    {
-                                        currentTargetPos = targetShipObject.transform.position;
-                                    }
+                                    // if(applyingShip && targetShipObject)
+                                    // {
+                                    //     currentTargetPos = targetShipObject.transform.position;
+                                    // }
                                     state.targetPos = currentTargetPos + errorOffset;
                                     state.acceleration = (state.targetPos - state.pos - state.velocity * state.period)  * 2f / (state.period * state.period);
                                     state.period -= Time.deltaTime;

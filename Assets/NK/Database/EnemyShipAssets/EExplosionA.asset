@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
-  m_Name: E3
+  m_Name: EExplosionA
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
   shipName: 
   shipType: 0

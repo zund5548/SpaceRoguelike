@@ -88,6 +88,12 @@ namespace Weapons
                     DroneShoot(drone.transform.position,applyingShip);
                 })
                 .AddTo(applyingShip.gameObject);
+            
+            applyingShip.gameObject.OnDestroyAsObservable()
+                .Subscribe(_ =>
+                {
+                    UnityEngine.Object.Destroy(drone);
+                });
         }
         private void DroneShoot(Vector2 dronePos,Ship applyingShip)
         {
