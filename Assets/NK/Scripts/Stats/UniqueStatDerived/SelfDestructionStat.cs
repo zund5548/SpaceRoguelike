@@ -13,7 +13,7 @@ namespace UniqueStatDerived
             ExplosionRadius,
             ChargeTime
         }
-        public Stat explosionRadius = new(1);
+        public Stat explosionRadius = new(5);
         public Stat chargeTime = new(0);
         public Stat GetStat(SelfDestructionStatType type)
         {

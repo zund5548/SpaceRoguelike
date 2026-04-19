@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf8ef852fed94f44844032dd7601072, type: 3}
   m_Name: DroneNum_1
   m_EditorClassIdentifier: Assembly-CSharp::Items.DroneStatModify
-  description: "\u30C9\u30ED\u30FC\u30F3\u306E\u6570\u304C1\u5897\u52A0\u3059\u308B"
+  description: "\u30C9\u30ED\u30FC\u30F3\u6570+1"
   isPlayers: 1
   value: 1
   droneStatType: 0

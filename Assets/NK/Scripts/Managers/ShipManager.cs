@@ -24,7 +24,7 @@ namespace Managers
         public float _currentFleetDeg = 0f;
         //
         public float initPlayerSpeed;
-        Stat _playerSpeed;
+        public Stat _playerSpeed;
         public float turnRate;
         public List<ShipData> playerShipDataList = new List<ShipData>();
         //public List<ShipData> enemyShipDataList = new List<ShipData>();

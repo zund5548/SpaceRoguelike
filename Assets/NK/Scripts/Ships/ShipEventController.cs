@@ -31,7 +31,7 @@ namespace Ships
         {
             onShoot.OnNext(shipShotEvent);
         }
-        // 攻撃がヒットしたとき
+        // 攻撃がこの艦船にヒットしたとき
         private Subject<ShipDamageEvent> onHit = new Subject<ShipDamageEvent>();
         public IObservable<ShipDamageEvent> OnHit => onHit;
         public void PublishHit(ShipDamageEvent shipDamageEvent)

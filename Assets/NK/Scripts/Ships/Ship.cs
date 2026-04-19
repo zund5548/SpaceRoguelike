@@ -29,6 +29,7 @@ namespace Ships
         public Stat shotIntervalReduction;
         public Stat shieldResistance;
         public Stat hullResistance;
+        public Stat shotSpeed;
         public UniqueStatController uniqueStatController = new();
         public ShipEventController shipEventController = new();
         public Stat GetStat(StatType type)
@@ -42,6 +43,7 @@ namespace Ships
                 StatType.ShieldResistance => shieldResistance,
                 StatType.HullResistance => hullResistance,
                 StatType.ShotIntervalReduction => shotIntervalReduction,
+                StatType.ShotSpeed => shotSpeed,
                 _ => null
             };
         }
@@ -92,6 +94,7 @@ namespace Ships
             hullResistance = new Stat(shipData.hullResistance);
             currentPower = new Stat(shipData.power);
             shotIntervalReduction = new Stat(0f);
+            shotSpeed = new Stat(shipData.shotSpeed);
         }
         
         // public void SetCurrent()

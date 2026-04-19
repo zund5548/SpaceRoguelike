@@ -12,7 +12,6 @@ namespace Items
         public string itemName;
         public Sprite itemIcon;
         public int itemTier;//大きいほどいいもの
-        public int maxNum = 1;//最大所持数
         [SerializeReference]
         public List<ItemEffect> itemEffectList;
         /// <summary>すべてのitemEffectの説明をstringで返す</summary>

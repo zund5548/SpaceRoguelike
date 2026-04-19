@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2726dbffacddd4c937e0b61b8a26ff, type: 3}
-  m_Name: ExpRad_1
-  m_EditorClassIdentifier: Assembly-CSharp::Items.MissileStatModify
-  description: "\u7206\u767A\u534A\u5F84\u304C1\u5897\u52A0\u3059\u308B"
+  m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
+  m_Name: ShotSpeed_1
+  m_EditorClassIdentifier: Assembly-CSharp::Items.ValueModify
+  description: "\u5F3E\u306E\u521D\u901F+3"
   isPlayers: 1
-  value: 1
-  missileShotStatType: 2
+  value: 3
+  statType: 7
   modType: 0

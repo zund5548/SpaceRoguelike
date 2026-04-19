@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
   m_Name: ResistanceShield_5
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u30B7\u30FC\u30EB\u30C9\u62B5\u6297\u304C5\u5897\u52A0\u3059\u308B"
+  description: "\u30B7\u30FC\u30EB\u30C9\u62B5\u6297+5"
   isPlayers: 1
   value: 5
   statType: 4

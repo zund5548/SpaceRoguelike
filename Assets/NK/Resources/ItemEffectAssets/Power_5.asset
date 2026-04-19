@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
   m_Name: Power_5
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u653B\u6483\u529B\u304C5\u5897\u52A0\u3059\u308B"
+  description: "\u653B\u6483\u529B+5"
   isPlayers: 1
   value: 5
   statType: 0

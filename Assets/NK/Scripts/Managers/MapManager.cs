@@ -227,6 +227,7 @@ namespace Managers
             //allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();StageEncountAsset
             List<StageEncount> encountList = Resources.LoadAll<StageEncount>("StageEncountAsset").ToList();
             List<StageEncount> filteredEncountList;
+            int allFloorNum = GManager.Instance._floorNum;
             for(int i = 1;i < _floorList.Count-1;i++)
             {
                 for(int j = 0;j < _floorList[i].Count;j++)
@@ -236,13 +237,23 @@ namespace Managers
                     else _floorList[i][j].stageType = StageNode.StageType.Shop;
                     //if(i == 1)_floorList[i][j].stageType = StageNode.StageType.Shop;
                     //stageEncount代入
-                    filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
-                    _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];
+                    // filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
+                    // _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];
+                    _floorList[i][j].stageEncount = GetStageEncount(_floorList[i][j].stageType,i/(allFloorNum/3));
+                    //すべてのフロアを下から3分割して、上に行くほど敵の数が増える。
                 }
             }
             //bossStageNode
             filteredEncountList = encountList.Where(e=>e.stageType == _floorList[_floorList.Count-1][0].stageType).ToList();
             _floorList[_floorList.Count-1][0].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];
+        }
+        private StageEncount GetStageEncount(StageNode.StageType stageType,int dif)
+        {
+            List<StageEncount> encountList = Resources.LoadAll<StageEncount>("StageEncountAsset").ToList();
+            List<StageEncount> filteredEncountList;
+            filteredEncountList = encountList.Where(e=>e.stageType == stageType && e.dificulty == dif).ToList();
+            if(filteredEncountList.Count == 0)filteredEncountList = encountList.Where(e=>e.stageType == stageType).ToList();
+            return filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];
         }
         /// <summary>mapを元にボタンと線を生成</summary>
         void InstantiateMap()

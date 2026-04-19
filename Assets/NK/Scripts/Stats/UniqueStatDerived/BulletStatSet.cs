@@ -14,7 +14,7 @@ namespace Stats
             BurstNum,
         }
         public Stat projectileNum = new(1);
-        public Stat burstNum = new(0);
+        public Stat burstNum = new(1);
         public Stat GetStat(BulletStatType type)
         {
             return type switch

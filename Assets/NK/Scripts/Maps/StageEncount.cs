@@ -12,6 +12,10 @@ namespace Maps
     {
         public StageNode.StageType stageType;
         public Sprite icon;
+        /// <summary>
+        /// -1:難易度を必要としない
+        /// </summary>
+        public int dificulty;
         public virtual IEnumerator SetStageEncount()
         {
             yield return null;

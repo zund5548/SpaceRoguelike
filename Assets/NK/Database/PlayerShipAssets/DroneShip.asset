@@ -19,8 +19,9 @@ MonoBehaviour:
   hullResistance: 5
   shieldResistance: 5
   power: 10
-  critRate: 10
+  critRate: 5
   speed: 5
+  shotSpeed: 10
   weaponData:
     rid: 5911334380801359948
   references:

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
+  m_Name: DroLifB
+  m_EditorClassIdentifier: Assembly-CSharp::Items.Item
+  itemName: "\u30C9\u30ED\u30FC\u30F3\u5145\u96FB2"
+  itemIcon: {fileID: 0}
+  itemTier: 0
+  itemEffectList:
+  - {fileID: 11400000, guid: aa927a3ac2dd8b94996cb253199c7098, type: 2}

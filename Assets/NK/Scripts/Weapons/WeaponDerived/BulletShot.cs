@@ -15,7 +15,6 @@ namespace Weapons
     {
         public GameObject projectile;
         public float range;
-        public float projectileSpeed;
         public float shotInterval;
         public float angleDif;//弾と弾の間の角(deg)
         [Header("unique stat")]
@@ -45,7 +44,7 @@ namespace Weapons
                 bullet.UpdateAsObservable()
                     .Subscribe(_=>
                     {
-                        bullet.transform.position += projectileSpeed * bullet.transform.right * Time.deltaTime; 
+                        bullet.transform.position +=applyingShip.shotSpeed.Value* bullet.transform.right * Time.deltaTime; 
                         if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
                     })
                     .AddTo(bullet);
