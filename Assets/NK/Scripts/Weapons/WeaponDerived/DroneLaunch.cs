@@ -16,7 +16,6 @@ namespace Weapons
         public GameObject droneObject;
         public GameObject projectile;
         public float range;
-        public float projectileSpeed;
         public float shotInterval;
         public float orbitRadius;
         [Header("unique stat")]
@@ -106,7 +105,8 @@ namespace Weapons
             bullet.UpdateAsObservable()
                 .Subscribe(_=>
                 {
-                    bullet.transform.position += projectileSpeed * bullet.transform.right * Time.deltaTime; 
+                    float currentProjectileSpeed = applyingShip.shotSpeed.Value;
+                    bullet.transform.position += currentProjectileSpeed * bullet.transform.right * Time.deltaTime; 
                     if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
                 })
                 .AddTo(bullet);
