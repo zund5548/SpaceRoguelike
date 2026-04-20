@@ -183,7 +183,7 @@ namespace Weapons
         {
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             int currentBurstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().missileBurstNum.Value;
-            applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{dealingShip = applyingShip});
+            applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{shootingShip = applyingShip});
             return Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
                 .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.1f)).Take(currentBurstNum).Do(i =>
                 {

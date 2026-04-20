@@ -161,8 +161,10 @@ namespace Ships
         /// <summary>このshipにダメージを与える</summary>
         /// <param name="power">ダメージ量</param>
         /// <param name="dealtShip">ダメージを与えた船</param>
-        public void DealDamage(int power,bool isCrit,Ship dealtShip = null)
+        public void DealDamage(int power,bool isCritEnable,Ship dealtShip = null)
         {
+            int actualPowerSum = 0;
+            
             bool isShieldDamaged = false;
             //Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
             int actualPower = power;
@@ -170,38 +172,47 @@ namespace Ships
             {
                 //actualPower = (int)(actualPower  - shieldResistance.Value) > 0 ? (int)(actualPower - shieldResistance.Value) : 0;
                 actualPower = (int)(actualPower * (100f - shieldResistance.Value)/100f) > 0 ?  (int)(actualPower * (100f - shieldResistance.Value)/100f):0;
+                actualPowerSum += actualPower;
                 if(currentShieldPoint > actualPower)
                 {
-                    ShipManager.Instance.SetDamagevalue(actualPower,transform.position,true,isCrit);
+                    ShipManager.Instance.SetDamagevalue(actualPower,transform.position,true,isCritEnable);
                     currentShieldPoint -= actualPower;
                     actualPower = 0;
                 }
                 else
                 {
-                    ShipManager.Instance.SetDamagevalue(currentShieldPoint,transform.position,true,isCrit);
+                    ShipManager.Instance.SetDamagevalue(currentShieldPoint,transform.position,true,isCritEnable);
                     actualPower -= currentShieldPoint;
                     currentShieldPoint = 0;
                 }
                 isShieldDamaged = true;
             }
+           
             if(currentHullPoint > 0)
             {
                 //actualPower = (int)(actualPower - hullResistance.Value) > 0 ? (int)(actualPower - hullResistance.Value) : 0;
                 actualPower = (int)(actualPower * (100f - hullResistance.Value)/100f) > 0 ?  (int)(actualPower * (100f - hullResistance.Value)/100f):0;
+                actualPowerSum += actualPower;
                 if(isShieldDamaged && actualPower <= 0)return;
                 if(currentHullPoint > actualPower)
                 {
-                    ShipManager.Instance.SetDamagevalue(actualPower,transform.position,false,isCrit);
+                    ShipManager.Instance.SetDamagevalue(actualPower,transform.position,false,isCritEnable);
                     currentHullPoint -= actualPower;
                     actualPower = 0;
                 }
                 else
                 {
-                    ShipManager.Instance.SetDamagevalue(currentHullPoint,transform.position,false,isCrit);
+                    ShipManager.Instance.SetDamagevalue(currentHullPoint,transform.position,false,isCritEnable);
                     actualPower -= currentHullPoint;
                     currentHullPoint = 0;
                 }
             }
+            dealtShip.shipEventController.PublishDamaging(new ShipEventController.ShipDamagingEvent
+            {
+                targetShip = this,
+                dealingShip = dealtShip,
+                dealedDamageValue = actualPowerSum
+            });
             if(currentHullPoint == 0)
             {
                 if(!isPlayer)GManager.Instance.AddCredit(shipData.shipType);

@@ -305,15 +305,17 @@ namespace Managers
             foreach(var shipData in enemyWave.shipDataList)
             {
                 var shipObject = InstantiateEnemyShip(shipData);
-            }
-            //ここで敵のアイテムをロード
-            foreach(var shipObject in enemyShipObjectList)
-            {
                 var ship = shipObject.GetComponent<Ship>();
                 ship.SetCurrentSPHP();
                 ship.SetCurrentUniqueStat();
                 ship.SetCurrentWeapon();
-            }   
+                if(enemyShipObjectList.Count >= limit )yield return new WaitUntil(()=>enemyShipObjectList.Count < limit);
+            }
+            // //ここで敵のアイテムをロード
+            // foreach(var shipObject in enemyShipObjectList)
+            // {
+               
+            // }   
             yield return new WaitUntil(()=>enemyShipObjectList.Count == 0);
         }
 

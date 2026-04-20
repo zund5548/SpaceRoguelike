@@ -12,13 +12,13 @@ using UnityEngine.UI;
 namespace Items
 {
     /// <summary>スタックが溜まるとダメージ</summary>
+    [Serializable]
     public class CrackStackEffect:StackEffect
     {
         public int threshold = 5;
         public float constantDamage = 100f;
         public override void OnStackChanged()
         {
-            Debug.Log(stackNum);
             if(stackNum >= threshold)
             {
                 stackNum %= threshold;

@@ -82,7 +82,7 @@ namespace Weapons
                     if(!applyingShip.gameObject || !applyingShip.GetNearestOpponet())return;
                     if(Vector2.Distance(applyingShip.gameObject.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
                     Shoot(applyingShip.gameObject,applyingShip);
-                    applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{dealingShip = applyingShip});
+                    applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{shootingShip = applyingShip});
                 }).Last())
                 .Do(_ =>
                 {

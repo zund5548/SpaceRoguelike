@@ -14,27 +14,27 @@ namespace Items
         //stackの情報を読む
         public T GetStackEffect<T>() where T : StackEffect
         {
-            stackDic.TryGetValue(typeof(T), out var status);
-            return status as T;
+            stackDic.TryGetValue(typeof(T), out var stackEffect);
+            return stackEffect as T;
         }
         //新しいstackを与える
         public T AddStack<T>(Ship ownerShip) where T : StackEffect, new()
         {
             var type = typeof(T);
-            if (!stackDic.TryGetValue(type, out var status))
+            if (!stackDic.TryGetValue(type, out var stackEffect))
             {
-                status = new T();
-                status.ownerShip = ownerShip;
-                stackDic.Add(type, status);
+                stackEffect = new T();
+                stackEffect.ownerShip = ownerShip;
+                stackDic.Add(type, stackEffect);
             }
-            return (T)status;
+            return (T)stackEffect;
         }
         //stackを指定した数与える
         public void AddStackNum<T>(Ship ownerShip,int value) where T : StackEffect, new()
         {
-            var status = AddStack<T>(ownerShip);
-            status.AddStack(value);
-            status.OnStackChanged();
+            var stackEffect = AddStack<T>(ownerShip);
+            stackEffect.AddStack(value);
+            stackEffect.OnStackChanged();
         }
     }
 }

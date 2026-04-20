@@ -11,7 +11,8 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace Items
 {
-    /// <summary>スタックが溜まるとダメージ</summary>
+    /// <summary>スタックが溜まると移動不可</summary>
+    [Serializable]
     public class SurgeStackEffect:StackEffect
     {
         public int threshold = 5;

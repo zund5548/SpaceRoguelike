@@ -1,3 +1,4 @@
+using System;
 using Ships;
 using Stats;
 using UnityEngine;
@@ -6,6 +7,7 @@ using Weapons;
 namespace Items
 {
     /// <summary>スタックが溜まると追加で砲撃</summary>
+    [Serializable]
     public class AdditionalMissileStackEffect:StackEffect
     {
         public int threshold = 5;

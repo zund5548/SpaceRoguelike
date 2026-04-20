@@ -126,10 +126,10 @@ namespace Managers
         }
         private Dictionary<ShipData.ShipType,(int,int)> CreditTable = new Dictionary<ShipData.ShipType, (int, int)>
         {
-            {ShipData.ShipType.Frigate,(90,111)},
-            {ShipData.ShipType.EliteFrigate,(290,310)},
-            {ShipData.ShipType.Destroyer,(490,511)},
-            {ShipData.ShipType.EliteDestroyer,(790,811)},
+            {ShipData.ShipType.Frigate,(50,60)},
+            {ShipData.ShipType.EliteFrigate,(100,110)},
+            {ShipData.ShipType.Destroyer,(250,260)},
+            {ShipData.ShipType.EliteDestroyer,(300,310)},
         };
         public void AddCredit(ShipData.ShipType shipType)
         {

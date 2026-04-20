@@ -12,8 +12,9 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace Items
 {
-    /// <summary>スタックが溜まると数秒移動不可</summary>
-    public class RadiationStackEffect:StackEffect
+    /// <summary>スタックが溜まるとdotダメージ</summary>
+    [Serializable]
+    public class HeatStackEffect:StackEffect
     {
         public int threshold = 4;
         public float dotDamage = 10f;
