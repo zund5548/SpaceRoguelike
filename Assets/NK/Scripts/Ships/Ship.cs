@@ -230,7 +230,7 @@ namespace Ships
                     break;
                 }
             }
-            if(isPlayer && allyShipObjectList.Count == 0)EventManager.Instance.PublishFalse();
+            if(isPlayer && allyShipObjectList.Count == 0)EventManager.Instance.PublishFail();
             
             Destroy(gameObject);
         }

@@ -30,6 +30,7 @@ namespace Managers
         [Header("Canvas")]
         public GameObject _ResultCanvas;
         public GameObject _GameClearCanvas;
+        public GameObject _GameFailCanvas;
         public GameObject _ItemBannerCanvas;
         public GameObject _ShopItemBannerCanvas;
         public GameObject _UICanvas;
@@ -164,6 +165,11 @@ namespace Managers
             _GameClearCanvas.SetActive(true);
             GManager.Instance.ResetManager();
         }
+        public void GameFail()
+        {
+            _GameFailCanvas.SetActive(true);
+            GManager.Instance.ResetManager();
+        }
         private IEnumerator ClearCoroutine()
         {
             //アイテムの詳細をItemBannerButtonにセットする
@@ -173,6 +179,7 @@ namespace Managers
             _ResultCanvas.SetActive(true);
             yield break;
         }
+
         private IEnumerator SetItemCoroutine()
         { 
             _ItemBannerCanvas.SetActive(true);

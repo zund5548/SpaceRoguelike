@@ -18,7 +18,7 @@ MonoBehaviour:
   maxShieldPoint: 100
   hullResistance: 5
   shieldResistance: 5
-  power: 10
+  power: 15
   critRate: 5
   speed: 10
   shotSpeed: 10

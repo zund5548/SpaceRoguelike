@@ -29,11 +29,11 @@ namespace Managers
             onStageClear.OnNext(Unit.Default);
         }
         //失敗したとき
-        private static Subject<Unit> onStageFalse = new Subject<Unit>();
-        public static IObservable<Unit> OnStageFalse => onStageFalse;
-        public void PublishFalse()
+        private static Subject<Unit> onStageFail = new Subject<Unit>();
+        public static IObservable<Unit> OnStageFail => onStageFail;
+        public void PublishFail()
         {
-            onStageFalse.OnNext(Unit.Default);
+            onStageFail.OnNext(Unit.Default);
         }
         //ボスを倒したとき、
         private static Subject<Unit> onBossBeat= new Subject<Unit>();

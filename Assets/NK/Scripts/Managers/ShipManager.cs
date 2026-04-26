@@ -19,6 +19,7 @@ namespace Managers
 
         private GameObject _shipObject;
         private GameObject _bossObject;
+        private GameObject _warpEffectObject;
         //艦隊の基準点と回転
         public Vector2 _currentFleetPos = Vector2.zero;
         public float _currentFleetDeg = 0f;
@@ -76,6 +77,7 @@ namespace Managers
             //if(GManager.Instance.enemyShipDataList.Count != 0)enemyShipDataList = GManager.Instance.enemyShipDataList;
             _shipObject = (GameObject)Resources.Load("Ship");
             _bossObject = (GameObject)Resources.Load("BossShip");
+            _warpEffectObject = (GameObject)Resources.Load("WarpEffect");
             _cam = Camera.main;
             _playerSpeed = new(initPlayerSpeed);
             gameObject.UpdateAsObservable()
@@ -93,13 +95,20 @@ namespace Managers
                     //Debug.DrawRay(_currentFleetPos,new Vector2(Mathf.Cos(_currentFleetDeg * Mathf.Deg2Rad),Mathf.Sin(_currentFleetDeg * Mathf.Deg2Rad)));
                 })
                 .AddTo(gameObject);
+            gameObject.UpdateAsObservable()
+                .Where(_=>playerShipObjectList.Count == 0)
+                .Subscribe(_ =>
+                {
+                    EventManager.Instance.PublishFail();
+                })
+                .AddTo(gameObject);
             // foreach(var shipData in enemyShipDataList)
             // {
             //     InstantiateEnemyShip(shipData);
             // }  
             foreach(var shipData in playerShipDataList)
             {
-                var shipObject = InstantiatePlayerShip(shipData);
+                var shipObject = SpawnPlayerShip(shipData);
             }   
             foreach(var ship in playerShipList)
             {
@@ -118,7 +127,7 @@ namespace Managers
         }
         
         
-        private GameObject InstantiatePlayerShip(ShipData shipData)
+        private GameObject SpawnPlayerShip(ShipData shipData)
         {
             GameObject shipObject = Instantiate(_shipObject);
             playerShipObjectList.Add(shipObject);
@@ -153,14 +162,11 @@ namespace Managers
         
         float separationDist = 1f;//敵艦同士の間隔
         float separationStrength = 0.5f;//敵艦同士の間隔以下に近づいたときにこの速度で遠ざける
-        private GameObject InstantiateEnemyShip(ShipData shipData)
+        private GameObject SpawnEnemyShip(ShipData shipData,Vector2 pos)
         {
             GameObject shipObject = Instantiate(_shipObject);
             Ship ship = shipObject.GetComponent<Ship>();
             enemyShipObjectList.Add(shipObject);
-
-            float randDeg = UnityEngine.Random.Range(-180f,180f);
-            var pos = 10f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
             float deg = Mathf.Atan2(-pos.y,-pos.x) * Mathf.Rad2Deg;
             shipObject.transform.position = pos;
             shipObject.transform.eulerAngles = new Vector3(0f,0f,deg);
@@ -196,10 +202,30 @@ namespace Managers
             //Shipをinstantiate → SetSPHPでStatのインスタンスをつくる →　Statにmodifier追加 →　Statを反映
             ship.SetStats();
             SetEnemyStatBuff(ship);
+            ship.SetCurrentSPHP();
+            ship.SetCurrentUniqueStat();
+            ship.SetCurrentWeapon();
             //ship.shipData.weaponData.SetUniqueStat(ship);
-            
             return shipObject;
         }   
+
+        private IEnumerator SpawnWithDelay(ShipData shipData,int limit)
+        {
+            if(enemyShipObjectList.Count >= limit)yield return new WaitUntil(()=>enemyShipObjectList.Count < limit);
+            float randDeg = UnityEngine.Random.Range(-180f,180f);
+            var pos = 10f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
+            var warpEffect = Instantiate(_warpEffectObject,pos,Quaternion.identity);
+            Observable.Timer(TimeSpan.FromSeconds(1f))
+                .Subscribe(_ =>
+                {
+                    Destroy(warpEffect);
+                })
+                .AddTo(warpEffect);
+            yield return new WaitForSeconds(0.5f);
+            SpawnEnemyShip(shipData,pos);
+            yield return null;
+        }
+        
         /// <summary>ステージを経るにつれて敵艦を強化</summary>
         public void SetEnemyStatBuff(Ship enemyShip)
         {
@@ -207,9 +233,9 @@ namespace Managers
             if(k == 0)return;
             enemyShip.GetStat(StatType.Hull).AddModifier(new StatModifier(k * 50f,ModType.Percent));
             enemyShip.GetStat(StatType.Shield).AddModifier(new StatModifier(k * 50f,ModType.Percent));
-            enemyShip.GetStat(StatType.Power).AddModifier(new StatModifier(k * 50f,ModType.Percent));
+            enemyShip.GetStat(StatType.Power).AddModifier(new StatModifier(k * 25f,ModType.Percent));
         }
-        public GameObject InstantiateBossShip(ShipData shipData,BossType bossType)
+        public GameObject SpawnBossShip(ShipData shipData,BossType bossType)
         {
             GameObject bossShipObject = Instantiate(_bossObject);
             BossShip bossShip = bossShipObject.GetComponent<BossShip>();
@@ -243,6 +269,8 @@ namespace Managers
             //色と値
             var textMesh = display.GetComponent<TextMeshProUGUI>();
             string txt = onShield?$"<color={"#1EE3DA"}>{value}</color>":value.ToString();
+            //isCritが真:値の表記に!をつける
+            //onShieldが真:値の色をtarquoiseにする
             textMesh.text = isCrit ? txt + (onShield ? $"<color={"#1EE3DA"}>{"!"}</color>" : "!") : txt;
             display.UpdateAsObservable()
                 .Delay(TimeSpan.FromSeconds(0.5f))
@@ -304,12 +332,7 @@ namespace Managers
         {
             foreach(var shipData in enemyWave.shipDataList)
             {
-                var shipObject = InstantiateEnemyShip(shipData);
-                var ship = shipObject.GetComponent<Ship>();
-                ship.SetCurrentSPHP();
-                ship.SetCurrentUniqueStat();
-                ship.SetCurrentWeapon();
-                if(enemyShipObjectList.Count >= limit )yield return new WaitUntil(()=>enemyShipObjectList.Count < limit);
+                yield return SpawnWithDelay(shipData,limit);
             }
             // //ここで敵のアイテムをロード
             // foreach(var shipObject in enemyShipObjectList)
@@ -321,7 +344,7 @@ namespace Managers
 
         public IEnumerator BossEncountCoroutine(ShipData shipData,BossType bossType)
         {
-            var bossShipObject = InstantiateBossShip(shipData,bossType);
+            var bossShipObject = SpawnBossShip(shipData,bossType);
             yield return new WaitUntil(()=>!bossShipObject);
         }
 
