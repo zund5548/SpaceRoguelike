@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 60a72a691dd3ea945bb6cb5088ce7d2d
+guid: e95c941ab142249439e58ef6adadd5b6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 58678122819832762
-    second: battleIcon_0
-  - first:
-      213: 416913610575512047
-    second: battleIcon_1
+      213: -8599915379491133568
+    second: surge_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: battleIcon
+      name: surge
       rect:
         serializedVersion: 2
         x: 0
@@ -118,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: abb43ca117770d000800000000000000
-      internalID: 58678122819832762
+      spriteID: 0872303d686f6a880800000000000000
+      internalID: -8599915379491133568
       vertices: []
       indices: 
       edges: []
@@ -128,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8ee47cef985e8cf4ea5963404e525e1f
+    spriteID: f580fdd25dc47514ea19029085496554
     internalID: 0
     vertices: []
     indices: 
@@ -138,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      battleIcon: 58678122819832762
-      battleIcon_1: 416913610575512047
+      surge: -8599915379491133568
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

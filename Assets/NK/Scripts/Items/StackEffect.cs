@@ -11,7 +11,7 @@ namespace Items
         [HideInInspector]
         public int stackNum = 0;
         [HideInInspector]
-        public float possibility = 25;
+        public float possibility = 100;
         [HideInInspector]
         public bool isAbletoAdd = true;
         public void AddStack(int value)

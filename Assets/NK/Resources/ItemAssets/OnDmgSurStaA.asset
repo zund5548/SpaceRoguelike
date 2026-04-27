@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: OnDmgCraStaA
+  m_Name: OnDmgSurStaA
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u8CAB\u901A\u5F3E1"
+  itemName: "\u5E2F\u96FB\u5F3E1"
   itemIcon: {fileID: 0}
   itemTier: 1
   itemEffectList:
-  - {fileID: 11400000, guid: 444bf7160a188e54cb996684f625d0f2, type: 2}
+  - {fileID: 11400000, guid: 74505b7f54a7a6048896645c7cf639af, type: 2}

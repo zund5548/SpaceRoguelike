@@ -16,7 +16,8 @@ namespace Items
     public class SurgeStackEffect:StackEffect
     {
         public int threshold = 5;
-        public float cantMoveTime = 3f;
+        public float moveDisableTime = 3f;
+        public GameObject effectIconObject;
         public override void OnStackChanged()
         {
             Debug.Log(stackNum);
@@ -25,13 +26,21 @@ namespace Items
                 stackNum %= threshold;
                 if(ownerShip.isAbleToMove)ownerShip.isAbleToMove = false;
                 if(isAbletoAdd)isAbletoAdd = false;
-                Observable.Timer(TimeSpan.FromSeconds(cantMoveTime))
+                GameObject iconObject = null;
+                if(effectIconObject)iconObject = UnityEngine.Object.Instantiate(effectIconObject,ownerShip.transform.position,Quaternion.identity);
+                Observable.Timer(TimeSpan.FromSeconds(moveDisableTime))
                     .Subscribe(_ =>
                     {
+                        if(iconObject)UnityEngine.Object.Destroy(iconObject);
                         ownerShip.isAbleToMove = true;
                         isAbletoAdd = true;
                     })
                     .AddTo(ownerShip);
+                ownerShip.gameObject.OnDestroyAsObservable()
+                    .Subscribe(_ =>
+                    {
+                        if(iconObject)UnityEngine.Object.Destroy(iconObject);
+                    });
             }
         }
     }

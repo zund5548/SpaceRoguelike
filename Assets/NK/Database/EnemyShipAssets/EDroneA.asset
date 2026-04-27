@@ -33,8 +33,8 @@ MonoBehaviour:
         droneObject: {fileID: 5459487165565507037, guid: 1f5761bf836c797469816aa9a04b9d2a, type: 3}
         projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
         range: 15
-        shotInterval: 6
+        shotInterval: 10
         orbitRadius: 1
         droneNum: 3
-        droneLifetime: 5
-        droneShotInterval: 0.5
+        droneLifetime: 8
+        droneShotInterval: 2
