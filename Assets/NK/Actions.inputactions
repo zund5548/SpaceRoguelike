@@ -57,6 +57,17 @@
                 },
                 {
                     "name": "",
+                    "id": "2b88c153-dd1b-433d-940d-60184d46fdb1",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "fe549923-b7af-4b9c-baeb-eb74ff1a6d6a",
                     "path": "<Pointer>/position",
                     "interactions": "",

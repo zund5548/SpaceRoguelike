@@ -17,13 +17,13 @@ namespace Maps
         public List<EnemyWave> enemyWaveList = new();
         public override IEnumerator SetStageEncount()
         {
-            EventManager.OnStageFail
+            EventManager.Instance.FailDisposable = EventManager.OnStageFail
                 .Subscribe(_ =>
                 {
                     StageManager.Instance.GameFail();
                 })
                 .AddTo(EventManager.Instance);
-            EventManager.OnStageClear
+            EventManager.Instance.ClearDisposable = EventManager.OnStageClear
                 .Subscribe(_ =>
                 {
                     StageManager.Instance.StageClear();

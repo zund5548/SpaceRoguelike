@@ -207,7 +207,7 @@ namespace Ships
                     currentHullPoint = 0;
                 }
             }
-            dealtShip.shipEventController.PublishDamaging(new ShipEventController.ShipDamagingEvent
+            if(dealtShip)dealtShip.shipEventController.PublishDamaging(new ShipEventController.ShipDamagingEvent
             {
                 targetShip = this,
                 dealingShip = dealtShip,

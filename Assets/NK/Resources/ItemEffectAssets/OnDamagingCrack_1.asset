@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d053089fe77535842934db9a0c4bbf76, type: 3}
   m_Name: OnDamagingCrack_1
   m_EditorClassIdentifier: Assembly-CSharp::Items.OnDamageAddStackEffect
-  description: 
+  description: "\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u305F\u3068\u304D\u300125%\u306E\u78BA\u7387\u3067Crack+1"
   isPlayers: 1
   stackEffect:
     rid: 5911334513785176279

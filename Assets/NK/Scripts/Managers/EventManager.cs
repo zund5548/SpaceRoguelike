@@ -28,6 +28,7 @@ namespace Managers
         {
             onStageClear.OnNext(Unit.Default);
         }
+        public IDisposable ClearDisposable;
         //失敗したとき
         private static Subject<Unit> onStageFail = new Subject<Unit>();
         public static IObservable<Unit> OnStageFail => onStageFail;
@@ -35,6 +36,7 @@ namespace Managers
         {
             onStageFail.OnNext(Unit.Default);
         }
+        public IDisposable FailDisposable;
         //ボスを倒したとき、
         private static Subject<Unit> onBossBeat= new Subject<Unit>();
         public static IObservable<Unit> OnBossBeat => onBossBeat;

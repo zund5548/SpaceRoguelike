@@ -9,6 +9,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
+using Weapons;
 
 namespace Managers
 {
@@ -156,17 +157,20 @@ namespace Managers
         }
         public void StageClear()
         {
+            if(EventManager.Instance.FailDisposable != null)EventManager.Instance.FailDisposable.Dispose();
             StartCoroutine(ClearCoroutine());
             ShipManager.Instance.DeleteAllPlayer();
         }
         public void GameClear()
         {
+            if(EventManager.Instance.FailDisposable != null)EventManager.Instance.FailDisposable.Dispose();
             ShipManager.Instance.DeleteAllPlayer();
             _GameClearCanvas.SetActive(true);
             GManager.Instance.ResetManager();
         }
         public void GameFail()
         {
+            if(EventManager.Instance.ClearDisposable != null)EventManager.Instance.ClearDisposable.Dispose();
             _GameFailCanvas.SetActive(true);
             GManager.Instance.ResetManager();
         }
@@ -226,8 +230,40 @@ namespace Managers
         }
         public List<Item>  GetRandomItem(List<Item> ownedItems,int count)
         {
-            return allItemList.Except(ownedItems).OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
-            //return allItemList.OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
+            List<Item> itemList = new();
+            List<Item> tmpItemList = new();
+            List<Type> uniqueStatModifyList = new List<Type>
+            {
+                typeof(BulletStatModify),
+                typeof(MissileStatModify),
+                typeof(DroneStatModify),
+            };
+            itemList = allItemList
+                .Where(item =>
+                    !item.itemEffectList.Any(effect =>
+                        uniqueStatModifyList.Any(t => t.IsAssignableFrom(effect.GetType()))
+                    )
+                )
+                .ToList();
+            foreach(var shipData in GManager.Instance.playerShipDataList)
+            {
+                switch(shipData.weaponData)
+                {
+                    case BulletShot:
+                        tmpItemList = allItemList.Where(item => item.itemEffectList.Any(itemEffect => itemEffect is BulletStatModify)).ToList();
+                        break;
+                    case MissileShot:
+                        tmpItemList = allItemList.Where(item => item.itemEffectList.Any(itemEffect => itemEffect is MissileStatModify)).ToList();
+                        break;
+                    case DroneLaunch:
+                        tmpItemList = allItemList.Where(item => item.itemEffectList.Any(itemEffect => itemEffect is DroneStatModify)).ToList();
+                        break;
+                }
+                itemList = itemList.Union(tmpItemList).ToList();
+                tmpItemList.Clear();
+            }
+            return itemList.Except(ownedItems).OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
+            //return allItemList.OrderBy(x => .Random.value).Take(count).ToList();
         }
         
     }
