@@ -20,9 +20,9 @@ namespace Items
             foreach(var ship in shipList)
             {
                 ship.shipEventController.OnDamage
-                    .Subscribe(e =>
+                    .Subscribe(sde =>
                     {
-                        AddSelectedStack(stackEffect,e);
+                        AddSelectedStack(stackEffect,sde);
                     })
                     .AddTo(ship.gameObject);
             }

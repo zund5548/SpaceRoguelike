@@ -11,13 +11,13 @@ namespace Items
         [HideInInspector]
         public int stackNum = 0;
         [HideInInspector]
-        public float possibility = 100;
+        public float possibility = 25;
         [HideInInspector]
         public bool isAbletoAdd = true;
         public void AddStack(int value)
         {
             if(!isAbletoAdd)return;
-            if(UnityEngine.Random.Range(1,1000) > possibility*10)
+            if(UnityEngine.Random.Range(1,1000) > possibility * 10)
             {
                 Debug.Log("add stack:miss");
                 return;

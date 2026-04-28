@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8569698ca67d4be499f8e2e990b634df, type: 3}
-  m_Name: BattleB1
+  m_Name: Battle1A
   m_EditorClassIdentifier: Assembly-CSharp::Maps.BattleEncount
   stageType: 1
   icon: {fileID: 58678122819832762, guid: 60a72a691dd3ea945bb6cb5088ce7d2d, type: 3}
-  dificulty: 1
+  dificulty: 0
   oneWaveLimit: 5
   enemyWaveList:
   - shipDataList:
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
-    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
+  - shipDataList:
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
@@ -30,11 +30,4 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
-    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
-    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
-    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
-    - {fileID: 11400000, guid: 6585b2343df6407478c3d9e267955b8e, type: 2}
-    - {fileID: 11400000, guid: 6585b2343df6407478c3d9e267955b8e, type: 2}
-    - {fileID: 11400000, guid: 6585b2343df6407478c3d9e267955b8e, type: 2}
-    - {fileID: 11400000, guid: f559d1cae67a86b4abbe93fed42baba3, type: 2}
-    - {fileID: 11400000, guid: f559d1cae67a86b4abbe93fed42baba3, type: 2}
+    - {fileID: 11400000, guid: 845985820aab32f43997b329d24b7648, type: 2}

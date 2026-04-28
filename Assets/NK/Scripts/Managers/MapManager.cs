@@ -240,7 +240,7 @@ namespace Managers
                     // filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
                     // _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];
                     _floorList[i][j].stageEncount = GetStageEncount(_floorList[i][j].stageType,i/(allFloorNum/3));
-                    //すべてのフロアを下から3分割して、上に行くほど敵の数が増える。
+                    //すべてのフロアを下から3分割して、上に行くほど難易度が上がる
                 }
             }
             //bossStageNode

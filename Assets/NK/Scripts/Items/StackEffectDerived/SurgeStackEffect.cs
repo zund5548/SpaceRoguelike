@@ -17,10 +17,11 @@ namespace Items
     {
         public int threshold = 5;
         public float moveDisableTime = 3f;
-        public GameObject effectIconObject;
+        public GameObject effectIconObject = null;
         public override void OnStackChanged()
         {
             Debug.Log(stackNum);
+            if(!effectIconObject)effectIconObject = (GameObject)Resources.Load("Surge");
             if(stackNum >= threshold)
             {
                 stackNum %= threshold;

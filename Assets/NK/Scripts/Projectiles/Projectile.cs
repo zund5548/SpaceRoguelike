@@ -6,7 +6,7 @@ namespace Projectiles
 {
     public class Projectile : MonoBehaviour
     {
-        public Ship _dealtShip;
+        public Ship _dealerShip;
         //public Ship _ship;
         public int _power{get;private set;}
         public bool _isPiercing{get;private set;}
@@ -23,7 +23,7 @@ namespace Projectiles
         {
             _power = power;
             _isPiercing = isPiercing;
-            _dealtShip = ship;
+            _dealerShip = ship;
             _isDamaging = isDamaging;
         }
         private void OnTriggerEnter2D(Collider2D collision)
@@ -37,9 +37,9 @@ namespace Projectiles
                 if(!isDamagedOnce)
                 {
                     var ship = collision.gameObject.GetComponent<Ship>();
-                    bool isCrit = Random.Range(1,1000) < _dealtShip.critRate.Value * 10;
+                    bool isCrit = Random.Range(1,1000) < _dealerShip.critRate.Value * 10;
                     int truePower =  isCrit? _power * 2 : _power;
-                    ship.DealDamage(truePower,isCrit,_dealtShip);
+                    ship.DealDamage(truePower,isCrit,_dealerShip);
                     if(!_isPiercing)isDamagedOnce = true;
                 }
                 if(!_isPiercing)Destroy(gameObject);

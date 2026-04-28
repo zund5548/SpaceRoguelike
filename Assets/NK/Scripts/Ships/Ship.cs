@@ -160,8 +160,8 @@ namespace Ships
         }
         /// <summary>このshipにダメージを与える</summary>
         /// <param name="power">ダメージ量</param>
-        /// <param name="dealtShip">ダメージを与えた船</param>
-        public void DealDamage(int power,bool isCritEnable,Ship dealtShip = null)
+        /// <param name="dealerShip">ダメージを与えた船</param>
+        public void DealDamage(int power,bool isCritEnable,Ship dealerShip = null)
         {
             int actualPowerSum = 0;
             
@@ -193,7 +193,11 @@ namespace Ships
                 //actualPower = (int)(actualPower - hullResistance.Value) > 0 ? (int)(actualPower - hullResistance.Value) : 0;
                 actualPower = (int)(actualPower * (100f - hullResistance.Value)/100f) > 0 ?  (int)(actualPower * (100f - hullResistance.Value)/100f):0;
                 actualPowerSum += actualPower;
-                if(isShieldDamaged && actualPower <= 0)return;
+                if(isShieldDamaged && actualPower <= 0)
+                {
+                    SetDamagingEvent(dealerShip,actualPowerSum);
+                    return;
+                }
                 if(currentHullPoint > actualPower)
                 {
                     ShipManager.Instance.SetDamagevalue(actualPower,transform.position,false,isCritEnable);
@@ -207,17 +211,21 @@ namespace Ships
                     currentHullPoint = 0;
                 }
             }
-            if(dealtShip)dealtShip.shipEventController.PublishDamaging(new ShipEventController.ShipDamagingEvent
-            {
-                targetShip = this,
-                dealingShip = dealtShip,
-                dealedDamageValue = actualPowerSum
-            });
+            SetDamagingEvent(dealerShip,actualPowerSum);
             if(currentHullPoint == 0)
             {
                 if(!isPlayer)GManager.Instance.AddCredit(shipData.shipType);
                 Kill();
             }
+        }
+        private void SetDamagingEvent(Ship dealerShip,int power)
+        {
+            if(dealerShip)dealerShip.shipEventController.PublishDamaging(new ShipEventController.ShipDamagingEvent
+            {
+                targetShip = this,
+                dealingShip = dealerShip,
+                dealtDamageValue = power
+            });
         }
         public void Kill()
         {

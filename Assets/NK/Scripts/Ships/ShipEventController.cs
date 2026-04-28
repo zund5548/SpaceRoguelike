@@ -14,7 +14,7 @@ namespace Ships
         {
             public Ship targetShip;//受けた船
             public Ship dealingShip;//与えた船
-            public int dealedDamageValue;//与えたダメージ
+            public int dealtDamageValue;//与えたダメージ
         }
         public void PublishDamaging(ShipDamagingEvent shipDamageEvent)
         {
