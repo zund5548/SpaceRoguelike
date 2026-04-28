@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4a97b8b36a3e9747a1f5e7efb5549c9, type: 3}
-  m_Name: BulletBurstNum_1
-  m_EditorClassIdentifier: Assembly-CSharp::Items.BulletStatModify
-  description: "\u901A\u5E38\u5F3E\u306E\u30D0\u30FC\u30B9\u30C8\u56DE\u6570+1"
+  m_Script: {fileID: 11500000, guid: 7d2726dbffacddd4c937e0b61b8a26ff, type: 3}
+  m_Name: MissileBurstNum_2
+  m_EditorClassIdentifier: Assembly-CSharp::Items.MissileStatModify
+  description: "\u30DF\u30B5\u30A4\u30EB\u306E\u30D0\u30FC\u30B9\u30C8\u56DE\u6570+2"
   isPlayers: 1
-  value: 1
-  bulletShotStatType: 1
+  value: 2
+  missileShotStatType: 1
   modType: 0

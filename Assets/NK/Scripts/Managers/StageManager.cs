@@ -54,7 +54,10 @@ namespace Managers
             // _ItemBannerButton = (GameObject)Resources.Load("ItemBannerButton");
             if(GManager.Instance.currentStageNode.stageType == StageNode.StageType.Boss)SetGameClear();
             else SetToMapButton();
-            allItemList = Resources.LoadAll<Item>("ItemAssets").ToList();
+            allItemList = Resources.LoadAll<Item>("ItemAssets")
+                .Where(item => !item.itemEffectList
+                .Any(effect => effect == null))
+                .ToList();
             InstantiateStage(GManager.Instance.currentStageNode);
             gameObject.UpdateAsObservable()
                 .Delay(TimeSpan.FromSeconds(3f))
@@ -240,9 +243,7 @@ namespace Managers
             };
             itemList = allItemList
                 .Where(item =>
-                    !item.itemEffectList.Any(effect =>
-                        uniqueStatModifyList.Any(t => t.IsAssignableFrom(effect.GetType()))
-                    )
+                    !item.itemEffectList.Any(itemEffect => uniqueStatModifyList.Any(usm => usm.IsAssignableFrom(itemEffect.GetType())))
                 )
                 .ToList();
             foreach(var shipData in GManager.Instance.playerShipDataList)

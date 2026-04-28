@@ -28,3 +28,4 @@ MonoBehaviour:
         isAbletoAdd: 1
         threshold: 5
         moveDisableTime: 3
+        effectIconObject: {fileID: 6353168423622975401, guid: 827ea3e02f18ee545b5f931caaa7ae75, type: 3}

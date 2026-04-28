@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
   shipName: E1
   shipType: 0
-  maxHullPoint: 100
-  maxShieldPoint: 100
+  maxHullPoint: 50
+  maxShieldPoint: 50
   hullResistance: 0
   shieldResistance: 0
   power: 20

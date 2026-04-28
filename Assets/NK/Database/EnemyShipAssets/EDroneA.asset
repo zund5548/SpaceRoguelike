@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
   shipName: 
   shipType: 2
-  maxHullPoint: 300
-  maxShieldPoint: 300
+  maxHullPoint: 200
+  maxShieldPoint: 200
   hullResistance: 10
   shieldResistance: 10
   power: 25
@@ -37,4 +37,4 @@ MonoBehaviour:
         orbitRadius: 1
         droneNum: 3
         droneLifetime: 8
-        droneShotInterval: 2
+        droneShotInterval: 1

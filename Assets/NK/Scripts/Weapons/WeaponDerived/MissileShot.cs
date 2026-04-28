@@ -15,6 +15,7 @@ namespace Weapons
     {
         public GameObject projectile;
         public GameObject explosion;
+        public bool isHoming;
         public float range;
         public float projectileSpeed;
         public float shotInterval;
@@ -86,10 +87,10 @@ namespace Weapons
                                 if(state.period > 0)
                                 {
                                     //加速度計算
-                                    // if(applyingShip && targetShip)
-                                    // {
-                                    //     currentTargetPos = targetShip.transform.position;
-                                    // }
+                                    if(isHoming &&applyingShip && targetShip)
+                                    {
+                                        currentTargetPos = targetShip.transform.position;
+                                    }
                                     state.targetPos = currentTargetPos + errorOffset;
                                     state.acceleration = (state.targetPos - state.pos - state.velocity * state.period)  * 2f / (state.period * state.period);
                                     state.period -= Time.deltaTime;
@@ -117,6 +118,7 @@ namespace Weapons
         public override void Shoot(GameObject applyingShipObject,Ship applyingShip)
         {
             var targetShipObject = applyingShip.GetNearestOpponet();
+            if(!targetShipObject)return;
             Vector2 initTargetPos = (Vector2)targetShipObject.transform.position;
             var v = initTargetPos - (Vector2)applyingShipObject.transform.position;
             float targetRad = Mathf.Atan2(v.y,v.x);

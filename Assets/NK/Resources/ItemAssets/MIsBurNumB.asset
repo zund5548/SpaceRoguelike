@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: PowerA
+  m_Name: MIsBurNumB
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u5F3E\u982D\u5F37\u53161"
+  itemName: "\u9023\u7D9A\u88C5\u586B2"
   itemIcon: {fileID: 0}
-  itemTier: 0
-  maxNum: 1
+  itemTier: 2
   itemEffectList:
-  - {fileID: 11400000, guid: 08c164f4daf08664ba7215e05a849451, type: 2}
+  - {fileID: 11400000, guid: 414aee042fa3f094e974c5aa0b44365a, type: 2}

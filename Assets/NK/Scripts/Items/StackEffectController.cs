@@ -32,7 +32,6 @@ namespace Items
         //stackを指定した数与える
         public void AddStackNum<T>(Ship ownerShip,int value) where T : StackEffect, new()
         {
-            Debug.Log("stack");
             var stackEffect = AddStack<T>(ownerShip);
             stackEffect.AddStack(value);
             stackEffect.OnStackChanged();
