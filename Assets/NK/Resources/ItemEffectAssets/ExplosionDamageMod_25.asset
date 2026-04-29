@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2726dbffacddd4c937e0b61b8a26ff, type: 3}
-  m_Name: ExplosionRadius_1
+  m_Name: ExplosionDamageMod_25
   m_EditorClassIdentifier: Assembly-CSharp::Items.MissileStatModify
-  description: "\u7206\u767A\u534A\u5F84+1"
+  description: "\u7206\u767A\u30C0\u30E1\u30FC\u30B8\u500D\u7387+25"
   isPlayers: 1
-  value: 1
-  missileShotStatType: 2
-  modType: 0
+  value: 25
+  missileShotStatType: 3
+  modType: 1

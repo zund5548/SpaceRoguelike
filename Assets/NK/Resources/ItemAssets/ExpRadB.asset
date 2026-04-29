@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: ExpRadA
+  m_Name: ExpRadB
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u30B7\u30A7\u30EB\u62E1\u65631"
+  itemName: "\u30B7\u30A7\u30EB\u62E1\u65632"
   itemIcon: {fileID: 0}
   itemTier: 0
   itemEffectList:
-  - {fileID: 11400000, guid: 188b162117fed084b8887ad016a208bb, type: 2}
+  - {fileID: 11400000, guid: 4e8a4071cf3d19347abc820030b4a9ce, type: 2}

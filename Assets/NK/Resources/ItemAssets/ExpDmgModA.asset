@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: MisNumC
+  m_Name: ExpDmgModA
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u30B5\u30A4\u30ED\u89E3\u653E3"
+  itemName: "\u5727\u529B\u89E3\u653E1"
   itemIcon: {fileID: 0}
-  itemTier: 3
+  itemTier: 0
   itemEffectList:
-  - {fileID: 11400000, guid: 5d0e0f79c36d8064e8a6e272230079c2, type: 2}
+  - {fileID: 11400000, guid: fdc51cab52295144c9abccb57e280a6e, type: 2}

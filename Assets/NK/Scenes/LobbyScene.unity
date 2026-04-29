@@ -1391,7 +1391,7 @@ MonoBehaviour:
     stageEncount: {fileID: 0}
   passsedStageNodes: []
   playerShipDataList:
-  - {fileID: 11400000, guid: 711f45f932b6b8843afa9322a239a78d, type: 2}
+  - {fileID: 11400000, guid: 4fd1fa40b4ffe1d4b95284cfc53e4c54, type: 2}
   enemyShipDataList: []
   itemList: []
   currentShipHullPoint: 
