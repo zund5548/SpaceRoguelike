@@ -21,7 +21,7 @@ namespace Items
                 ship.shipEventController.OnShoot
                     .Subscribe(_ =>
                     {
-                        ship.stackEffectController.AddStackNum<AdditionalMissileStackEffect>(ship,1);
+                        ship.stackEffectController.AddStackNum<AdditionalMissileStackEffect>(ship,ship,1);
                     })
                     .AddTo(ship.gameObject);
             }

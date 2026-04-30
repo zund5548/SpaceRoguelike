@@ -18,7 +18,7 @@ MonoBehaviour:
   maxShieldPoint: 200
   hullResistance: 5
   shieldResistance: 5
-  power: 30
+  power: 1
   critRate: 5
   speed: 5
   shotSpeed: 1
@@ -32,5 +32,5 @@ MonoBehaviour:
       data:
         projectile: {fileID: 2904888318123126438, guid: 9e7e7811405f6ed4ea6f0198f353de97, type: 3}
         range: 20
-        projectileSpeed: 50
+        projectileSpeed: 75
         shotInterval: 2
