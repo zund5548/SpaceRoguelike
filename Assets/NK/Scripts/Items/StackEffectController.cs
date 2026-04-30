@@ -18,21 +18,22 @@ namespace Items
             return stackEffect as T;
         }
         //新しいstackを与える
-        public T AddStack<T>(Ship ownerShip) where T : StackEffect, new()
+        public T AddStack<T>(Ship dealerShip,Ship ownerShip) where T : StackEffect, new()
         {
             var type = typeof(T);
             if (!stackDic.TryGetValue(type, out var stackEffect))
             {
                 stackEffect = new T();
                 stackEffect.ownerShip = ownerShip;
+                stackEffect.dealerShip = dealerShip;
                 stackDic.Add(type, stackEffect);
             }
             return (T)stackEffect;
         }
         //stackを指定した数与える
-        public void AddStackNum<T>(Ship ownerShip,int value) where T : StackEffect, new()
+        public void AddStackNum<T>(Ship dealerShip,Ship ownerShip,int value) where T : StackEffect, new()
         {
-            var stackEffect = AddStack<T>(ownerShip);
+            var stackEffect = AddStack<T>(dealerShip,ownerShip);
             stackEffect.AddStack(value);
             stackEffect.OnStackChanged();
         }

@@ -20,7 +20,6 @@ namespace Items
         public GameObject effectIconObject = null;
         public override void OnStackChanged()
         {
-            Debug.Log(stackNum);
             if(!effectIconObject)effectIconObject = (GameObject)Resources.Load("Surge");
             if(stackNum >= threshold)
             {

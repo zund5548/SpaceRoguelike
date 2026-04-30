@@ -13,7 +13,7 @@ namespace Ships
         public struct ShipDamagingEvent
         {
             public Ship targetShip;//受けた船
-            public Ship dealingShip;//与えた船
+            public Ship dealertShip;//与えた船
             public int dealtDamageValue;//与えたダメージ
         }
         public void PublishDamaging(ShipDamagingEvent shipDamageEvent)

@@ -1,25 +1,13 @@
 fileFormatVersion: 2
-guid: 3098e6223e85e494789dc162d8279763
+guid: 60a72a691dd3ea945bb6cb5088ce7d2d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8189583078808796246
-    second: battle3_0
+      213: 58678122819832762
+    second: battleIcon_0
   - first:
-      213: 8274338959232048886
-    second: battle3_1
-  - first:
-      213: 9015372048890587203
-    second: battle3_2
-  - first:
-      213: 1063007069426499391
-    second: battle3_3
-  - first:
-      213: -1828143053579484023
-    second: battle3_4
-  - first:
-      213: -8810241142632041768
-    second: battle3_5
+      213: 416913610575512047
+    second: battleIcon_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -63,7 +51,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 1024
@@ -115,7 +103,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: battle
+      name: battleIcon
       rect:
         serializedVersion: 2
         x: 0
@@ -130,8 +118,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 65cb2fe7b6e37a170800000000000000
-      internalID: 8189583078808796246
+      spriteID: abb43ca117770d000800000000000000
+      internalID: 58678122819832762
       vertices: []
       indices: 
       edges: []
@@ -140,7 +128,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1d99682936e23234cb401b8448cd5f5d
+    spriteID: 8ee47cef985e8cf4ea5963404e525e1f
     internalID: 0
     vertices: []
     indices: 
@@ -150,12 +138,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      battle: 8189583078808796246
-      battle3_1: 8274338959232048886
-      battle3_2: 9015372048890587203
-      battle3_3: 1063007069426499391
-      battle3_4: -1828143053579484023
-      battle3_5: -8810241142632041768
+      battleIcon: 58678122819832762
+      battleIcon_1: 416913610575512047
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

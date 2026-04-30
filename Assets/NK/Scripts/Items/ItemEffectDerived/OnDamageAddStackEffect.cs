@@ -32,13 +32,13 @@ namespace Items
             switch(stackEffect)
             {
                 case AdditionalMissileStackEffect:
-                    sde.targetShip.stackEffectController.AddStackNum<AdditionalMissileStackEffect>(sde.targetShip,1);
+                    sde.targetShip.stackEffectController.AddStackNum<AdditionalMissileStackEffect>(sde.dealertShip,sde.targetShip,1);
                     break;
                 case CrackStackEffect:
-                    sde.targetShip.stackEffectController.AddStackNum<CrackStackEffect>(sde.targetShip,1);
+                    sde.targetShip.stackEffectController.AddStackNum<CrackStackEffect>(sde.dealertShip,sde.targetShip,1);
                     break;
                 case SurgeStackEffect:
-                    sde.targetShip.stackEffectController.AddStackNum<SurgeStackEffect>(sde.targetShip,1);
+                    sde.targetShip.stackEffectController.AddStackNum<SurgeStackEffect>(sde.dealertShip,sde.targetShip,1);
                     break;
             }
         }

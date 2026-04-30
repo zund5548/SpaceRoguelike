@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 60a72a691dd3ea945bb6cb5088ce7d2d
+guid: 36009a740254b39448452bc2f01c5f7d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 58678122819832762
-    second: battleIcon_0
-  - first:
-      213: 416913610575512047
-    second: battleIcon_1
+      213: 8795366620419746748
+    second: crack_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: battleIcon
+      name: crack_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,15 +108,15 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: abb43ca117770d000800000000000000
-      internalID: 58678122819832762
+      spriteID: cbb6277675b6f0a70800000000000000
+      internalID: 8795366620419746748
       vertices: []
       indices: 
       edges: []
@@ -128,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8ee47cef985e8cf4ea5963404e525e1f
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -138,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      battleIcon: 58678122819832762
-      battleIcon_1: 416913610575512047
+      crack_0: 8795366620419746748
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

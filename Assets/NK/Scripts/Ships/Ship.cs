@@ -223,7 +223,7 @@ namespace Ships
             if(dealerShip)dealerShip.shipEventController.PublishDamaging(new ShipEventController.ShipDamagingEvent
             {
                 targetShip = this,
-                dealingShip = dealerShip,
+                dealertShip = dealerShip,
                 dealtDamageValue = power
             });
         }
