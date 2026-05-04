@@ -44,6 +44,7 @@ namespace Weapons
         }
         public override void Shoot(GameObject applyingdShipObject, Ship applyingShip)
         {
+            if(applyingShip.isSurged)return;
             // GameObject startShipObject = applyingShip.targetObject;
             // GameObject endShipObject = null;
             GameObject startShipObject = applyingdShipObject;

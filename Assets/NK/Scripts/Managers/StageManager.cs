@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Items;
 using Maps;
+using Ships;
 using TMPro;
 using UniRx;
 using UniRx.Triggers;
@@ -20,12 +21,17 @@ namespace Managers
         public Button GameClearButton;
         //private bool isBannerPushed = false;
         private bool isBannerPushed = false;
+        private bool isShipDataBannerPushed = false;
         [Header("prefab")]
         public GameObject NoticeObject;
+        public GameObject _planetObject;
+        public GameObject _ItemBannerButton;
+        public GameObject _ShipDataBannerButton;
         [Header("UI")]
         public TextMeshProUGUI _CurrentFloorText;
         public TextMeshProUGUI _StageNameText;
-        public RectTransform _RewardContent;
+        public RectTransform _ItemRewardContent;
+        public RectTransform _ShipDataRewardContent;
         public RectTransform _ShopScrollContent;
         public GameObject _LeaveShopButton;
         [Header("Canvas")]
@@ -34,9 +40,11 @@ namespace Managers
         public GameObject _GameFailCanvas;
         public GameObject _ItemBannerCanvas;
         public GameObject _ShopItemBannerCanvas;
+        public GameObject _ShipDataBannerCanvas;
         public GameObject _UICanvas;
-        public GameObject _planetObject;
-        public GameObject _ItemBannerButton;
+
+       
+
         public List<Item> allItemList;
         List<GameObject> planetObjectList = new();
         void Awake()
@@ -186,7 +194,6 @@ namespace Managers
             _ResultCanvas.SetActive(true);
             yield break;
         }
-
         private IEnumerator SetItemCoroutine()
         { 
             _ItemBannerCanvas.SetActive(true);
@@ -212,8 +219,8 @@ namespace Managers
                 var banner = Instantiate(_ItemBannerButton);
                 var button = banner.transform.GetChild(0).GetComponent<Button>();
                 buttonList.Add(button);
-                banner.transform.SetParent(_RewardContent,false);
-                banner.GetComponent<ItemBanner>().SetBanner(item.itemName,item.GetItemDescription());
+                banner.transform.SetParent(_ItemRewardContent,false);
+                banner.GetComponent<ItemBanner>().SetBannerMessage(item.itemName,item.GetItemDescription());
                 button.OnClickAsObservable()
                     .Where(_=>!isBannerPushed)
                     .Subscribe(_=>
@@ -231,7 +238,7 @@ namespace Managers
                     .AddTo(banner);
             }
         }
-        public List<Item>  GetRandomItem(List<Item> ownedItems,int count)
+        public List<Item> GetRandomItem(List<Item> ownedItems,int count)
         {
             List<Item> itemList = new();
             List<Item> tmpItemList = new();
@@ -240,12 +247,15 @@ namespace Managers
                 typeof(BulletStatModify),
                 typeof(MissileStatModify),
                 typeof(DroneStatModify),
+                typeof(DamageAreaStatModify),
             };
+            //uniqueStatをいじるクラスを除外
             itemList = allItemList
                 .Where(item =>
                     !item.itemEffectList.Any(itemEffect => uniqueStatModifyList.Any(usm => usm.IsAssignableFrom(itemEffect.GetType())))
                 )
                 .ToList();
+            //uniqueStatに対応するweaponDataを持つshipDataがあったら排出するようにする
             foreach(var shipData in GManager.Instance.playerShipDataList)
             {
                 switch(shipData.weaponData)
@@ -259,6 +269,9 @@ namespace Managers
                     case DroneLaunch:
                         tmpItemList = allItemList.Where(item => item.itemEffectList.Any(itemEffect => itemEffect is DroneStatModify)).ToList();
                         break;
+                    case DamageAreaShot:
+                        tmpItemList = allItemList.Where(item => item.itemEffectList.Any(itemEffect => itemEffect is DamageAreaStatModify)).ToList();
+                        break;
                 }
                 itemList = itemList.Union(tmpItemList).ToList();
                 tmpItemList.Clear();
@@ -267,6 +280,58 @@ namespace Managers
             //return allItemList.OrderBy(x => .Random.value).Take(count).ToList();
         }
         
+        public IEnumerator SetShipDataCoroutine()
+        {
+           _ShipDataBannerCanvas.SetActive(true); 
+            SetShipDataBanner(3);
+            yield return new WaitUntil(()=>isShipDataBannerPushed);
+            yield return new WaitForSeconds(1f);
+            foreach (Transform banner in _ShipDataBannerCanvas.transform.GetChild(1))
+            {
+                //ItemBannerをすべて削除
+                Destroy(banner.gameObject);
+            }
+            _ShipDataBannerCanvas.SetActive(false);
+            yield break;
+        }
+
+        public List<ShipData> GetRandomShipData(int count)
+        {
+            //var shipDataList = Resources.LoadAll<ShipData>("PlayerShipAssets").Except(GManager.Instance.playerShipDataList).ToList();
+            return Resources.LoadAll<ShipData>("ShipPlayerAssets").Except(GManager.Instance.playerShipDataList).OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
+        }
+
+        private void SetShipDataBanner(int n)
+        {
+            var buttonList = new List<Button>();
+            var shipDataList = GetRandomShipData(n);
+            Debug.Log(shipDataList.Count);
+            if(shipDataList == null || shipDataList.Count == 0)isShipDataBannerPushed = true;
+            foreach(var shipData in shipDataList)
+            {
+                Debug.Log("a");
+                var banner = Instantiate(_ShipDataBannerButton);
+                var button = banner.transform.GetChild(0).GetComponent<Button>();
+                buttonList.Add(button);
+                banner.transform.SetParent(_ShipDataRewardContent,false);
+                banner.GetComponent<ShipDataBanner>().SetBannerMessage(shipData.name,shipData.weaponData.weaponName);
+                button.OnClickAsObservable()
+                    .Where(_=>!isShipDataBannerPushed)
+                    .Subscribe(_=>
+                    {
+                        var buttonObject = banner;
+                         isShipDataBannerPushed = true;
+                        GManager.Instance.playerShipDataList.Add(shipData);
+                        foreach(var button in buttonList)
+                        {
+                            button.interactable = false;
+                            //buttonObject.transform.GetChild(1).gameObject.SetActive(true);
+                        }
+                        buttonObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("BannerUp");
+                    })
+                    .AddTo(banner);
+            }
+        }
     }
 }
 

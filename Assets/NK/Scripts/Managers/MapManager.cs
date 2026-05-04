@@ -235,7 +235,7 @@ namespace Managers
                     float r = UnityEngine.Random.value;
                     if(r < 0.9f)_floorList[i][j].stageType = StageNode.StageType.Battle;
                     else _floorList[i][j].stageType = StageNode.StageType.Shop;
-                    //if(i == 1)_floorList[i][j].stageType = StageNode.StageType.Shop;
+                    if(i == 1)_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
                     //stageEncount代入
                     // filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
                     // _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];

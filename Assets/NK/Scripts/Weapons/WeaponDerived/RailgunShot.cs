@@ -26,6 +26,7 @@ namespace Weapons
                 .ThrottleFirst(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
                 .Subscribe(_ =>
                 {
+                    if(applyingShip.isSurged)return;
                     applyingShip.GetNearestOpponet();
                     if(!applyingdShipObject || !applyingShip.GetNearestOpponet())return;
                     if(Vector2.Distance(applyingdShipObject.transform.position,applyingShip.GetNearestOpponet().transform.position) > range)return;

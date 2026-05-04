@@ -3,38 +3,56 @@ using System;
 using UniRx;
 using UniRx.Triggers;
 using Ships;
+using Items;
 namespace Ships
 {
     public class ShipEventController
     {
-        //ダメージを受けたとき
-        private Subject<ShipDamagingEvent> onDamage = new Subject<ShipDamagingEvent>();
-        public IObservable<ShipDamagingEvent> OnDamage => onDamage;
-        public struct ShipDamagingEvent
+        public enum EventCategory
         {
-            public Ship targetShip;//受けた船
-            public Ship dealertShip;//与えた船
+            OnDamaging,
+            OnShoot,
+            OnHit
+        }
+        public struct ShipAttackEvent
+        {
+            public Ship targetShip;//攻撃を受けた船
+            public Ship dealerShip;//攻撃を与えた船
             public int dealtDamageValue;//与えたダメージ
         }
-        public void PublishDamaging(ShipDamagingEvent shipDamageEvent)
+
+
+        public IObservable<ShipAttackEvent> GetEventByCategory(EventCategory eventCategory)
         {
-            onDamage.OnNext(shipDamageEvent);
+            return eventCategory switch
+            {
+                EventCategory.OnDamaging => onDamaging,
+                EventCategory.OnShoot => onShoot,
+                EventCategory.OnHit => onHit,
+                _ => null
+            };
         }
-        // //砲撃したとき
-        private Subject<ShipShotEvent> onShoot = new Subject<ShipShotEvent>();
-        public IObservable<ShipShotEvent> OnShoot => onShoot;
-        public struct ShipShotEvent
+
+        //ダメージを受けたとき
+        private Subject<ShipAttackEvent> onDamaging = new Subject<ShipAttackEvent>();
+        public IObservable<ShipAttackEvent> OnDamaging => onDamaging;
+        public void PublishDamaging(ShipAttackEvent shipAttackEvent)
         {
-            public Ship  shootingShip;//砲撃した船
+            onDamaging.OnNext(shipAttackEvent);
         }
-        public void PublishShoot(ShipShotEvent shipShotEvent)
+
+        //砲撃したとき
+        private Subject<ShipAttackEvent> onShoot = new Subject<ShipAttackEvent>();
+        public IObservable<ShipAttackEvent> OnShoot => onShoot;
+        public void PublishShoot(ShipAttackEvent shipAttackEvent)
         {
-            onShoot.OnNext(shipShotEvent);
+            onShoot.OnNext(shipAttackEvent);
         }
+
         // 攻撃がこの艦船にヒットしたとき
-        private Subject<ShipDamagingEvent> onHit = new Subject<ShipDamagingEvent>();
-        public IObservable<ShipDamagingEvent> OnHit => onHit;
-        public void PublishHit(ShipDamagingEvent shipDamageEvent)
+        private Subject<ShipAttackEvent> onHit = new Subject<ShipAttackEvent>();
+        public IObservable<ShipAttackEvent> OnHit => onHit;
+        public void PublishHit(ShipAttackEvent shipDamageEvent)
         {
             onHit.OnNext(shipDamageEvent);
         }

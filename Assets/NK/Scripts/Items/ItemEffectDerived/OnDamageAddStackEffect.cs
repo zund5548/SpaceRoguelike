@@ -19,7 +19,7 @@ namespace Items
             var type = stackEffect.GetType();
             foreach(var ship in shipList)
             {
-                ship.shipEventController.OnDamage
+                ship.shipEventController.OnDamaging
                     .Subscribe(sde =>
                     {
                         AddSelectedStack(stackEffect,sde);
@@ -27,18 +27,18 @@ namespace Items
                     .AddTo(ship.gameObject);
             }
         }
-        private void AddSelectedStack(StackEffect stackEffect,ShipEventController.ShipDamagingEvent sde)
+        private void AddSelectedStack(StackEffect stackEffect,ShipEventController.ShipAttackEvent sae)
         {
             switch(stackEffect)
             {
                 case AdditionalMissileStackEffect:
-                    sde.targetShip.stackEffectController.AddStackNum<AdditionalMissileStackEffect>(sde.dealertShip,sde.targetShip,1);
+                    sae.targetShip.stackEffectController.AddStackNum<AdditionalMissileStackEffect>(sae.dealerShip,sae.targetShip,1);
                     break;
                 case CrackStackEffect:
-                    sde.targetShip.stackEffectController.AddStackNum<CrackStackEffect>(sde.dealertShip,sde.targetShip,1);
+                    sae.targetShip.stackEffectController.AddStackNum<CrackStackEffect>(sae.dealerShip,sae.targetShip,1);
                     break;
                 case SurgeStackEffect:
-                    sde.targetShip.stackEffectController.AddStackNum<SurgeStackEffect>(sde.dealertShip,sde.targetShip,1);
+                    sae.targetShip.stackEffectController.AddStackNum<SurgeStackEffect>(sae.dealerShip,sae.targetShip,1);
                     break;
             }
         }

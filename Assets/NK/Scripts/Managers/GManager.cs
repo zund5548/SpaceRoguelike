@@ -24,7 +24,7 @@ namespace Managers
         public List<ShipData> playerShipDataList = new List<ShipData>();
         public List<ShipData> enemyShipDataList = new List<ShipData>(); 
         public List<Item> itemList = new();
-        public List<int> currentShipHullPoint = new();
+        //public List<int> currentShipHullPoint = new();
         public int credit{get;private set;}
         private bool isInvOpen = false;
         //input
@@ -68,10 +68,8 @@ namespace Managers
             currentStageNode = null;
             passsedStageNodes.Clear();
             passsedStageNodes.Clear();
-            playerShipDataList.Clear();
-            enemyShipDataList.Clear();
             itemList.Clear();
-            currentShipHullPoint.Clear();
+            //currentShipHullPoint.Clear();
         }
         private void SetInventoryInput()
         {

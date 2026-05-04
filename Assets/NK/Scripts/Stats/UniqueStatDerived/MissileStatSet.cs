@@ -1,6 +1,8 @@
 using System;
+using Items;
 namespace Stats
 {
+    [Serializable]
     public class MissileStatSet:UniqueStatSet
     {
         [Serializable]
@@ -23,6 +25,17 @@ namespace Stats
                 MissileStatType.MissileBurstNum => missileBurstNum,
                 MissileStatType.ExplosionRadius => explosionRadius,
                 MissileStatType.ExplosionDamageMod => explosionDamageMod,
+                _=>null
+            };
+        }
+        public Stat GetStat(MissileStatCollection.MissileStatType type)
+        {
+            return type switch
+            {
+                MissileStatCollection.MissileStatType.MissileNum => missileNum,
+                MissileStatCollection.MissileStatType.MissileBurstNum => missileBurstNum,
+                MissileStatCollection.MissileStatType.ExplosionRadius => explosionRadius,
+                MissileStatCollection.MissileStatType.ExplosionDamageMod => explosionDamageMod,
                 _=>null
             };
         }

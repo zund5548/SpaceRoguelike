@@ -23,6 +23,7 @@ namespace Weapons
         }
         private void SetLaser(GameObject applyingdShipObject,Ship applyingShip)
         {
+            if(applyingShip.isSurged)return;
             var laser = UnityEngine.Object.Instantiate(laserObject);
             laser.tag = applyingShip.isPlayer?"PlayerProjectile":"EnemyProjectile";
             var v = applyingShip.GetNearestOpponet().transform.position - applyingdShipObject.transform.position;

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8a2315d64e0353409e1d036abb52dad, type: 3}
   m_Name: BossAEncount
   m_EditorClassIdentifier: Assembly-CSharp::Maps.BossEncounter
-  stageType: 6
+  stageType: 7
   icon: {fileID: 0}
+  dificulty: 0
   bossType:
     rid: 8997316388243374247
   shipData: {fileID: 11400000, guid: dd3bc00dc0023fd41ad620cf6492f2e4, type: 2}

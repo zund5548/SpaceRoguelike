@@ -21,6 +21,7 @@ namespace Maps
             Defence,
             Shop,
             Credit,
+            ObtainShip,
             Elite,
             Boss,
         }

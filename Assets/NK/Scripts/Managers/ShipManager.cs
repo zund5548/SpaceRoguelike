@@ -116,7 +116,12 @@ namespace Managers
             }   
             foreach(var item in GManager.Instance.itemList)
             {
-                foreach(var itemEffect in  item.itemEffectList)itemEffect.OnApply();
+                if(item.itemEffectList == null)continue;
+                foreach(var itemEffect in item.itemEffectList)
+                {
+                    if(itemEffect)itemEffect.OnApply();
+                }
+                
             }
             foreach(var ship in playerShipList)
             {
@@ -173,7 +178,8 @@ namespace Managers
             shipObject.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                if(!ship.isAbleToMove)return;
+                Debug.Log(ship.isSurged);
+                if(ship.isSurged)return;
                 if(Vector2.Distance(shipObject.transform.position,_currentFleetPos) < 0.1f)return;
                 var v = _currentFleetPos - (Vector2)shipObject.transform.position;
                 Vector2 moveDir = v.normalized;

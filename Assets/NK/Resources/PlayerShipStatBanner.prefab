@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 8338245836276498785}
   - component: {fileID: 8484247018164016490}
   m_Layer: 5
-  m_Name: PlayerShipBanner
+  m_Name: PlayerShipStatBanner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

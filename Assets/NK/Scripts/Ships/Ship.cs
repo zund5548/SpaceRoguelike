@@ -12,7 +12,7 @@ namespace Ships
     public class Ship : MonoBehaviour
     {
         public bool isPlayer = true;
-        public bool isAbleToMove = true;//falseで移動不可
+        public bool isSurged = false;//trueで移動不可
         public ShipData shipData;
         public int currentShieldPoint;
         public int currentHullPoint;
@@ -220,10 +220,10 @@ namespace Ships
         }
         private void SetDamagingEvent(Ship dealerShip,int power)
         {
-            if(dealerShip)dealerShip.shipEventController.PublishDamaging(new ShipEventController.ShipDamagingEvent
+            if(dealerShip)dealerShip.shipEventController.PublishDamaging(new ShipEventController.ShipAttackEvent
             {
                 targetShip = this,
-                dealertShip = dealerShip,
+                dealerShip = dealerShip,
                 dealtDamageValue = power
             });
         }

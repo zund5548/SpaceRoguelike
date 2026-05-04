@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Battle1C
   m_EditorClassIdentifier: Assembly-CSharp::Maps.BattleEncount
   stageType: 1
-  icon: {fileID: 0}
+  icon: {fileID: 58678122819832762, guid: 60a72a691dd3ea945bb6cb5088ce7d2d, type: 3}
   dificulty: 0
   oneWaveLimit: 5
   enemyWaveList:

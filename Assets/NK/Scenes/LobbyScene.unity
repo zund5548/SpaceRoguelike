@@ -1391,11 +1391,10 @@ MonoBehaviour:
     stageEncount: {fileID: 0}
   passsedStageNodes: []
   playerShipDataList:
-  - {fileID: 11400000, guid: 34553048b1b190345b011b3836a2aecd, type: 2}
+  - {fileID: 11400000, guid: b32567b1efc129349920ef29ce516ce2, type: 2}
   enemyShipDataList: []
   itemList:
-  - {fileID: 11400000, guid: 107e6ca99376ffc4e9e863431fc5d44f, type: 2}
-  currentShipHullPoint: 
+  - {fileID: 11400000, guid: c96901ff90ae55e4c98e9b87a21ad0e1, type: 2}
   inputAction: {fileID: -944628639613478452, guid: 836744da074f51e41adc85c738fc1322, type: 3}
   _CreditDisplay: {fileID: 30204351}
   InventoryCanvas: {fileID: 1475840757}
@@ -3168,8 +3167,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Start
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d443aec15a873b147853bb176d7a4408, type: 2}
+  m_sharedMaterial: {fileID: -312031699444090467, guid: d443aec15a873b147853bb176d7a4408, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

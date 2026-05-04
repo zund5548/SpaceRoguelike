@@ -24,7 +24,7 @@ namespace Items
             if(stackNum >= threshold)
             {
                 stackNum %= threshold;
-                if(ownerShip.isAbleToMove)ownerShip.isAbleToMove = false;
+                if(!ownerShip.isSurged)ownerShip.isSurged = true;
                 if(isAbletoAdd)isAbletoAdd = false;
                 GameObject iconObject = null;
                 if(effectIconObject)iconObject = UnityEngine.Object.Instantiate(effectIconObject,ownerShip.transform.position,Quaternion.identity);
@@ -32,7 +32,7 @@ namespace Items
                     .Subscribe(_ =>
                     {
                         if(iconObject)UnityEngine.Object.Destroy(iconObject);
-                        ownerShip.isAbleToMove = true;
+                        ownerShip.isSurged = false;
                         isAbletoAdd = true;
                     })
                     .AddTo(ownerShip);

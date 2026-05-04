@@ -34,6 +34,7 @@ namespace Weapons
         }
         public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
+            if(applyingShip.isSurged)return;
             int currentDroneNum = (int)applyingShip.uniqueStatController.GetUniqueStat<DroneStatSet>().droneNum.Value;
             for(int i = 0;i < currentDroneNum;i++)
             {
@@ -80,8 +81,9 @@ namespace Weapons
                 .Repeat()
                 .Subscribe(_=>
                 {
-                    if(!applyingShip.gameObject || !applyingShip.GetNearestOpponet())return;
-                    if(Vector2.Distance(applyingShip.transform.position, applyingShip.GetNearestOpponet().transform.position) > range) return;
+                    var targetShip = applyingShip.GetNearestOpponet();
+                    if(!applyingShip.gameObject || !targetShip)return;
+                    if(Vector2.Distance(applyingShip.transform.position, targetShip.transform.position) > range) return;
                     if(!drone)return;
                     DroneShoot(drone.transform.position,applyingShip);
                 })
@@ -99,7 +101,9 @@ namespace Weapons
             bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
             bullet.transform.position = dronePos;
             bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,false,true);
-            var v = (Vector2)applyingShip.GetNearestOpponet().transform.position - dronePos;
+            var targetShip = applyingShip.GetNearestOpponet();
+            if(!targetShip)return;
+            var v = (Vector2)targetShip.transform.position - dronePos;
             bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg);
             bullet.UpdateAsObservable()
                 .Subscribe(_=>

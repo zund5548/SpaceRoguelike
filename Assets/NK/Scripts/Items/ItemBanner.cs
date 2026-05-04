@@ -14,7 +14,7 @@ namespace Items
         {
             
         }
-        public void SetBanner(string itemName,string itemDescription)
+        public void SetBannerMessage(string itemName,string itemDescription)
         {
             itemNameText.text = itemName;
             itemDescriptionText.text = itemDescription;

@@ -1,6 +1,6 @@
 using UnityEngine;
 using Ships;
-using UniqueStatDerived;
+using Stats;
 using Projectiles;
 using UniRx;
 using UniRx.Triggers;
@@ -19,15 +19,17 @@ namespace Weapons
         public override void SetUniqueStat(Ship applyingShip)
         {
             applyingShip.uniqueStatController.AddUniqueStat(
-                new SelfDestructionStat
+                new SelfDestructionStatSet
                 {
                     explosionRadius = new(explosionRadius),
                     chargeTime = new(chargeTime),
                 });
-            Debug.Log(applyingShip.uniqueStatController.GetUniqueStat<SelfDestructionStat>().explosionRadius.Value);
+            Debug.Log(applyingShip.uniqueStatController.GetUniqueStat<SelfDestructionStatSet>().explosionRadius.Value);
         }
         public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
+            //if(applyingShip.isSurged)return;
+            //surge状態でも爆破する
             SetExplosion(applyingShip,applyingShipObject.transform.position);
         }
         public override void ShootAction(GameObject applyingShipObject, Ship applyingShip)
@@ -45,7 +47,7 @@ namespace Weapons
         }
         private void SetExplosion(Ship applyingShip,Vector2 pos)
         {
-            applyingShip.isAbleToMove = false;
+            //applyingShip.isSurged = true;
             var warning = UnityEngine.Object.Instantiate(warningSymbol,applyingShip.transform.position,Quaternion.identity);
             Observable.Timer(TimeSpan.FromSeconds(chargeTime))
                 .Subscribe(_ =>
@@ -56,7 +58,7 @@ namespace Weapons
                     var ExplosionSc = explosionRadiusObject.GetComponent<Explosion>();
 
                     int power = (int)applyingShip.currentPower.Value;
-                    float radius = applyingShip.uniqueStatController.GetUniqueStat<SelfDestructionStat>().explosionRadius.Value;
+                    float radius = applyingShip.uniqueStatController.GetUniqueStat<SelfDestructionStatSet>().explosionRadius.Value;
                     ExplosionSc.SetExplosion(applyingShip,power,radius);
                     
                     applyingShip.Kill();

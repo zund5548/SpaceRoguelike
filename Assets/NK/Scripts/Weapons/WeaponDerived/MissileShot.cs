@@ -53,7 +53,7 @@ namespace Weapons
 
         private void ShootMissile(GameObject applyingShipObject,Ship applyingShip,bool isRight)
         {
-            Debug.Log("a");
+            if(applyingShip.isSurged)return;
             GameObject targetObject = applyingShip.GetNearestOpponet();
             Vector2 initTargetPos = (Vector2)targetObject.transform.position;
             var v = initTargetPos - (Vector2)applyingShipObject.transform.position;
@@ -117,6 +117,7 @@ namespace Weapons
         }
         public override void Shoot(GameObject applyingShipObject,Ship applyingShip)
         {
+            if(applyingShip.isSurged)return;
             var targetShipObject = applyingShip.GetNearestOpponet();
             if(!targetShipObject)return;
             Vector2 initTargetPos = (Vector2)targetShipObject.transform.position;
@@ -185,7 +186,7 @@ namespace Weapons
         {
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             int currentBurstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().missileBurstNum.Value;
-            applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipShotEvent{shootingShip = applyingShip});
+            applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipAttackEvent{dealerShip = applyingShip});
             return Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
                 .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.1f)).Take(currentBurstNum).Do(i =>
                 {
@@ -202,8 +203,9 @@ namespace Weapons
         private void SetExplosion(Ship applyingShip,Vector2 pos)
         {
             var explosionRadiusObject = UnityEngine.Object.Instantiate(explosion,pos,Quaternion.identity);
-            if(applyingShip.isPlayer)explosionRadiusObject.tag = "PlayerExplosion";
-            else if(!applyingShip.isPlayer)explosionRadiusObject.tag = "EnemyExplosion";
+            // if(applyingShip.isPlayer)explosionRadiusObject.tag = "PlayerExplosion";
+            // else if(!applyingShip.isPlayer)explosionRadiusObject.tag = "EnemyExplosion";
+            explosionRadiusObject.tag = applyingShip.isPlayer? "PlayerExplosion":"EnemyExplosion";
             var ExplosionSc = explosionRadiusObject.GetComponent<Explosion>();
             ExplosionSc.SetExplosion(applyingShip,(int)applyingShip.currentPower.Value,applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value);
         }
