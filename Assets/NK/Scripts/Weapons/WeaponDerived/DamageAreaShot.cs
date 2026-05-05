@@ -18,6 +18,7 @@ namespace Weapons
         public GameObject _projectile;
         public GameObject _damageAreaObject;
         public float shotInterval;
+        public float shotSpeed;
         [Header("unique stat")]
        
         public float damageInterval;
@@ -25,6 +26,7 @@ namespace Weapons
         public float lastingTime;
         public override void SetUniqueStat(Ship applyingShip)
         {
+            if(applyingShip.uniqueStatController.GetUniqueStat<DamageAreaStatSet>() != null)return;
             applyingShip.uniqueStatController.AddUniqueStat(
             new DamageAreaStatSet
             {
@@ -54,7 +56,7 @@ namespace Weapons
                 })
                 .Subscribe(_=>
                 {
-                    bullet.transform.position +=applyingShip.shotSpeed.Value* bullet.transform.right * Time.deltaTime; 
+                    bullet.transform.position += shotSpeed * bullet.transform.right * Time.deltaTime; 
                     if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
                 })
                 .AddTo(bullet);            

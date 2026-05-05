@@ -28,11 +28,11 @@ namespace Managers
         //
         Dictionary<int, int> stageNumDic = new Dictionary<int, int>
         {
-            {0,10},
-            {1,15},
-            {2,20},
-            {3,25},
-            {4,30}
+            {0,9},
+            {1,14},
+            {2,19},
+            {3,24},
+            {4,29}
         }; 
         void Awake()
         {
@@ -81,7 +81,7 @@ namespace Managers
                 buttonObject.transform.SetParent(_DifficultyButtonScrollContent,false);
                 //文字設定
                 var buttonText = buttonObject.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-                buttonText.text =  "Level " + (i + 1).ToString() + "\n" + stageNumDic[i].ToString() + " Floors";
+                buttonText.text =  "Level " + (i + 1).ToString() + "\n" + (stageNumDic[i] + 1).ToString() + " Floors";
                 //
                 var button = buttonObject.transform.GetChild(0).GetComponent<Button>();
                 int j = i;

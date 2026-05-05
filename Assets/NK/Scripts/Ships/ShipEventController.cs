@@ -12,13 +12,26 @@ namespace Ships
         {
             OnDamaging,
             OnShoot,
-            OnHit
+            OnHit,
+            OnKilled
         }
         public struct ShipAttackEvent
         {
             public Ship targetShip;//攻撃を受けた船
             public Ship dealerShip;//攻撃を与えた船
             public int dealtDamageValue;//与えたダメージ
+            public ShipAttackEvent(Ship targetShip,Ship dealerShip,int dealtDamageValue)
+            {
+                this.targetShip = targetShip;
+                this.dealerShip = dealerShip;
+                this.dealtDamageValue = dealtDamageValue;
+            }
+            public ShipAttackEvent(Ship targetShip,Ship dealerShip)
+            {
+                this.targetShip = targetShip;
+                this.dealerShip = dealerShip;
+                dealtDamageValue = 0;
+            }
         }
 
 
@@ -29,6 +42,7 @@ namespace Ships
                 EventCategory.OnDamaging => onDamaging,
                 EventCategory.OnShoot => onShoot,
                 EventCategory.OnHit => onHit,
+                EventCategory.OnKilled => onKilling,
                 _ => null
             };
         }
@@ -55,6 +69,14 @@ namespace Ships
         public void PublishHit(ShipAttackEvent shipDamageEvent)
         {
             onHit.OnNext(shipDamageEvent);
+        }
+
+        // この艦船が敵を倒したとき
+        private Subject<ShipAttackEvent> onKilling = new Subject<ShipAttackEvent>();
+        public IObservable<ShipAttackEvent> OnKilling => onKilling;
+        public void PublishKilling(ShipAttackEvent shipDamageEvent)
+        {
+            onKilling.OnNext(shipDamageEvent);
         }
     }
 }

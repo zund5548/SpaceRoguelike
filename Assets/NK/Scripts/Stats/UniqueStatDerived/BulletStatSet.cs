@@ -14,15 +14,18 @@ namespace Stats
         {
             ProjectileNum,
             BurstNum,
+            IsPiercing,
         }
         public Stat projectileNum = new(1);
         public Stat burstNum = new(1);
+        public Stat isPiercing = new(0);
         public Stat GetStat(BulletStatType type)
         {
             return type switch
             {
                 BulletStatType.BurstNum => burstNum,
                 BulletStatType.ProjectileNum => projectileNum,
+                BulletStatType.IsPiercing => isPiercing,
                 _ => null
             };
         }

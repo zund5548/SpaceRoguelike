@@ -18,6 +18,7 @@ namespace Weapons
         public float chargeTime = 1f;
         public override void SetUniqueStat(Ship applyingShip)
         {
+            if(applyingShip.uniqueStatController.GetUniqueStat<SelfDestructionStatSet>() != null)return;
             applyingShip.uniqueStatController.AddUniqueStat(
                 new SelfDestructionStatSet
                 {
@@ -47,7 +48,7 @@ namespace Weapons
         }
         private void SetExplosion(Ship applyingShip,Vector2 pos)
         {
-            //applyingShip.isSurged = true;
+            applyingShip.isSurged = true;
             var warning = UnityEngine.Object.Instantiate(warningSymbol,applyingShip.transform.position,Quaternion.identity);
             Observable.Timer(TimeSpan.FromSeconds(chargeTime))
                 .Subscribe(_ =>
@@ -61,7 +62,7 @@ namespace Weapons
                     float radius = applyingShip.uniqueStatController.GetUniqueStat<SelfDestructionStatSet>().explosionRadius.Value;
                     ExplosionSc.SetExplosion(applyingShip,power,radius);
                     
-                    applyingShip.Kill();
+                    applyingShip.Kill(applyingShip);
                 })
                 .AddTo(applyingShip.gameObject);
             applyingShip.gameObject.OnDestroyAsObservable()

@@ -19,8 +19,7 @@ namespace Items
                 var ship = shipObject.GetComponent<Ship>();
                 if(ship.uniqueStatController.GetUniqueStat<DroneStatSet>() == null)ship.uniqueStatController.AddUniqueStat(new DroneStatSet{});
                 ship.uniqueStatController.GetUniqueStat<DroneStatSet>().GetStat(droneStatType).AddModifier(new StatModifier(value,modType)); 
-                //もうstatは入っている
-                ship.SetCurrentSPHP();
+                //ship.SetCurrentSPHP();
             }
         }
     }

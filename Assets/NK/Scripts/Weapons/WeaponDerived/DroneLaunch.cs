@@ -18,12 +18,14 @@ namespace Weapons
         public float range;
         public float shotInterval;
         public float orbitRadius;
+        public float shotSpeed;
         [Header("unique stat")]
         public int droneNum;
         public int droneLifetime;
         public float droneShotInterval;
         public override void SetUniqueStat(Ship applyingShip)
         {
+            if(applyingShip.uniqueStatController.GetUniqueStat<DroneStatSet>() != null)return;
             applyingShip.uniqueStatController.AddUniqueStat(
                 new DroneStatSet
                 {
@@ -108,7 +110,7 @@ namespace Weapons
             bullet.UpdateAsObservable()
                 .Subscribe(_=>
                 {
-                    float currentProjectileSpeed = applyingShip.shotSpeed.Value;
+                    float currentProjectileSpeed = shotSpeed;
                     bullet.transform.position += currentProjectileSpeed * bullet.transform.right * Time.deltaTime; 
                     if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
                 })

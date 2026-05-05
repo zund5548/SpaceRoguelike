@@ -178,7 +178,7 @@ namespace Managers
             shipObject.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                Debug.Log(ship.isSurged);
+                //Debug.Log(ship.isSurged);
                 if(ship.isSurged)return;
                 if(Vector2.Distance(shipObject.transform.position,_currentFleetPos) < 0.1f)return;
                 var v = _currentFleetPos - (Vector2)shipObject.transform.position;
@@ -237,8 +237,8 @@ namespace Managers
         {
             int k = GManager.Instance.currentStageNode.floorStageNum / 2;
             if(k == 0)return;
-            enemyShip.GetStat(StatType.Hull).AddModifier(new StatModifier(k * 50f,ModType.Percent));
-            enemyShip.GetStat(StatType.Shield).AddModifier(new StatModifier(k * 50f,ModType.Percent));
+            enemyShip.GetStat(StatType.Hull).AddModifier(new StatModifier(k * 25f,ModType.Percent));
+            enemyShip.GetStat(StatType.Shield).AddModifier(new StatModifier(k * 25f,ModType.Percent));
             enemyShip.GetStat(StatType.Power).AddModifier(new StatModifier(k * 25f,ModType.Percent));
         }
         public GameObject SpawnBossShip(ShipData shipData,BossType bossType)

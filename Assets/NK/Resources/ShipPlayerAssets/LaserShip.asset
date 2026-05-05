@@ -10,27 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
-  m_Name: Railgun
+  m_Name: LaserShip
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
-  shipName: 
+  shipName: "Adamant\u7D1A"
   shipType: 0
-  maxHullPoint: 300
+  maxHullPoint: 400
   maxShieldPoint: 200
-  hullResistance: 5
-  shieldResistance: 5
+  hullResistance: 10
+  shieldResistance: 10
   power: 1
   critRate: 5
-  speed: 5
-  shotSpeed: 1
+  speed: 2.5
+  shotSpeed: 0
   weaponData:
-    rid: 1541337840300064768
+    rid: 1541337840300064973
   references:
     version: 2
     RefIds:
-    - rid: 1541337840300064768
-      type: {class: RailgunShot, ns: Weapons, asm: Assembly-CSharp}
+    - rid: 1541337840300064973
+      type: {class: LaserShot, ns: Weapons, asm: Assembly-CSharp}
       data:
-        projectile: {fileID: 2904888318123126438, guid: 9e7e7811405f6ed4ea6f0198f353de97, type: 3}
-        range: 20
-        projectileSpeed: 75
-        shotInterval: 2
+        weaponName: "\u30EC\u30FC\u30B6\u30FC"
+        laserObject: {fileID: 4070486188369185136, guid: 3bd39d843a923ba49b282d382675c53f, type: 3}
+        range: 10
+        shotInterval: 5
+        damageInterval: 0.25
+        laserLastTime: 3
+        laserTurnRate: 60

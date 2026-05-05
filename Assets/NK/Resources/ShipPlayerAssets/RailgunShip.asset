@@ -10,35 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
-  m_Name: Missile
+  m_Name: RailgunShip
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
-  shipName: UX1100
+  shipName: "Lithos\u7D1A"
   shipType: 0
-  maxHullPoint: 200
-  maxShieldPoint: 100
+  maxHullPoint: 300
+  maxShieldPoint: 200
   hullResistance: 5
   shieldResistance: 5
-  power: 20
-  critRate: 25
-  speed: 10
-  shotSpeed: 10
+  power: 150
+  critRate: 5
+  speed: 5
   weaponData:
-    rid: 8997316278764699777
+    rid: 1541337840300064768
   references:
     version: 2
     RefIds:
-    - rid: 8997316278764699777
-      type: {class: MissileShot, ns: Weapons, asm: Assembly-CSharp}
+    - rid: 1541337840300064768
+      type: {class: RailgunShot, ns: Weapons, asm: Assembly-CSharp}
       data:
-        projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
+        weaponName: "\u30EC\u30FC\u30EB\u30AC\u30F3"
+        railgunProjectile: {fileID: 2904888318123126438, guid: 9e7e7811405f6ed4ea6f0198f353de97, type: 3}
         explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
-        isHoming: 1
-        range: 20
-        projectileSpeed: 5
-        shotInterval: 1
-        hitTime: 1
-        errorRadius: 0.5
-        missileNum: 1
-        missileBurstNum: 1
-        explosionRadius: 1.5
-        explosionDamageMod: 1
+        range: 15
+        shotInterval: 2
+        projectileSpeed: 50
+        projectileWidth: 0.1
+        enableOnHitExplosion: 0

@@ -13,10 +13,10 @@ namespace Ships
         public Button button;
         public TextMeshProUGUI shipNameText;
         public TextMeshProUGUI shipDescriptionText;
-        public void SetBannerMessage(string itemName,string itemDescription)
+        public void SetBannerMessage(string shipName,string shipDescription)
         {
-            shipNameText.text = itemName;
-            shipDescriptionText.text = "・"+itemDescription;
+            shipNameText.text = shipName;
+            shipDescriptionText.text = "・"+shipDescription;
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Managers
             SetStageDescription(GManager.Instance.currentStageNode);
             SetMapColor();
             SetMapButton();
-            _mapScrollRect.verticalNormalizedPosition = 1f/ _floorNum * GManager.Instance.currentStageNode.floorStageNum;
+            _mapScrollRect.verticalNormalizedPosition = 1f / _floorNum * GManager.Instance.currentStageNode.floorStageNum;
             _toStageButton.interactable = false;
             SetToStageButton();
         }
@@ -228,6 +228,8 @@ namespace Managers
             List<StageEncount> encountList = Resources.LoadAll<StageEncount>("StageEncountAsset").ToList();
             List<StageEncount> filteredEncountList;
             int allFloorNum = GManager.Instance._floorNum;
+
+            int obtainShipInterval = _floorNum/2 + 1 < 11 ? _floorNum/2 + 1 : 11;
             for(int i = 1;i < _floorList.Count-1;i++)
             {
                 for(int j = 0;j < _floorList[i].Count;j++)
@@ -235,7 +237,7 @@ namespace Managers
                     float r = UnityEngine.Random.value;
                     if(r < 0.9f)_floorList[i][j].stageType = StageNode.StageType.Battle;
                     else _floorList[i][j].stageType = StageNode.StageType.Shop;
-                    if(i == 1)_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
+                    if(i % obtainShipInterval == 0)_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
                     //stageEncount代入
                     // filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
                     // _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];

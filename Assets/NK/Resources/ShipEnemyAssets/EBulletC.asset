@@ -17,11 +17,10 @@ MonoBehaviour:
   maxHullPoint: 400
   maxShieldPoint: 400
   hullResistance: 5
-  shieldResistance: 5
+  shieldResistance: 20
   power: 10
   critRate: 0
   speed: 1
-  shotSpeed: 5
   weaponData:
     rid: 8997316271938470205
   references:
@@ -30,9 +29,13 @@ MonoBehaviour:
     - rid: 8997316271938470205
       type: {class: BulletShot, ns: Weapons, asm: Assembly-CSharp}
       data:
+        weaponName: 
         projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
         range: 5
         shotInterval: 1
         angleDif: 5
+        maxErrorDeg: 0
+        shotSpeed: 3
         burstNum: 1
         projectileNum: 3
+        isPiercing: 0

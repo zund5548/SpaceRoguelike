@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
-  m_Name: Chain
+  m_Name: ChainShip
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
-  shipName: UX1100
+  shipName: "Buraq\u7D1A"
   shipType: 0
   maxHullPoint: 200
   maxShieldPoint: 100
@@ -21,6 +21,7 @@ MonoBehaviour:
   power: 30
   critRate: 5
   speed: 10
+  shotSpeed: 0
   weaponData:
     rid: 8997316341899985022
   references:
@@ -29,8 +30,9 @@ MonoBehaviour:
     - rid: 8997316341899985022
       type: {class: ChainShot, ns: Weapons, asm: Assembly-CSharp}
       data:
+        weaponName: "\u9023\u9396\u5F3E"
         ChianLineObject: {fileID: 3562957314161690254, guid: 332f9659690b8734cb0a7e5a43f05dbd, type: 3}
-        range: 10
+        range: 5
         chainRange: 5
         shotInterval: 1
         chainInterval: 0.1

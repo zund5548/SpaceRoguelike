@@ -27,7 +27,7 @@ namespace Ships
         public int power;
         public float critRate;
         public float speed;
-        public float shotSpeed;
+        //public float shotSpeed;
         [SerializeReference,SubclassSelector]
         public WeaponData weaponData;
     }

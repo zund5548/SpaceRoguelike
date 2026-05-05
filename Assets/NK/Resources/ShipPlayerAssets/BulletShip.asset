@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
-  m_Name: Bullet
+  m_Name: BulletShip
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
-  shipName: UX1100
+  shipName: "Hydro\u7D1A"
   shipType: 0
   maxHullPoint: 400
   maxShieldPoint: 200
   hullResistance: 5
   shieldResistance: 5
-  power: 1
+  power: 50
   critRate: 2.5
   speed: 10
-  shotSpeed: 10
   weaponData:
     rid: 8997316271938470206
   references:
@@ -30,9 +29,13 @@ MonoBehaviour:
     - rid: 8997316271938470206
       type: {class: BulletShot, ns: Weapons, asm: Assembly-CSharp}
       data:
+        weaponName: "\u901A\u5E38\u5F3E"
         projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
         range: 10
         shotInterval: 0.5
         angleDif: 5
+        maxErrorDeg: 0
+        shotSpeed: 10
         burstNum: 1
         projectileNum: 1
+        isPiercing: 0

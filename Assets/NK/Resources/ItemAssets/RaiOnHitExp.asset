@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: Burst
+  m_Name: RaiOnHitExp
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: 
+  itemName: "\u7834\u7815\u7206\u767A"
   itemIcon: {fileID: 0}
   itemTier: 0
   itemEffectList:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 5de784d6e165ae643a05082af0d3ff5f, type: 2}

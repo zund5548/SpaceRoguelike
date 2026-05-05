@@ -19,8 +19,7 @@ namespace Items
                 var ship = shipObject.GetComponent<Ship>();
                 if(ship.uniqueStatController.GetUniqueStat<DamageAreaStatSet>() == null)ship.uniqueStatController.AddUniqueStat(new DamageAreaStatSet{});
                 ship.uniqueStatController.GetUniqueStat<DamageAreaStatSet>().GetStat(damageAreaStatType).AddModifier(new StatModifier(value,modType)); 
-                //もうstatは入っている
-                ship.SetCurrentSPHP();
+                //ship.SetCurrentSPHP();
             }
         }
     }

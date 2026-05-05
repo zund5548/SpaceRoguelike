@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: ResHulB
+  m_Name: IsPir
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u8239\u4F53\u5197\u9577\u53161"
+  itemName: "\u8CAB\u901A\u5F3E"
   itemIcon: {fileID: 0}
-  itemTier: 0
+  itemTier: 3
   itemEffectList:
-  - {fileID: 11400000, guid: 07dc8a1ae49ad6741bb5b5c9f521e489, type: 2}
+  - {fileID: 11400000, guid: ae9747d439ebe614ebb3078e1282e63d, type: 2}

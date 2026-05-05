@@ -29,7 +29,6 @@ namespace Ships
         public Stat shotIntervalReduction;
         public Stat shieldResistance;
         public Stat hullResistance;
-        public Stat shotSpeed;
         public UniqueStatController uniqueStatController = new();
         public ShipEventController shipEventController = new();
         public Stat GetStat(StatType type)
@@ -43,7 +42,6 @@ namespace Ships
                 StatType.ShieldResistance => shieldResistance,
                 StatType.HullResistance => hullResistance,
                 StatType.ShotIntervalReduction => shotIntervalReduction,
-                StatType.ShotSpeed => shotSpeed,
                 _ => null
             };
         }
@@ -94,7 +92,7 @@ namespace Ships
             hullResistance = new Stat(shipData.hullResistance);
             currentPower = new Stat(shipData.power);
             shotIntervalReduction = new Stat(0f);
-            shotSpeed = new Stat(shipData.shotSpeed);
+            //shotSpeed = new Stat(shipData.shotSpeed);
         }
         
         // public void SetCurrent()
@@ -215,8 +213,9 @@ namespace Ships
             if(currentHullPoint == 0)
             {
                 if(!isPlayer)GManager.Instance.AddCredit(shipData.shipType);
-                Kill();
+                Kill(dealerShip);
             }
+            
         }
         private void SetDamagingEvent(Ship dealerShip,int power)
         {
@@ -227,7 +226,7 @@ namespace Ships
                 dealtDamageValue = power
             });
         }
-        public void Kill()
+        public void Kill(Ship killerShip)
         {
             int n = allyShipObjectList.Count;
             for(int i = 0;i < n;i++)
@@ -239,7 +238,7 @@ namespace Ships
                 }
             }
             if(isPlayer && allyShipObjectList.Count == 0)EventManager.Instance.PublishFail();
-            
+            killerShip.shipEventController.PublishKilling(new ShipEventController.ShipAttackEvent(this,killerShip));
             Destroy(gameObject);
         }
     }

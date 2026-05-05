@@ -36,6 +36,7 @@ namespace Weapons
         }
         public override void SetUniqueStat(Ship applyingShip)
         {
+            if(applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>() != null)return;
             applyingShip.uniqueStatController.AddUniqueStat(
                 new MissileStatSet
                 {

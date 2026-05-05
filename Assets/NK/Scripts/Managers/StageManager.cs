@@ -314,7 +314,7 @@ namespace Managers
                 var button = banner.transform.GetChild(0).GetComponent<Button>();
                 buttonList.Add(button);
                 banner.transform.SetParent(_ShipDataRewardContent,false);
-                banner.GetComponent<ShipDataBanner>().SetBannerMessage(shipData.name,shipData.weaponData.weaponName);
+                banner.GetComponent<ShipDataBanner>().SetBannerMessage(shipData.shipName,shipData.weaponData.weaponName);
                 button.OnClickAsObservable()
                     .Where(_=>!isShipDataBannerPushed)
                     .Subscribe(_=>
