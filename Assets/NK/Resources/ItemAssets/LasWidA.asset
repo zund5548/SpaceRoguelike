@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: DroNumB
+  m_Name: LasWidA
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u30C9\u30ED\u30FC\u30F3\u5BB9\u91CF2"
+  itemName: "\u51FA\u529B\u5F37\u53161"
   itemIcon: {fileID: 0}
-  itemTier: 2
+  itemTier: 1
   itemEffectList:
-  - {fileID: 11400000, guid: 203a2537dda2eac4799af9356a7ab776, type: 2}
+  - {fileID: 11400000, guid: 4ba6e5e4c89cbea49a8075908156f194, type: 2}

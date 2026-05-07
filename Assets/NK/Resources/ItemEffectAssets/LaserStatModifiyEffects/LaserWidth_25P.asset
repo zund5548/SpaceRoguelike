@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
-  m_Name: Power_5
-  m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u653B\u6483\u529B+5"
+  m_Script: {fileID: 11500000, guid: 74eee1d2bbbcea44694acf83541759a8, type: 3}
+  m_Name: LaserWidth_25P
+  m_EditorClassIdentifier: Assembly-CSharp::Items.LaserStatModify
+  description: "\u30EC\u30FC\u30B6\u30FC\u5E45+25%"
   isPlayers: 1
-  value: 5
-  statType: 0
-  modType: 0
+  value: 25
+  laserShotStatType: 4
+  modType: 1

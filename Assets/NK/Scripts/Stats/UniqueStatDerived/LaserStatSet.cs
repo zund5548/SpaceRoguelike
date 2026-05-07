@@ -15,12 +15,14 @@ namespace Stats
             Range,
             DamageIntervalReduction,
             LaserLastingTime,
-            LaserTurnLate
+            LaserTurnLate,
+            LaserWidth
         }
         public Stat range = new(10);
         public Stat damageIntervalReduction = new(0.25f);
         public Stat laserLastingTime = new(5);
         public Stat laserTurnLate = new(90);
+        public Stat laserWidth = new(0.1f);
         public Stat GetStat(LaserStatType type)
         {
             return type switch
@@ -29,6 +31,7 @@ namespace Stats
                 LaserStatType.DamageIntervalReduction => damageIntervalReduction,
                 LaserStatType.LaserLastingTime => laserLastingTime,
                 LaserStatType.LaserTurnLate => laserTurnLate,
+                LaserStatType.LaserWidth => laserWidth,
                 _ => null
             };
         }

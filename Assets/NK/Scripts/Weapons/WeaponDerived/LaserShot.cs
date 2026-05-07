@@ -20,6 +20,7 @@ namespace Weapons
         public float damageIntervalReduction = 0f;
         public float laserLastingTime = 3f;
         public float laserTurnRate = 90f;
+        public float laserWidth = 0.2f;
         public override void SetUniqueStat(Ship applyingShip)
         {
             if(applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>() != null)return;
@@ -87,8 +88,9 @@ namespace Weapons
                             laser.transform.eulerAngles = new Vector3(0f,0f,nextDeg);
                             laser.transform.position = applyingdShipObject.transform.position;
                             //float dist = Vector2.Distance(applyingdShipObject.transform.position,targetPos);
-                            //float actualDist = dist < range?dist:range;
-                            laser.transform.localScale = new Vector3(currentRange ,laser.transform.localScale.y,laser.transform.localScale.z);
+                            //float actualDist = dist < range?dist:range;]
+                            float currentLaserWidth = applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().laserWidth.Value;
+                            laser.transform.localScale = new Vector3(currentRange,currentLaserWidth,1);
                         });
                     float currentDamageInterval = (1f - applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().damageIntervalReduction.Value / 100f) * damageInterval;
                     var interval = Observable.Interval(TimeSpan.FromSeconds(currentDamageInterval))

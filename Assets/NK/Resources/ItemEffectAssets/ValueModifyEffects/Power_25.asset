@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
-  m_Name: ResistanceHull_1
+  m_Name: Power_25
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u8239\u4F53\u62B5\u6297+1"
-  isPlayers: 1
-  value: 1
-  statType: 5
+  description: "\u653B\u6483\u529B+25"
+  isPlayers: 0
+  value: 25
+  statType: 0
   modType: 0

@@ -73,6 +73,7 @@ namespace Managers
             passsedStageNodes.Clear();
             passsedStageNodes.Clear();
             itemList.Clear();
+            playerShipDataList.Clear();
             //currentShipHullPoint.Clear();
         }
         private void SetInventoryInput()
@@ -108,9 +109,9 @@ namespace Managers
         private void Start() 
         {
             credit = 0;
+            iw = inventoryWindowObject.GetComponent<InventoryWindow>();
             AddCredit(1000);
             SetInventoryInput();
-            iw = inventoryWindowObject.GetComponent<InventoryWindow>();
             foreach(var item in itemList)
             {
                 iw.GenerateItemBanner(item);

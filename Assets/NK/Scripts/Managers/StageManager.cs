@@ -284,10 +284,30 @@ namespace Managers
                 itemList = itemList.Union(tmpItemList).ToList();
                 tmpItemList.Clear();
             }
-            return itemList.Except(ownedItems).OrderBy(x => UnityEngine.Random.value).Take(count).ToList();
+            // List<Item> result = new();
+            // for(int i = 0;i < count;i++)
+            // {
+            //     float r = UnityEngine.Random.Range(0,1000);
+
+            //     for(int j = TierToProp.Count - 1;j >= 0;j--)
+            //     {
+            //         if(r < TierToProp[j] * 10)
+            //         {
+            //             var chosens = itemList.Except(ownedItems).Where(item=>item.itemTier == 2 - j).ToList();
+            //             if(!chosens.Any())chosens = itemList.Except(ownedItems).ToList();
+            //             var chosen = chosens[UnityEngine.Random.Range(0,chosens.Count)];
+            //             itemList.Remove(chosen);
+            //             result.Add(chosen);
+            //             break;
+            //         }
+            //     }
+            // }
+            // return result;
             //return allItemList.OrderBy(x => .Random.value).Take(count).ToList();
+            return itemList.Except(ownedItems).OrderBy(x => UnityEngine.Random.Range(0,itemList.Count)).Take(count).ToList();
         }
-        
+        //
+        private List<int> TierToProp = new List<int>{10,30,60};
         public IEnumerator SetShipDataCoroutine()
         {
            _ShipDataBannerCanvas.SetActive(true); 
@@ -338,6 +358,18 @@ namespace Managers
                         buttonObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("BannerUp");
                     })
                     .AddTo(banner);
+            }
+        }
+
+        void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.Q))
+            {
+                var list = GetRandomItem(GManager.Instance.itemList,3);
+                foreach(var item in list)
+                {
+                    Debug.Log(item.itemName);
+                }
             }
         }
     }
