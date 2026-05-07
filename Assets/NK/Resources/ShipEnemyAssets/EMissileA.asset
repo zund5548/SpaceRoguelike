@@ -21,7 +21,6 @@ MonoBehaviour:
   power: 20
   critRate: 10
   speed: 1
-  shotSpeed: 10
   weaponData:
     rid: 5911334426664239225
   references:
@@ -30,8 +29,9 @@ MonoBehaviour:
     - rid: 5911334426664239225
       type: {class: MissileShot, ns: Weapons, asm: Assembly-CSharp}
       data:
-        projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
-        explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
+        weaponName: 
+        _projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
+        _explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
         isHoming: 0
         range: 10
         projectileSpeed: 1

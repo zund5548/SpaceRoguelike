@@ -13,7 +13,6 @@ namespace Weapons
     [Serializable]
     public class BulletShot : WeaponData
     {
-        public GameObject projectile;
         public float range;
         public float shotInterval;
         public float angleDif;//弾と弾の間の角(deg)
@@ -36,33 +35,35 @@ namespace Weapons
         }
         public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
-            int currentProjectileNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().projectileNum.Value;
-            float currentDeg = -angleDif * (currentProjectileNum -1) /2f;
-            float errorDeg = 0f;
-            bool currentIsPiercing = applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().isPiercing.Value >= 1 ? true : false;
-            if(maxErrorDeg != 0)errorDeg = UnityEngine.Random.Range(-maxErrorDeg,maxErrorDeg);
-            for(int i = 0;i < currentProjectileNum;i++)
-            {
-                var bullet = UnityEngine.Object.Instantiate(projectile);
-                bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
-                bullet.transform.position = applyingShipObject.transform.position;
-                bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,currentIsPiercing,true);
-                var v = applyingShip.GetNearestOpponet().transform.position - applyingShipObject.transform.position;
-                bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg + (currentDeg + errorDeg));
-                bullet.UpdateAsObservable()
-                    .Subscribe(_=>
-                    {
-                        bullet.transform.position += shotSpeed * bullet.transform.right * Time.deltaTime; 
-                        if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
-                    })
-                    .AddTo(bullet);
-                currentDeg += angleDif;
-            } 
+            ShootBullet(angleDif,maxErrorDeg,shotSpeed,applyingShipObject,applyingShip);
+            // int currentProjectileNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().projectileNum.Value;
+            // float currentDeg = -angleDif * (currentProjectileNum -1) /2f;
+            // float errorDeg = 0f;
+            // bool currentIsPiercing = applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().isPiercing.Value >= 1 ? true : false;
+            // if(maxErrorDeg != 0)errorDeg = UnityEngine.Random.Range(-maxErrorDeg,maxErrorDeg);
+            // for(int i = 0;i < currentProjectileNum;i++)
+            // {
+            //     var bullet = UnityEngine.Object.Instantiate(projectile);
+            //     bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
+            //     bullet.transform.position = applyingShipObject.transform.position;
+            //     bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,currentIsPiercing,true);
+            //     var v = applyingShip.GetNearestOpponet().transform.position - applyingShipObject.transform.position;
+            //     bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg + (currentDeg + errorDeg));
+            //     bullet.UpdateAsObservable()
+            //         .Subscribe(_=>
+            //         {
+            //             bullet.transform.position += shotSpeed * bullet.transform.right * Time.deltaTime; 
+            //             if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
+            //         })
+            //         .AddTo(bullet);
+            //     currentDeg += angleDif;
+            // } 
         }
         public override void ShootAction(GameObject applyingShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
             if(applyingShip.isSurged)return;
+            SetWeaponPrefab();
             ShootLoop(applyingShip).Subscribe().AddTo(applyingShipObject);
         }
         private IObservable<long> ShootLoop(Ship applyingShip)

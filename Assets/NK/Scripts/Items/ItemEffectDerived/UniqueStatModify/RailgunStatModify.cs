@@ -5,7 +5,7 @@ using Ships;
 using System;
 using Items;
 
-namespace SpaceRoguelike.Assets.NK.Scripts.Items.ItemEffectDerived.UniqueStatModify
+namespace Items
 {
     [CreateAssetMenu(menuName = "ItemEffect/RailgunStatModify")]
     [Serializable]

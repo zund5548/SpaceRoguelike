@@ -15,7 +15,6 @@ namespace Weapons
     public class DamageAreaShot:WeaponData
     {
         //jp:プラズマ
-        public GameObject _projectile;
         public GameObject _damageAreaObject;
         public float shotInterval;
         public float shotSpeed;
@@ -40,6 +39,7 @@ namespace Weapons
             if(applyingShip.isSurged)return;
             var targetShip = applyingShip.GetNearestOpponet();
             if(!applyingShip.gameObject || !targetShip)return;
+            SetWeaponPrefab();
             var bullet = UnityEngine.Object.Instantiate(_projectile);
             bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
             bullet.transform.position = applyingShipObject.transform.position;
@@ -100,11 +100,13 @@ namespace Weapons
             newColor.a = initAlpha;
             var sr = damageArea.GetComponent<SpriteRenderer>();
             sr.color = newColor;
+            float currentLastingtime = applyingShip.uniqueStatController.GetUniqueStat<DamageAreaStatSet>().lastingTime.Value;
+            float currentDamageInterval = applyingShip.uniqueStatController.GetUniqueStat<DamageAreaStatSet>().damageInterval.Value;
             IObservable<long> DealingDamageFase()
             {
                 return Observable.EveryUpdate()
-                    .TakeUntil(Observable.Timer(TimeSpan.FromSeconds(lastingTime)))
-                    .ThrottleFirst(TimeSpan.FromSeconds(damageInterval))
+                    .TakeUntil(Observable.Timer(TimeSpan.FromSeconds(currentLastingtime)))
+                    .ThrottleFirst(TimeSpan.FromSeconds(currentDamageInterval))
                     .Do(_=>
                     {
                          DamageAreaHit(damageArea,filter,applyingShip);

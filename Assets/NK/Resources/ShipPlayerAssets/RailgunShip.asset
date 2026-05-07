@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
   shipName: "Lithos\u7D1A"
   shipType: 0
-  maxHullPoint: 300
+  maxHullPoint: 200
   maxShieldPoint: 200
   hullResistance: 5
   shieldResistance: 5
@@ -30,10 +30,11 @@ MonoBehaviour:
       type: {class: RailgunShot, ns: Weapons, asm: Assembly-CSharp}
       data:
         weaponName: "\u30EC\u30FC\u30EB\u30AC\u30F3"
+        _projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
+        _explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
         railgunProjectile: {fileID: 2904888318123126438, guid: 9e7e7811405f6ed4ea6f0198f353de97, type: 3}
-        explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
-        range: 15
+        range: 10
         shotInterval: 2
         projectileSpeed: 50
         projectileWidth: 0.1
-        enableOnHitExplosion: 0
+        enableOnKillingExplosion: 0

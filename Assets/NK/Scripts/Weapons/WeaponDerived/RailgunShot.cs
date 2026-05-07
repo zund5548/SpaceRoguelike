@@ -11,13 +11,12 @@ namespace Weapons
     public class RailgunShot : WeaponData
     {
         public GameObject railgunProjectile;
-        public GameObject explosion;
         public float range;
         public float shotInterval;
         [Header("unique")]
         public float projectileSpeed;
         public float projectileWidth;
-        public bool enableOnHitExplosion;
+        public bool enableOnKillingExplosion;
         public override void SetUniqueStat(Ship applyingShip)
         {
             if(applyingShip.uniqueStatController.GetUniqueStat<RailgunStatSet>() != null)return;
@@ -26,29 +25,20 @@ namespace Weapons
             {
                 projectileSpeed = new(projectileSpeed),
                 projectileWidth  = new(projectileWidth),
-                enableOnHitExplosion = new(enableOnHitExplosion? 1f : 0f )
+                enableOnKillingExplosion = new(enableOnKillingExplosion? 1f : 0f )
             });
-        }
-        private void SetExplosion(Ship applyingShip,Vector2 pos)
-        {
-            var explosionRadiusObject = UnityEngine.Object.Instantiate(explosion,pos,Quaternion.identity);
-            // if(applyingShip.isPlayer)explosionRadiusObject.tag = "PlayerExplosion";
-            // else if(!applyingShip.isPlayer)explosionRadiusObject.tag = "EnemyExplosion";
-            explosionRadiusObject.tag = applyingShip.isPlayer? "PlayerExplosion":"EnemyExplosion";
-            var ExplosionSc = explosionRadiusObject.GetComponent<Explosion>();
-            float radius = 3;
-            ExplosionSc.SetExplosion(applyingShip,(int)applyingShip.currentPower.Value/2,radius);
         }
         public  override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
-            bool currentOnHitExplosion = applyingShip.uniqueStatController.GetUniqueStat<RailgunStatSet>().projectileSpeed.Value  >= 1f? true : false;
-            if(currentOnHitExplosion)
+            SetWeaponPrefab();
+            bool currentOnKillingExplosion = applyingShip.uniqueStatController.GetUniqueStat<RailgunStatSet>().enableOnKillingExplosion.IsAble;
+            if(currentOnKillingExplosion)
             {
                 applyingShip.shipEventController.OnKilling
                     .Subscribe(sae =>
                     {
-                        SetExplosion(applyingShip,sae.targetShip.transform.position);
+                        SpawnExplosion((int)applyingShip.currentPower.Value/2,4,sae.targetShip.transform.position,applyingShip);
                     })
                     .AddTo(applyingShip.gameObject);
             }

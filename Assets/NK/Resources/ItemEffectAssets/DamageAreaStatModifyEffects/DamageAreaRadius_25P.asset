@@ -15,5 +15,5 @@ MonoBehaviour:
   description: "\u30D7\u30E9\u30BA\u30DE\u306E\u7BC4\u56F2+25%"
   isPlayers: 1
   value: 25
-  damageAreaStatType: 2
+  damageAreaStatType: 1
   modType: 1

@@ -33,6 +33,13 @@ namespace Stats
                 return resultValue;
             }
         }
+        public bool IsAble
+        {
+            get
+            {
+                return Value > 0 ? true : false;
+            }
+        }
         public void AddModifier(StatModifier mod)
         {
             modifiers.Add(mod);

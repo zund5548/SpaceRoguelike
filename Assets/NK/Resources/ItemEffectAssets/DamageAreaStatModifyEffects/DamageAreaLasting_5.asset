@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
-  m_Name: MaxHull_20
-  m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u8239\u4F53\u5024+20"
+  m_Script: {fileID: 11500000, guid: 1e01c1a2b9a4bac41b7fe8d1b0302d36, type: 3}
+  m_Name: DamageAreaLasting_5
+  m_EditorClassIdentifier: Assembly-CSharp::Items.DamageAreaStatModify
+  description: "\u30D7\u30E9\u30BA\u30DE\u6301\u7D9A\u6642\u9593+5"
   isPlayers: 1
-  value: 20
-  statType: 2
+  value: 5
+  damageAreaStatType: 2
   modType: 0

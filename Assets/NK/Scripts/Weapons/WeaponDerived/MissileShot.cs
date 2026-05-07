@@ -13,8 +13,6 @@ namespace Weapons
     [Serializable]
     public class MissileShot: WeaponData
     {
-        public GameObject projectile;
-        public GameObject explosion;
         public bool isHoming;
         public float range;
         public float projectileSpeed;
@@ -55,6 +53,7 @@ namespace Weapons
         private void ShootMissile(GameObject applyingShipObject,Ship applyingShip,bool isRight)
         {
             if(applyingShip.isSurged)return;
+            SetWeaponPrefab();
             GameObject targetObject = applyingShip.GetNearestOpponet();
             Vector2 initTargetPos = (Vector2)targetObject.transform.position;
             var v = initTargetPos - (Vector2)applyingShipObject.transform.position;
@@ -68,7 +67,7 @@ namespace Weapons
             for(int i = 0;i < currentMissileNum;i++)
             {
                 Vector2 errorOffset =  UnityEngine.Random.Range(0f,errorRadius) * RandomUnitVector();
-                var missileProjectile = UnityEngine.Object.Instantiate(projectile);
+                var missileProjectile = UnityEngine.Object.Instantiate(_projectile);
                 missileProjectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
                 missileProjectile.transform.position = applyingShipObject.transform.position;
                 //missileProjectile.GetComponent<Projectile>().enabled = false;
@@ -109,8 +108,9 @@ namespace Weapons
                         if(state.period <= 0f)
                         {
                             var p = state.targetPos;
-                            UnityEngine.Object.Destroy(missileProjectile);
-                            SetExplosion(applyingShip,p);
+                            float currentRadius = applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value;
+                            SpawnExplosion((int)applyingShip.currentPower.Value,currentRadius,p,applyingShip);
+                            UnityEngine.Object.Destroy(missileProjectile);                            
                         }
                     })
                     .AddTo(missileProjectile);
@@ -130,7 +130,7 @@ namespace Weapons
             
             Vector2 errorOffset =  UnityEngine.Random.Range(0f,errorRadius) * RandomUnitVector();
             Vector2 currentTargetPos = targetShipObject.transform.position;
-            var missileProjectile = UnityEngine.Object.Instantiate(projectile);
+            var missileProjectile = UnityEngine.Object.Instantiate(_projectile);
                 missileProjectile.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
                 missileProjectile.transform.position = applyingShipObject.transform.position;
                 //missileProjectile.GetComponent<Projectile>().enabled = false;
@@ -172,7 +172,7 @@ namespace Weapons
                         {
                             var p = state.targetPos;
                             UnityEngine.Object.Destroy(missileProjectile);
-                            SetExplosion(applyingShip,p);
+                            SpawnExplosion((int)applyingShip.currentPower.Value,applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value,p,applyingShip);
                             
                         }
                     })
@@ -200,15 +200,6 @@ namespace Weapons
                     isRight = !isRight;
                 })
                 .SelectMany(_=> ShootMissileLoop(isRight,applyingShip));
-        }
-        private void SetExplosion(Ship applyingShip,Vector2 pos)
-        {
-            var explosionRadiusObject = UnityEngine.Object.Instantiate(explosion,pos,Quaternion.identity);
-            // if(applyingShip.isPlayer)explosionRadiusObject.tag = "PlayerExplosion";
-            // else if(!applyingShip.isPlayer)explosionRadiusObject.tag = "EnemyExplosion";
-            explosionRadiusObject.tag = applyingShip.isPlayer? "PlayerExplosion":"EnemyExplosion";
-            var ExplosionSc = explosionRadiusObject.GetComponent<Explosion>();
-            ExplosionSc.SetExplosion(applyingShip,(int)applyingShip.currentPower.Value,applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value);
         }
     }
 }

@@ -19,11 +19,7 @@ MonoBehaviour:
   enemyWaveList:
   - shipDataList:
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
-    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
-    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
-  - shipDataList:
-    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
-    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
+    - {fileID: 11400000, guid: c21c6475c12249945bc2f1a212c36f69, type: 2}
     - {fileID: 11400000, guid: c21c6475c12249945bc2f1a212c36f69, type: 2}
   - shipDataList:
     - {fileID: 11400000, guid: c21c6475c12249945bc2f1a212c36f69, type: 2}

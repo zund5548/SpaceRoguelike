@@ -117,6 +117,7 @@ namespace Managers
             newColor.a = 1f;
             buttonImage.color = newColor;
             GManager.Instance._floorNum = stageNumDic[level];
+            GManager.Instance._mapLevel = level;
         }
     }
 }

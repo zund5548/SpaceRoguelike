@@ -20,8 +20,8 @@ namespace Items
                 isFirst = false;
                 missileShot = new MissileShot
                 {
-                    projectile = (GameObject)Resources.Load("projectile"),
-                    explosion = (GameObject)Resources.Load("explosion"),
+                    _projectile = (GameObject)Resources.Load("Projectile"),
+                    _explosion = (GameObject)Resources.Load("Explosion"),
                     range = 100f,
                     projectileSpeed = 1f,
                     //shotInterval

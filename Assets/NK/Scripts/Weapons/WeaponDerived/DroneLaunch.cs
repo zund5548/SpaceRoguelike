@@ -14,7 +14,6 @@ namespace Weapons
     public class DroneLaunch : WeaponData
     {
         public GameObject droneObject;
-        public GameObject projectile;
         public float range;
         public float shotInterval;
         public float orbitRadius;
@@ -46,6 +45,7 @@ namespace Weapons
         public override void ShootAction(GameObject applyingShipObject, Ship applyingShip)
         {
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            SetWeaponPrefab();
             Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
                 .Repeat()
                 .Subscribe(_ =>
@@ -62,11 +62,12 @@ namespace Weapons
             var drone = UnityEngine.Object.Instantiate(droneObject);
             drone.transform.position = orbitRadius  * new Vector2(Mathf.Cos(deg * Mathf.Deg2Rad),Mathf.Sin(deg * Mathf.Deg2Rad)) + (Vector2)applyingShip.transform.position;
             float currentDroneLifetime = (int)applyingShip.uniqueStatController.GetUniqueStat<DroneStatSet>().droneLifetime.Value;
-            
+            bool currentDroneExplosion = applyingShip.uniqueStatController.GetUniqueStat<DroneStatSet>().enableDroneExplosion.IsAble;
             Observable.EveryUpdate()
                 .TakeUntil(Observable.Timer(TimeSpan.FromSeconds(currentDroneLifetime)))
                 .Finally(()=>
                 {
+                    if(currentDroneExplosion)SpawnExplosion((int)applyingShip.currentPower.Value,2f,drone.transform.position,applyingShip);
                     UnityEngine.Object.Destroy(drone);
                 })
                 .Subscribe(_ =>
@@ -99,7 +100,7 @@ namespace Weapons
         }
         private void DroneShoot(Vector2 dronePos,Ship applyingShip)
         {
-            var bullet = UnityEngine.Object.Instantiate(projectile);
+            var bullet = UnityEngine.Object.Instantiate(_projectile);
             bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
             bullet.transform.position = dronePos;
             bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,false,true);

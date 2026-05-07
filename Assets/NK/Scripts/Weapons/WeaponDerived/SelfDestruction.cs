@@ -36,6 +36,7 @@ namespace Weapons
         public override void ShootAction(GameObject applyingShipObject, Ship applyingShip)
         {
             if(!applyingShip)return;
+            SetWeaponPrefab();
             applyingShipObject.UpdateAsObservable()
                 .ThrottleFirst(TimeSpan.FromSeconds(1f))
                 .Subscribe(_ =>

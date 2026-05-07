@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daf8ef852fed94f44844032dd7601072, type: 3}
+  m_Name: DroneExplosion
+  m_EditorClassIdentifier: Assembly-CSharp::Items.DroneStatModify
+  description: "\u30C9\u30ED\u30FC\u30F3\u306E\u7A3C\u50CD\u6642\u9593\u304C\u7D42\u308F\u308B\u3068\u3001\u7206\u767A\u3059\u308B\u3088\u3046\u306B\u306A\u308B"
+  isPlayers: 0
+  value: 1
+  droneStatType: 3
+  modType: 0

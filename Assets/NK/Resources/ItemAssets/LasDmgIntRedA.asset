@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: ShiSpeA
+  m_Name: LasDmgIntRedA
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u30A2\u30D5\u30BF\u30FC\u30D0\u30FC\u30CA\u30FC1"
+  itemName: "\u5149\u6E90\u5897\u5E451"
   itemIcon: {fileID: 0}
   itemTier: 0
   itemEffectList:
-  - {fileID: 11400000, guid: 98d4c5375a282fc48b832010e25283f0, type: 2}
+  - {fileID: 11400000, guid: ad2fc40a8db589d4ea43f7618f1c991a, type: 2}

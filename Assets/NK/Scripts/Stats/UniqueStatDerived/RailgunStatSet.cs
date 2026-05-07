@@ -13,18 +13,18 @@ namespace Stats
         {
             ProjectileSpeed,
             ProjectileWidth,
-            EnableOnHitExplosion,
+            EnableOnKillingExplosion,
         }
         public Stat projectileSpeed = new(75);
         public Stat projectileWidth = new(0.1f);
-        public Stat enableOnHitExplosion = new(0.1f);
+        public Stat enableOnKillingExplosion = new(0f);
         public Stat GetStat(RailGunStatType type)
         {
             return type switch
             {
                 RailGunStatType.ProjectileSpeed => projectileSpeed,
                 RailGunStatType.ProjectileWidth => projectileWidth,
-                RailGunStatType.EnableOnHitExplosion=> enableOnHitExplosion,
+                RailGunStatType.EnableOnKillingExplosion=> enableOnKillingExplosion,
                 _ => null
             };
         }

@@ -6,6 +6,7 @@ using UniRx;
 using Maps;
 using Ships;
 using Items;
+using System.Linq;
 using TMPro;
 using UnityEngine.InputSystem;
 
@@ -16,6 +17,7 @@ namespace Managers
         public static GManager Instance{get;private set;}
         public ReactiveProperty<GameState> CurrentState = new ReactiveProperty<GameState>();
         public int _floorNum;
+        public int _mapLevel;
         [HideInInspector]
         public bool isMapCreated = false;
         public List<List<StageNode>> _stageFloorList = new();
@@ -30,8 +32,10 @@ namespace Managers
         //input
         public InputActionAsset inputAction;
         private InputAction inventoryAction;
-        [Header("UI")]
-        public TextMeshProUGUI _CreditDisplay;
+        public GameObject inventoryWindowObject;
+        [HideInInspector]
+        public InventoryWindow iw;
+
         [Header("Canvas")]
         public GameObject InventoryCanvas;
         public Camera inventoryWorldCamera;
@@ -106,6 +110,12 @@ namespace Managers
             credit = 0;
             AddCredit(1000);
             SetInventoryInput();
+            iw = inventoryWindowObject.GetComponent<InventoryWindow>();
+            foreach(var item in itemList)
+            {
+                iw.GenerateItemBanner(item);
+            }
+            if(playerShipDataList.Count == 0)playerShipDataList.Add(GetRandomShipData());
         }
         [Serializable]
         public enum GameState
@@ -118,9 +128,13 @@ namespace Managers
         {
             CurrentState.Value = gameState;
         }
+        /// <summary>
+        /// valueの分だけcreidtを増やす
+        /// </summary>
         public void AddCredit(int value)
         {
             credit += value;
+            iw.SetCreditDisplay();
         }
         private Dictionary<ShipData.ShipType,(int,int)> CreditTable = new Dictionary<ShipData.ShipType, (int, int)>
         {
@@ -129,12 +143,15 @@ namespace Managers
             {ShipData.ShipType.Destroyer,(150,155)},
             {ShipData.ShipType.EliteDestroyer,(200,205)},
         };
+        /// <summary>
+        /// 倒した艦船に応じてcreditを増やす
+        /// </summary>
         public void AddCredit(ShipData.ShipType shipType)
         {
-            var creditmm = CreditTable[shipType];
+            var creditAmount = CreditTable[shipType];
             //var addValue = UnityEngine.Random.Range(creditmm.Item1,creditmm.Item2); 
-            credit += UnityEngine.Random.Range(creditmm.Item1,creditmm.Item2);
-            SetCreditDisplay();
+            credit += UnityEngine.Random.Range(creditAmount.Item1,creditAmount.Item2);
+            iw.SetCreditDisplay();
         }
         public void UseCredit(int value)
         {
@@ -144,11 +161,19 @@ namespace Managers
                 return;
             }
             credit -= value;
-            SetCreditDisplay();
+            iw.SetCreditDisplay();
         }
-        public void SetCreditDisplay()
+
+        public void AddItemToInventory(Item item)
         {
-            _CreditDisplay.SetText(credit.ToString() + "C");
+            itemList.Add(item);
+            iw.GenerateItemBanner(item);
+        }
+
+        public ShipData GetRandomShipData()
+        {
+            var list = Resources.LoadAll<ShipData>("ShipPlayerAssets").OrderBy(x => UnityEngine.Random.value).Take(1).ToList();
+            return list[UnityEngine.Random.Range(0,list.Count)];
         }
         // public void AddCurrentHullPoint(Ship ship)
         // {

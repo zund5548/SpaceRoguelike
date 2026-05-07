@@ -39,7 +39,9 @@ namespace Maps
         {
             {0,600},
             {1,1200},
-            {2,1800}
+            {2,1800},
+            {3,2400},
+            {4,3200},
         };
         private void SetShopBanner(int n)
         {
@@ -70,7 +72,7 @@ namespace Maps
                         if(GManager.Instance.credit < itemPrice)return;
                         GManager.Instance.UseCredit(itemPrice);
                         var buttonObject = banner;
-                        GManager.Instance.itemList.Add(item);
+                        GManager.Instance.AddItemToInventory(item);
                         buttonObject.transform.GetChild(0).GetComponent<Button>().interactable = false;
                         buttonObject.transform.GetChild(1).gameObject.SetActive(true);
                         for(int i = 0;i < itemList.Count;i++)

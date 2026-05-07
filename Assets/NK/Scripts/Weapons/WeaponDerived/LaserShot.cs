@@ -5,6 +5,7 @@ using System;
 using Ships;
 using Projectiles;
 using System.Collections.Generic;
+using Stats;
 
 namespace Weapons
 {
@@ -12,14 +13,24 @@ namespace Weapons
     public class LaserShot : WeaponData
     {
         public GameObject laserObject;
-        public float range = 10f;
         public float shotInterval = 5f;
         public float damageInterval = 0.5f;
-        public float laserLastTime = 3f;
+        [Header("unique stat")]
+        public float range = 10f;
+        public float damageIntervalReduction = 0f;
+        public float laserLastingTime = 3f;
         public float laserTurnRate = 90f;
         public override void SetUniqueStat(Ship applyingShip)
         {
-
+            if(applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>() != null)return;
+            applyingShip.uniqueStatController.AddUniqueStat(
+            new LaserStatSet
+            {
+                range = new(range),
+                damageIntervalReduction = new(damageIntervalReduction),
+                laserLastingTime = new(laserLastingTime),
+                laserTurnLate = new(laserTurnRate)
+            });
         }
         private void SetLaser(GameObject applyingdShipObject,Ship applyingShip)
         {
@@ -28,9 +39,10 @@ namespace Weapons
             laser.tag = applyingShip.isPlayer?"PlayerProjectile":"EnemyProjectile";
             var v = applyingShip.GetNearestOpponet().transform.position - applyingdShipObject.transform.position;
             float initDeg = Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg;
+            float currentRange = applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().range.Value; 
             laser.transform.eulerAngles = new Vector3(0f,0f,initDeg);
             laser.transform.position = applyingdShipObject.transform.position;
-            laser.transform.localScale = new Vector3(range,laser.transform.localScale.y,laser.transform.localScale.z);
+            laser.transform.localScale = new Vector3(currentRange ,laser.transform.localScale.y,laser.transform.localScale.z);
             Vector2 targetPos = Vector2.zero;
             //コライダー
             ContactFilter2D filter = new();
@@ -58,28 +70,28 @@ namespace Weapons
             Observable.Timer(TimeSpan.Zero)
                 .SelectMany(_ =>
                 {
-                    // 3秒間の処理ブロック
-                    var duration = TimeSpan.FromSeconds(laserLastTime);
-
-                    // 毎フレーム処理
+                    float currentLaserLastingTime = applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().laserLastingTime.Value;
+                    var duration = TimeSpan.FromSeconds(currentLaserLastingTime);
                     var everyFrame = Observable.EveryUpdate()
                         .TakeUntil(Observable.Timer(duration))
                         .Do(_ =>
                         {
+                            //回転・移動
                             var targetObject = applyingShip.GetNearestOpponet();
                             if(!targetObject)UnityEngine.Object.Destroy(laser);
                             else targetPos = targetObject.transform.position;
                             var w = targetPos - (Vector2)applyingdShipObject.transform.position;
                             float targetDeg = Mathf.Atan2(w.y,w.x) * Mathf.Rad2Deg;
-                            float nextDeg = Mathf.MoveTowardsAngle(laser.transform.eulerAngles.z,targetDeg,laserTurnRate * Time.deltaTime);
+                            float currentLaserTurnRate = applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().laserTurnLate.Value;
+                            float nextDeg = Mathf.MoveTowardsAngle(laser.transform.eulerAngles.z,targetDeg, currentLaserTurnRate * Time.deltaTime);
                             laser.transform.eulerAngles = new Vector3(0f,0f,nextDeg);
                             laser.transform.position = applyingdShipObject.transform.position;
                             //float dist = Vector2.Distance(applyingdShipObject.transform.position,targetPos);
                             //float actualDist = dist < range?dist:range;
-                            laser.transform.localScale = new Vector3(range,laser.transform.localScale.y,laser.transform.localScale.z);
+                            laser.transform.localScale = new Vector3(currentRange ,laser.transform.localScale.y,laser.transform.localScale.z);
                         });
-                    // 数秒ごと処理（例：1秒ごと）
-                    var interval = Observable.Interval(TimeSpan.FromSeconds(damageInterval))
+                    float currentDamageInterval = (1f - applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().damageIntervalReduction.Value / 100f) * damageInterval;
+                    var interval = Observable.Interval(TimeSpan.FromSeconds(currentDamageInterval))
                         .TakeUntil(Observable.Timer(duration))
                         .Do(_ =>
                         {
@@ -113,6 +125,7 @@ namespace Weapons
         public override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
+            SetWeaponPrefab();
             var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             applyingdShipObject.UpdateAsObservable()
                 .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
@@ -121,7 +134,9 @@ namespace Weapons
                 {
                     var targetObject = applyingShip.GetNearestOpponet();
                     if(!targetObject)return;
-                    if(Vector2.Distance(applyingdShipObject.transform.position,targetObject.transform.position) > range)return;
+
+                    float currentRange = applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().range.Value; 
+                    if(Vector2.Distance(applyingdShipObject.transform.position,targetObject.transform.position) > currentRange)return;
                     SetLaser(applyingdShipObject,applyingShip);
                 })
                 .AddTo(applyingdShipObject);

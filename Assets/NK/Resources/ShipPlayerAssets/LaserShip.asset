@@ -14,14 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
   shipName: "Adamant\u7D1A"
   shipType: 0
-  maxHullPoint: 400
-  maxShieldPoint: 200
+  maxHullPoint: 300
+  maxShieldPoint: 300
   hullResistance: 10
   shieldResistance: 10
-  power: 1
+  power: 30
   critRate: 5
   speed: 2.5
-  shotSpeed: 0
   weaponData:
     rid: 1541337840300064973
   references:
@@ -31,9 +30,12 @@ MonoBehaviour:
       type: {class: LaserShot, ns: Weapons, asm: Assembly-CSharp}
       data:
         weaponName: "\u30EC\u30FC\u30B6\u30FC"
+        _projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
+        _explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
         laserObject: {fileID: 4070486188369185136, guid: 3bd39d843a923ba49b282d382675c53f, type: 3}
-        range: 10
         shotInterval: 5
-        damageInterval: 0.25
-        laserLastTime: 3
-        laserTurnRate: 60
+        damageInterval: 0.3
+        range: 7.5
+        damageIntervalReduction: 0
+        laserLastingTime: 3
+        laserTurnRate: 45

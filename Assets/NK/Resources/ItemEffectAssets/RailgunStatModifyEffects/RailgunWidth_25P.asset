@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c1c11888306a64782bf6bee8680497, type: 3}
   m_Name: RailgunWidth_25P
   m_EditorClassIdentifier: Assembly-CSharp::SpaceRoguelike.Assets.NK.Scripts.Items.ItemEffectDerived.UniqueStatModify.RailgunStatModify
-  description: "\u30EC\u30FC\u30EB\u30AC\u30F3\u306E\u5F3E\u4E38\u30B5\u30A4\u30BA+25%"
+  description: "\u30EC\u30FC\u30EB\u30AC\u30F3\u306E\u5F3E\u4E38\u30B5\u30A4\u30BA+15%"
   isPlayers: 1
-  value: 25
+  value: 15
   railgunShotStatType: 1
   modType: 1

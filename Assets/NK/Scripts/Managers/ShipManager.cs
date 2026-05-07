@@ -237,8 +237,8 @@ namespace Managers
         {
             int k = GManager.Instance.currentStageNode.floorStageNum / 2;
             if(k == 0)return;
-            enemyShip.GetStat(StatType.Hull).AddModifier(new StatModifier(k * 25f,ModType.Percent));
-            enemyShip.GetStat(StatType.Shield).AddModifier(new StatModifier(k * 25f,ModType.Percent));
+            enemyShip.GetStat(StatType.Hull).AddModifier(new StatModifier(k * 5f,ModType.Percent));
+            enemyShip.GetStat(StatType.Shield).AddModifier(new StatModifier(k * 20f,ModType.Percent));
             enemyShip.GetStat(StatType.Power).AddModifier(new StatModifier(k * 25f,ModType.Percent));
         }
         public GameObject SpawnBossShip(ShipData shipData,BossType bossType)

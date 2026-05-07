@@ -229,7 +229,16 @@ namespace Managers
             List<StageEncount> filteredEncountList;
             int allFloorNum = GManager.Instance._floorNum;
 
-            int obtainShipInterval = _floorNum/2 + 1 < 11 ? _floorNum/2 + 1 : 11;
+            // int obtainShipInterval = _floorNum/2 + 1 < 11 ? _floorNum/2 + 1 : 11;
+            Dictionary<int,int> obtainShipNumDic = new Dictionary<int, int>
+            {
+                {0,1},
+                {1,2},
+                {2,2},
+                {3,3},
+                {4,4},
+            };
+
             for(int i = 1;i < _floorList.Count-1;i++)
             {
                 for(int j = 0;j < _floorList[i].Count;j++)
@@ -237,7 +246,8 @@ namespace Managers
                     float r = UnityEngine.Random.value;
                     if(r < 0.9f)_floorList[i][j].stageType = StageNode.StageType.Battle;
                     else _floorList[i][j].stageType = StageNode.StageType.Shop;
-                    if(i % obtainShipInterval == 0)_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
+                    //if(i % obtainShipInterval == 0)_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
+                    if(i % 3 == 0 && i <= 3 * obtainShipNumDic[GManager.Instance._mapLevel])_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
                     //stageEncount代入
                     // filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
                     // _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];

@@ -22,7 +22,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
     - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
-    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
   - shipDataList:
     - {fileID: 11400000, guid: 66dcd10a52923f94fbc413384adffdfe, type: 2}
     - {fileID: 11400000, guid: 66dcd10a52923f94fbc413384adffdfe, type: 2}

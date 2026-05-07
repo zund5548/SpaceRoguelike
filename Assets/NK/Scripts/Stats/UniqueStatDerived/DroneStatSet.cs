@@ -10,11 +10,16 @@ namespace Stats
         {
             DroneNum,
             Lifetime,
-            DroneShotInterval
+            DroneShotInterval,
+             /// <summary>
+            /// ドローンが消えるとき爆発
+            /// </summary>
+            EnableDroneExplosion,
         }
         public Stat droneNum = new(3);
         public Stat droneLifetime = new(5);
         public Stat droneShotInterval= new(5);
+        public Stat enableDroneExplosion = new(0);
         public Stat GetStat(DroneStatType type)
         {
             return type switch
@@ -22,6 +27,7 @@ namespace Stats
                 DroneStatType.DroneNum => droneNum,
                 DroneStatType.Lifetime => droneLifetime,
                 DroneStatType.DroneShotInterval => droneShotInterval,
+                DroneStatType.EnableDroneExplosion => enableDroneExplosion,
                 _ => null
             };
         }

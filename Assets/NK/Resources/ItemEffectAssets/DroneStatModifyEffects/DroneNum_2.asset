@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
-  m_Name: MaxShield_100
-  m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u30B7\u30FC\u30EB\u30C9\u5024+100"
+  m_Script: {fileID: 11500000, guid: daf8ef852fed94f44844032dd7601072, type: 3}
+  m_Name: DroneNum_2
+  m_EditorClassIdentifier: Assembly-CSharp::Items.DroneStatModify
+  description: "\u30C9\u30ED\u30FC\u30F3\u6570+2"
   isPlayers: 1
-  value: 100
-  statType: 2
+  value: 2
+  droneStatType: 0
   modType: 0

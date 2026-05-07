@@ -15,13 +15,12 @@ MonoBehaviour:
   shipName: "Buraq\u7D1A"
   shipType: 0
   maxHullPoint: 200
-  maxShieldPoint: 100
+  maxShieldPoint: 200
   hullResistance: 5
   shieldResistance: 5
   power: 30
   critRate: 5
   speed: 10
-  shotSpeed: 0
   weaponData:
     rid: 8997316341899985022
   references:
@@ -31,6 +30,8 @@ MonoBehaviour:
       type: {class: ChainShot, ns: Weapons, asm: Assembly-CSharp}
       data:
         weaponName: "\u9023\u9396\u5F3E"
+        _projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
+        _explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
         ChianLineObject: {fileID: 3562957314161690254, guid: 332f9659690b8734cb0a7e5a43f05dbd, type: 3}
         range: 5
         chainRange: 5

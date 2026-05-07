@@ -80,7 +80,7 @@ namespace Managers
 
             SetNotice(GManager.Instance.currentStageNode.stageName);
             SetFloorDisplay();
-            GManager.Instance.SetCreditDisplay();
+            GManager.Instance.iw.SetCreditDisplay();
         }
         private void SetToMapButton()
         {
@@ -227,7 +227,7 @@ namespace Managers
                     {
                         var buttonObject = banner;
                         isBannerPushed = true;
-                        GManager.Instance.itemList.Add(item);
+                        GManager.Instance.AddItemToInventory(item);
                         foreach(var button in buttonList)
                         {
                             button.interactable = false;
@@ -248,6 +248,8 @@ namespace Managers
                 typeof(MissileStatModify),
                 typeof(DroneStatModify),
                 typeof(DamageAreaStatModify),
+                typeof(RailgunStatModify),
+                typeof(LaserStatModify)
             };
             //uniqueStatをいじるクラスを除外
             itemList = allItemList
@@ -271,6 +273,12 @@ namespace Managers
                         break;
                     case DamageAreaShot:
                         tmpItemList = allItemList.Where(item => item.itemEffectList.Any(itemEffect => itemEffect is DamageAreaStatModify)).ToList();
+                        break;
+                    case RailgunShot:
+                        tmpItemList = allItemList.Where(item => item.itemEffectList.Any(itemEffect => itemEffect is RailgunStatModify)).ToList();
+                        break;
+                     case LaserShot:
+                        tmpItemList = allItemList.Where(item => item.itemEffectList.Any(itemEffect => itemEffect is LaserStatModify)).ToList();
                         break;
                 }
                 itemList = itemList.Union(tmpItemList).ToList();

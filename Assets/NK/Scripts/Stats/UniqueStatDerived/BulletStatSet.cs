@@ -16,6 +16,12 @@ namespace Stats
             BurstNum,
             IsPiercing,
         }
+        public float range;
+        public float shotInterval;
+        public float angleDif;//弾と弾の間の角(deg)
+        public float maxErrorDeg;
+        public float shotSpeed;
+        //unique stat
         public Stat projectileNum = new(1);
         public Stat burstNum = new(1);
         public Stat isPiercing = new(0);
