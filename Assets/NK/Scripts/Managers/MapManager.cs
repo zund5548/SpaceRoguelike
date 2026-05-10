@@ -247,7 +247,7 @@ namespace Managers
                     if(r < 0.9f)_floorList[i][j].stageType = StageNode.StageType.Battle;
                     else _floorList[i][j].stageType = StageNode.StageType.Shop;
                     //if(i % obtainShipInterval == 0)_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
-                    if(i % 3 == 0 && i <= 3 * obtainShipNumDic[GManager.Instance._mapLevel])_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
+                    if(i % 4 == 0 && i <= 4 * obtainShipNumDic[GManager.Instance._mapLevel])_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
                     //stageEncount代入
                     // filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
                     // _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];

@@ -41,6 +41,7 @@ namespace Maps
                 StageType.Defence => "戦闘:防衛",
                 StageType.Shop => "ショップ",
                 StageType.Credit => "賞金稼ぎ",
+                StageType.ObtainShip => "艦船追加",
                 StageType.Elite => "精鋭",
                 StageType.Boss => "ボス",
                 _=> ""

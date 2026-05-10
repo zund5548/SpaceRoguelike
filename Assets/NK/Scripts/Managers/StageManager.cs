@@ -220,7 +220,7 @@ namespace Managers
                 var button = banner.transform.GetChild(0).GetComponent<Button>();
                 buttonList.Add(button);
                 banner.transform.SetParent(_ItemRewardContent,false);
-                banner.GetComponent<ItemBanner>().SetBannerMessage(item.itemName,item.GetItemDescription());
+                banner.GetComponent<ItemBanner>().SetBannerMessage(item);
                 button.OnClickAsObservable()
                     .Where(_=>!isBannerPushed)
                     .Subscribe(_=>
@@ -284,27 +284,36 @@ namespace Managers
                 itemList = itemList.Union(tmpItemList).ToList();
                 tmpItemList.Clear();
             }
-            // List<Item> result = new();
-            // for(int i = 0;i < count;i++)
-            // {
-            //     float r = UnityEngine.Random.Range(0,1000);
-
-            //     for(int j = TierToProp.Count - 1;j >= 0;j--)
-            //     {
-            //         if(r < TierToProp[j] * 10)
-            //         {
-            //             var chosens = itemList.Except(ownedItems).Where(item=>item.itemTier == 2 - j).ToList();
-            //             if(!chosens.Any())chosens = itemList.Except(ownedItems).ToList();
-            //             var chosen = chosens[UnityEngine.Random.Range(0,chosens.Count)];
-            //             itemList.Remove(chosen);
-            //             result.Add(chosen);
-            //             break;
-            //         }
-            //     }
-            // }
-            // return result;
-            //return allItemList.OrderBy(x => .Random.value).Take(count).ToList();
-            return itemList.Except(ownedItems).OrderBy(x => UnityEngine.Random.Range(0,itemList.Count)).Take(count).ToList();
+            var result = new List<Item>();
+            var itemPool = itemList.Except(ownedItems).ToList();
+            List<float> weightList = new List<float>{50,30,20,10};
+            for(int i = 0;i < count;i++)
+            {
+                var item = itemPool.Where(item => item.itemTier == WeightedItemTier(weightList)).OrderBy(x => UnityEngine.Random.Range(0,itemPool.Count)).ToList()[0];
+                result.Add(item);
+                itemPool.Remove(item);
+            }
+            if(result.Count != count)result = itemPool.OrderBy(x => UnityEngine.Random.Range(0,itemPool.Count)).Take(count).ToList();
+            return result;
+        }
+        private int WeightedItemTier(List<float> weightList)
+        {
+            float weightSum = 0;
+            for(int i = 0;i < weightList.Count;i++)
+            {
+                weightSum += weightList[i];
+            }
+            float r = UnityEngine.Random.Range(0,weightSum);
+            float currentWeightSum = 0;
+            for(int i = 0;i < weightList.Count;i++)
+            {
+                currentWeightSum += weightList[i];
+                if(r < currentWeightSum)
+                {
+                    return i;
+                }
+            }
+            return weightList.Count - 1;
         }
         //
         private List<int> TierToProp = new List<int>{10,30,60};
@@ -363,14 +372,14 @@ namespace Managers
 
         void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Q))
-            {
-                var list = GetRandomItem(GManager.Instance.itemList,3);
-                foreach(var item in list)
-                {
-                    Debug.Log(item.itemName);
-                }
-            }
+            // if(Input.GetKeyDown(KeyCode.Q))
+            // {
+            //     var list = GetRandomItem(GManager.Instance.itemList,3);
+            //     foreach(var item in list)
+            //     {
+            //         Debug.Log(item.itemName);
+            //     }
+            // }
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Maps
                 var button = banner.transform.GetChild(0).GetComponent<Button>();
                 //buttonList.Add(button);
                 banner.transform.SetParent(StageManager.Instance._ShopScrollContent,false);
-                banner.GetComponent<ItemBanner>().SetBannerMessage(item.itemName,item.GetItemDescription());
+                banner.GetComponent<ItemBanner>().SetBannerMessage(item);
                 //金額表示
                 var priceDisplay = UnityEngine.Object.Instantiate(_PriceDisplay);
                 priceDisplay.transform.SetParent(banner.transform,false);

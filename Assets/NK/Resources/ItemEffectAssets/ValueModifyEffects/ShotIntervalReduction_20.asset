@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
-  m_Name: Power_25
+  m_Name: ShotIntervalReduction_20
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u653B\u6483\u529B+25"
+  description: "\u5C04\u6483\u9593\u9694\u6E1B\u5C11(%)+20"
   isPlayers: 1
-  value: 25
-  statType: 0
+  value: 20
+  statType: 6
   modType: 0

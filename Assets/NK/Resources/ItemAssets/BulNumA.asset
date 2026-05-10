@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
   itemName: "\u88C5\u586B\uFF11"
   itemIcon: {fileID: 0}
-  itemTier: 1
-  maxNum: 1
+  itemTier: 0
   itemEffectList:
   - {fileID: 11400000, guid: d32e20df68bf98d4ebb59dcc593a3fc5, type: 2}

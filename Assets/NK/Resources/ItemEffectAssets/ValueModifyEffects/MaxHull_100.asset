@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MaxHull_100
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
   description: "\u8239\u4F53\u5024+100"
-  isPlayers: 0
+  isPlayers: 1
   value: 100
   statType: 2
   modType: 0

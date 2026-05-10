@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: DroNumA
+  m_Name: SirB
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u30C9\u30ED\u30FC\u30F3\u5BB9\u91CF1"
+  itemName: "\u7167\u6E96\u6539\u826F2"
   itemIcon: {fileID: 0}
-  itemTier: 0
+  itemTier: 1
   itemEffectList:
-  - {fileID: 11400000, guid: 6f8c3bd53018e074899886adcbd37caa, type: 2}
+  - {fileID: 11400000, guid: aadf91d4f59ab5144944708c9d73b67e, type: 2}

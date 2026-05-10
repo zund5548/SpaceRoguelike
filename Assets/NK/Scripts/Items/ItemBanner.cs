@@ -9,15 +9,19 @@ namespace Items
         public Button button;
         public TextMeshProUGUI itemNameText;
         public TextMeshProUGUI itemDescriptionText;
+        public TextMeshProUGUI itemTierDisplay;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             
         }
-        public void SetBannerMessage(string itemName,string itemDescription)
+        public void SetBannerMessage(Item item)
         {
-            itemNameText.text = itemName;
-            itemDescriptionText.text = itemDescription;
+            itemNameText.text = item.itemName;
+            itemDescriptionText.text = item.GetItemDescription();
+            string tierText = "";
+            for(int i = 0;i < item.itemTier + 1;i++)tierText += "★";
+            itemTierDisplay.text = tierText;
         }
     }
 }
