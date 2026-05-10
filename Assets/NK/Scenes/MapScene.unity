@@ -454,6 +454,7 @@ MonoBehaviour:
   CurrentState:
     value: 0
   _floorNum: 1
+  _mapLevel: 0
   isMapCreated: 0
   currentStageNode:
     stageName: 
@@ -471,7 +472,8 @@ MonoBehaviour:
   itemList:
   - {fileID: 11400000, guid: 2f102a41264b96c42ae83b316080e348, type: 2}
   inputAction: {fileID: -944628639613478452, guid: 836744da074f51e41adc85c738fc1322, type: 3}
-  _CreditDisplay: {fileID: 1127608793}
+  inventoryWindowObject: {fileID: 0}
+  iw: {fileID: 0}
   InventoryCanvas: {fileID: 250725625}
   inventoryWorldCamera: {fileID: 0}
   references:
@@ -2427,7 +2429,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}

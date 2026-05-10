@@ -238,7 +238,6 @@ namespace Managers
                 {3,3},
                 {4,4},
             };
-
             for(int i = 1;i < _floorList.Count-1;i++)
             {
                 for(int j = 0;j < _floorList[i].Count;j++)
@@ -251,7 +250,7 @@ namespace Managers
                     //stageEncount代入
                     // filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
                     // _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];
-                    _floorList[i][j].stageEncount = GetStageEncount(_floorList[i][j].stageType,i/(allFloorNum/3));
+                    _floorList[i][j].stageEncount = GetStageEncount(_floorList[i][j].stageType,allFloorNum/5);
                     //すべてのフロアを下から3分割して、上に行くほど難易度が上がる
                 }
             }

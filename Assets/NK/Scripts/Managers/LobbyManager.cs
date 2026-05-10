@@ -17,17 +17,20 @@ namespace Managers
         public Button _BackToStartButton;
         public Button _SelectDifficultyMapButton;
         public Button _TechButton;
+        public Button _ToCreditButton;
         public Button _ToMapButton;
         public RectTransform _DifficultyButtonScrollContent;
         [Header("Canvas")]
         public GameObject _LobbyCanvas;
         public GameObject _StartCanvas;
+        public GameObject _CreditCanvas;
         [Header("Area")]
         public GameObject _DifficultyArea;
         public GameObject _TechTreeArea;
         //
         Dictionary<int, int> stageNumDic = new Dictionary<int, int>
         {
+            //{0,1},
             {0,9},
             {1,14},
             {2,19},
@@ -45,20 +48,35 @@ namespace Managers
         }
         void Start()
         {
-            _LobbyCanvas.SetActive(false);
+            _BackToStartButton.gameObject.SetActive(false);
             _StartCanvas.SetActive(true);
+            _LobbyCanvas.SetActive(false);
+            _CreditCanvas.SetActive(false);
             _StartButton.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
-                    _LobbyCanvas.SetActive(true);
+                    _BackToStartButton.gameObject.SetActive(true);
                     _StartCanvas.SetActive(false);
+                    _LobbyCanvas.SetActive(true);
+                    _CreditCanvas.SetActive(false);
                 })
                 .AddTo(gameObject);
             _BackToStartButton.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
-                    _LobbyCanvas.SetActive(false);
+                    _BackToStartButton.gameObject.SetActive(false);
                     _StartCanvas.SetActive(true);
+                    _LobbyCanvas.SetActive(false);
+                    _CreditCanvas.SetActive(false);
+                })
+                .AddTo(gameObject);
+            _ToCreditButton.OnClickAsObservable()
+                .Subscribe(_ =>
+                {
+                    _BackToStartButton.gameObject.SetActive(true);
+                    _StartCanvas.SetActive(false);
+                    _LobbyCanvas.SetActive(false);
+                    _CreditCanvas.SetActive(true);
                 })
                 .AddTo(gameObject);
             _SelectDifficultyMapButton.OnClickAsObservable()

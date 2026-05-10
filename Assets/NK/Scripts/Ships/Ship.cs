@@ -104,12 +104,14 @@ namespace Ships
         
         public void SetCurrentSPHP()
         {
+            Debug.Log((int)maxShieldPoint.Value);
             currentShieldPoint = (int)maxShieldPoint.Value;
             currentHullPoint = (int)maxHullPoint.Value;
         }
 
         public void SetCurrentUniqueStat()
         {
+        
             if(shipData == null)
             {
                 Debug.Log("shipData is null");

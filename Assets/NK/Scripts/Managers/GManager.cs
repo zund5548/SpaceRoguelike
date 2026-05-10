@@ -75,9 +75,11 @@ namespace Managers
             itemList.Clear();
             playerShipDataList.Clear();
             //currentShipHullPoint.Clear();
+            Start();
         }
         private void SetInventoryInput()
         {
+            
             inventoryAction = inputAction["Inventory"];
             inventoryAction.performed += OnInventoryAccess;
         }
@@ -111,7 +113,7 @@ namespace Managers
             credit = 0;
             iw = inventoryWindowObject.GetComponent<InventoryWindow>();
             AddCredit(1000);
-            SetInventoryInput();
+            if(inventoryAction == null)SetInventoryInput();
             foreach(var item in itemList)
             {
                 iw.GenerateItemBanner(item);

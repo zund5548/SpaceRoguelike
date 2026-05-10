@@ -138,7 +138,8 @@ namespace Weapons
                     if(!targetObject)return;
 
                     float currentRange = applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().range.Value; 
-                    if(Vector2.Distance(applyingdShipObject.transform.position,targetObject.transform.position) > currentRange)return;
+                    //射程内に敵がいなくても撃つ
+                    //if(Vector2.Distance(applyingdShipObject.transform.position,targetObject.transform.position) > currentRange)return;
                     SetLaser(applyingdShipObject,applyingShip);
                 })
                 .AddTo(applyingdShipObject);

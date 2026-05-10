@@ -178,6 +178,7 @@ namespace Managers
             ShipManager.Instance.DeleteAllPlayer();
             _GameClearCanvas.SetActive(true);
             GManager.Instance.ResetManager();
+            
         }
         public void GameFail()
         {
