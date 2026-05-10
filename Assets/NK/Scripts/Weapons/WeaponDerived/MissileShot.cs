@@ -109,7 +109,8 @@ namespace Weapons
                         {
                             var p = state.targetPos;
                             float currentRadius = applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value;
-                            SpawnExplosion((int)applyingShip.currentPower.Value,currentRadius,p,applyingShip);
+                            float currentExplosionDamageMod = applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionDamageMod.Value;
+                            SpawnExplosion((int)(applyingShip.currentPower.Value * (1f + currentExplosionDamageMod/100f)),currentRadius,p,applyingShip);
                             UnityEngine.Object.Destroy(missileProjectile);                            
                         }
                     })
@@ -171,9 +172,10 @@ namespace Weapons
                         if(state.period <= 0f)
                         {
                             var p = state.targetPos;
+                            float currentRadius = applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value;
+                            float currentExplosionDamageMod = applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionDamageMod.Value;
+                            SpawnExplosion((int)(applyingShip.currentPower.Value * (1f + currentExplosionDamageMod/100f)),currentRadius,p,applyingShip);
                             UnityEngine.Object.Destroy(missileProjectile);
-                            SpawnExplosion((int)applyingShip.currentPower.Value,applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().explosionRadius.Value,p,applyingShip);
-                            
                         }
                     })
                     .AddTo(missileProjectile);

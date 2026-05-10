@@ -18,7 +18,7 @@ MonoBehaviour:
   maxShieldPoint: 400
   hullResistance: 5
   shieldResistance: 20
-  power: 10
+  power: 35
   critRate: 0
   speed: 1
   weaponData:
@@ -31,12 +31,12 @@ MonoBehaviour:
       data:
         weaponName: 
         _projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
-        _explosion: {fileID: 0}
+        _explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
         range: 5
         shotInterval: 1
         angleDif: 5
-        maxErrorDeg: 0
-        shotSpeed: 3
         burstNum: 1
         projectileNum: 3
         isPiercing: 0
+        shotSpeed: 3
+        maxErrorDeg: 0

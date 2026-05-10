@@ -39,6 +39,7 @@ namespace Weapons
             else cip = applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().isPiercing.IsAble;
             bool currentIsPiercing = cip;
             if(maxErrorDeg != 0)errorDeg = UnityEngine.Random.Range(-maxErrorDeg,maxErrorDeg);
+            
             for(int i = 0;i < currentProjectileNum;i++)
             {
                 var bullet = UnityEngine.Object.Instantiate(_projectile);

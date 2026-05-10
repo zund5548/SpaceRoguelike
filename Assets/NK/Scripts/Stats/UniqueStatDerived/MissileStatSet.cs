@@ -28,17 +28,6 @@ namespace Stats
                 _=>null
             };
         }
-        public Stat GetStat(MissileStatCollection.MissileStatType type)
-        {
-            return type switch
-            {
-                MissileStatCollection.MissileStatType.MissileNum => missileNum,
-                MissileStatCollection.MissileStatType.MissileBurstNum => missileBurstNum,
-                MissileStatCollection.MissileStatType.ExplosionRadius => explosionRadius,
-                MissileStatCollection.MissileStatType.ExplosionDamageMod => explosionDamageMod,
-                _=>null
-            };
-        }
     }
 }
 

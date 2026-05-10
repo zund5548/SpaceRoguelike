@@ -27,14 +27,5 @@ namespace Stats
                 _=>null
             };
         }
-        public Stat GetStat(SelfDestructionStatCollection.SelfDestructionStatType type)
-        {
-            return type switch
-            {
-                SelfDestructionStatCollection.SelfDestructionStatType.ExplosionRadius => explosionRadius,
-                SelfDestructionStatCollection.SelfDestructionStatType.ChargeTime => chargeTime,
-                _=>null
-            };
-        }
     }
 }

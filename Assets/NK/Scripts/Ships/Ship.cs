@@ -104,7 +104,7 @@ namespace Ships
         
         public void SetCurrentSPHP()
         {
-            Debug.Log((int)maxShieldPoint.Value);
+            //Debug.Log((int)maxShieldPoint.Value);
             currentShieldPoint = (int)maxShieldPoint.Value;
             currentHullPoint = (int)maxHullPoint.Value;
         }

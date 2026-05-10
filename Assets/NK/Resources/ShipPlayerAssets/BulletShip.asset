@@ -35,8 +35,8 @@ MonoBehaviour:
         range: 10
         shotInterval: 0.5
         angleDif: 5
-        maxErrorDeg: 0
-        shotSpeed: 10
         burstNum: 1
         projectileNum: 1
         isPiercing: 0
+        shotSpeed: 5
+        maxErrorDeg: 3

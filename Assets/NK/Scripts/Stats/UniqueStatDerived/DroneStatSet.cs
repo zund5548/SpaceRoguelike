@@ -31,15 +31,5 @@ namespace Stats
                 _ => null
             };
         }
-        public Stat GetStat(DroneStatCollection.DroneStatType type)
-        {
-            return type switch
-            {
-                DroneStatCollection.DroneStatType.DroneNum => droneNum,
-                DroneStatCollection.DroneStatType.Lifetime => droneLifetime,
-                DroneStatCollection.DroneStatType.DroneShotInterval => droneShotInterval,
-                _ => null
-            };
-        }
     }
 }

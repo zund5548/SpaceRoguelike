@@ -17,11 +17,13 @@ namespace Weapons
         public float shotInterval;
         public float angleDif;//弾と弾の間の角(deg)
         public float maxErrorDeg;
-        public float shotSpeed;
         [Header("unique stat")]
         public float burstNum;
         public int projectileNum;
         public bool isPiercing;
+        public float shotSpeed;
+        public float maxErrorDegReduction;
+
         public override void SetUniqueStat(Ship applyingShip)
         {
             if(applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>() != null)return;
@@ -30,34 +32,17 @@ namespace Weapons
             {
                 projectileNum = new(projectileNum),
                 burstNum = new(burstNum),
-                isPiercing = new(isPiercing? 1f : 0f )
+                isPiercing = new(isPiercing? 1f : 0f ),
+                shotSpeed = new(shotSpeed),
+                maxErrorDegReduction = new(maxErrorDegReduction)
             });
         }
         public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
-            ShootBullet(angleDif,maxErrorDeg,shotSpeed,applyingShipObject,applyingShip);
-            // int currentProjectileNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().projectileNum.Value;
-            // float currentDeg = -angleDif * (currentProjectileNum -1) /2f;
-            // float errorDeg = 0f;
-            // bool currentIsPiercing = applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().isPiercing.Value >= 1 ? true : false;
-            // if(maxErrorDeg != 0)errorDeg = UnityEngine.Random.Range(-maxErrorDeg,maxErrorDeg);
-            // for(int i = 0;i < currentProjectileNum;i++)
-            // {
-            //     var bullet = UnityEngine.Object.Instantiate(projectile);
-            //     bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
-            //     bullet.transform.position = applyingShipObject.transform.position;
-            //     bullet.GetComponent<Projectile>().SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,currentIsPiercing,true);
-            //     var v = applyingShip.GetNearestOpponet().transform.position - applyingShipObject.transform.position;
-            //     bullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg + (currentDeg + errorDeg));
-            //     bullet.UpdateAsObservable()
-            //         .Subscribe(_=>
-            //         {
-            //             bullet.transform.position += shotSpeed * bullet.transform.right * Time.deltaTime; 
-            //             if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
-            //         })
-            //         .AddTo(bullet);
-            //     currentDeg += angleDif;
-            // } 
+            float currentShotSpeed = applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().shotSpeed.Value;
+            float currentMaxErrorDegReduction = applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().maxErrorDegReduction.Value;
+            float currentMaxErrorDeg = maxErrorDeg * (1f - currentMaxErrorDegReduction/100f) > 0f ? maxErrorDeg * (1f - currentMaxErrorDegReduction/100f) : 0f;
+            ShootBullet(angleDif,currentMaxErrorDeg ,currentShotSpeed,applyingShipObject,applyingShip);
         }
         public override void ShootAction(GameObject applyingShipObject,Ship applyingShip)
         {
