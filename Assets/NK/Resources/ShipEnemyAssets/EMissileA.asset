@@ -21,6 +21,7 @@ MonoBehaviour:
   power: 20
   critRate: 10
   speed: 1
+  shotInterval: 2
   weaponData:
     rid: 5911334426664239225
   references:
@@ -35,7 +36,6 @@ MonoBehaviour:
         isHoming: 0
         range: 10
         projectileSpeed: 1
-        shotInterval: 1.5
         hitTime: 1.5
         errorRadius: 1
         missileNum: 1

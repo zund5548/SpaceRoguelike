@@ -21,6 +21,7 @@ MonoBehaviour:
   power: 25
   critRate: 5
   speed: 0.5
+  shotInterval: 12
   weaponData:
     rid: 5911334493895786660
   references:
@@ -34,7 +35,6 @@ MonoBehaviour:
         _explosion: {fileID: 0}
         droneObject: {fileID: 5459487165565507037, guid: 1f5761bf836c797469816aa9a04b9d2a, type: 3}
         range: 15
-        shotInterval: 10
         orbitRadius: 1
         shotSpeed: 5
         droneNum: 3
