@@ -14,10 +14,10 @@ namespace Weapons
     {
         public GameObject laserObject;
         public float shotInterval = 5f;
-        public float damageInterval = 0.5f;
+        
         [Header("unique stat")]
         public float range = 10f;
-        public float damageIntervalReduction = 0f;
+        public float damageInterval = 0.5f;
         public float laserLastingTime = 3f;
         public float laserTurnRate = 90f;
         public float laserWidth = 0.2f;
@@ -28,7 +28,7 @@ namespace Weapons
             new LaserStatSet
             {
                 range = new(range),
-                damageIntervalReduction = new(damageIntervalReduction),
+                damageInterval = new(damageInterval),
                 laserLastingTime = new(laserLastingTime),
                 laserTurnLate = new(laserTurnRate)
             });
@@ -92,7 +92,7 @@ namespace Weapons
                             float currentLaserWidth = applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().laserWidth.Value;
                             laser.transform.localScale = new Vector3(currentRange,currentLaserWidth,1);
                         });
-                    float currentDamageInterval = (1f - applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().damageIntervalReduction.Value / 100f) * damageInterval;
+                    float currentDamageInterval =applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().damageInterval.Value;
                     var interval = Observable.Interval(TimeSpan.FromSeconds(currentDamageInterval))
                         .TakeUntil(Observable.Timer(duration))
                         .Do(_ =>

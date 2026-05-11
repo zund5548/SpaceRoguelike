@@ -2546,6 +2546,7 @@ GameObject:
   - component: {fileID: 1864117005}
   - component: {fileID: 1864117007}
   - component: {fileID: 1864117006}
+  - component: {fileID: 1864117008}
   m_Layer: 5
   m_Name: StageDescription
   m_TagString: Untagged
@@ -2613,6 +2614,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1864117004}
   m_CullTransparentMesh: 1
+--- !u!114 &1864117008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864117004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6867ca9cf987734fbb8bcc6744809d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageNodeBanner
+  _stageNameDisplay: {fileID: 331148095}
+  _stageTypeDisplay: {fileID: 14922965}
+  _stageDescriptionDisplay: {fileID: 14922965}
 --- !u!1 &1922887459
 GameObject:
   m_ObjectHideFlags: 0
@@ -2664,8 +2680,7 @@ MonoBehaviour:
   _mapScrollRect: {fileID: 1646137094}
   _mapScrollContent: {fileID: 538656797}
   MapCanvas: {fileID: 235551698}
-  stageNameDisplay: {fileID: 331148095}
-  stageTypeDisplay: {fileID: 14922965}
+  stageNodeBanner: {fileID: 1864117008}
   FloorObject: {fileID: 1607181773263385609, guid: d04f8b494c5c0bb4f97088c1f2937340, type: 3}
   StageButtonObject: {fileID: 8002157796729800967, guid: 77c3d463d5aac7e45a510e2f55d363d9, type: 3}
   MapLineObject: {fileID: 1350734607157786096, guid: 51fc2e4eab644274da8b09230ff101ea, type: 3}

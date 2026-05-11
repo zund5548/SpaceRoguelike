@@ -28,8 +28,7 @@ namespace Managers
         public ScrollRect _mapScrollRect;
         public RectTransform _mapScrollContent;
         public Canvas MapCanvas;
-        public TextMeshProUGUI stageNameDisplay;
-        public TextMeshProUGUI stageTypeDisplay;
+        public StageNodeBanner stageNodeBanner;
         [Header("prefab")]
         public GameObject FloorObject;
         public GameObject StageButtonObject;
@@ -60,7 +59,8 @@ namespace Managers
             if(!GManager.Instance.isMapCreated)CreateMap(_floorNum,4,6);
             else _floorList = GManager.Instance._stageFloorList;
             InstantiateMap();
-            SetStageDescription(GManager.Instance.currentStageNode);
+            //SetStageDescription(GManager.Instance.currentStageNode);
+            stageNodeBanner.SetBanner(GManager.Instance.currentStageNode);
             SetMapColor();
             SetMapButton();
             _mapScrollRect.verticalNormalizedPosition = 1f / _floorNum * GManager.Instance.currentStageNode.floorStageNum;
@@ -328,7 +328,8 @@ namespace Managers
                     button.GetComponent<UnityEngine.UI.Button>().OnClickAsObservable()
                         .Subscribe(_ =>
                         {
-                            SetStageDescription(_floorList[p][q]);
+                            //SetStageDescription(_floorList[p][q]);
+                            stageNodeBanner.SetBanner(_floorList[p][q]);
                             GManager.Instance.currentStageNode = _floorList[p][q];
                             _toStageButton.interactable = true;
                             _toStageButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "星系へワープ";
@@ -433,11 +434,6 @@ namespace Managers
                 var mapIdx = stageNode.mapIdx;
                 _buttonObjectFloorList[mapIdx.Item1][mapIdx.Item2].GetComponent<UnityEngine.UI.Button>().interactable = true;
             }
-        }
-        public void SetStageDescription(StageNode stageNode)
-        {
-            stageNameDisplay.text = stageNode.stageName;
-            stageTypeDisplay.text = stageNode.GetStageTypeStr();
         }
     }
 }

@@ -1350,7 +1350,7 @@ RectTransform:
   m_Father: {fileID: 1561179986}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1574,9 +1574,10 @@ MonoBehaviour:
     stageEncount: {fileID: 0}
   passsedStageNodes: []
   playerShipDataList:
-  - {fileID: 11400000, guid: 34553048b1b190345b011b3836a2aecd, type: 2}
+  - {fileID: 11400000, guid: 4fd1fa40b4ffe1d4b95284cfc53e4c54, type: 2}
   enemyShipDataList: []
-  itemList: []
+  itemList:
+  - {fileID: 11400000, guid: e2d3dba05e168194997f1edf598c11c4, type: 2}
   inputAction: {fileID: -944628639613478452, guid: 836744da074f51e41adc85c738fc1322, type: 3}
   inventoryWindowObject: {fileID: 1620603502}
   iw: {fileID: 0}
@@ -4699,7 +4700,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1874718534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4820,7 +4821,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.00030517578, y: -389.8401}
-  m_SizeDelta: {x: 0, y: 700}
+  m_SizeDelta: {x: -1820, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1874721246
 MonoBehaviour:

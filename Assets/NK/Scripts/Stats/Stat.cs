@@ -7,7 +7,7 @@ namespace Stats
     public class Stat
     {
         float baseValue;
-        List<StatModifier> modifiers = new();
+        List<StatModifier> modifierList = new();
         public Stat(float baseValue)
         {
             this.baseValue = baseValue;
@@ -17,20 +17,24 @@ namespace Stats
             get
             {
                 float resultValue = baseValue;
-                foreach (var mod in modifiers)
+                foreach (var mod in modifierList)
                 {
                     if (mod.type == ModType.Add)resultValue += mod.value;
+                    else if(mod.type == ModType.Sub)resultValue -= mod.value;
                 }
                 // foreach (var mod in modifiers)
                 // {
                 //     if (mod.type == ModType.Multiply)resultValue *= mod.value;
                 // }
-                float addedValue = resultValue;
-                foreach (var mod in modifiers)
+                float percentSum = 0f;
+                foreach (var mod in modifierList)
                 {
-                    if (mod.type == ModType.Percent)resultValue += addedValue * mod.value / 100f;
+                    if(mod.type == ModType.Percent)percentSum += mod.value;
+                    else if (mod.type == ModType.PercentReduction)percentSum -= mod.value;
+                    //if (mod.type == ModType.Percent)resultValue += addedValue * mod.value / 100f;
                 }
-                return resultValue;
+                percentSum = percentSum >= -100f ? percentSum : -100f;
+                return resultValue * (1f + percentSum/100f);
             }
         }
         public bool IsAble
@@ -42,11 +46,11 @@ namespace Stats
         }
         public void AddModifier(StatModifier mod)
         {
-            modifiers.Add(mod);
+            modifierList.Add(mod);
         }
         public void RemoveModifier(object source)
         {
-            modifiers.RemoveAll(m => m.source == source);
+            modifierList.RemoveAll(m => m.source == source);
         }
     }
     [Serializable]
@@ -63,9 +67,11 @@ namespace Stats
     [Serializable]
     public enum ModType
     {
-        Add,
+        Add,//足す
         //Multiply,
-        Percent
+        Percent,//割合追加
+        Sub,//引く
+        PercentReduction//割合除去
     }
     [Serializable]
     public class StatModifier

@@ -13,13 +13,13 @@ namespace Stats
         public enum LaserStatType
         {
             Range,
-            DamageIntervalReduction,
+            DamageInterval,
             LaserLastingTime,
             LaserTurnLate,
             LaserWidth
         }
         public Stat range = new(10);
-        public Stat damageIntervalReduction = new(0.25f);
+        public Stat damageInterval = new(0.25f);
         public Stat laserLastingTime = new(5);
         public Stat laserTurnLate = new(90);
         public Stat laserWidth = new(0.1f);
@@ -28,7 +28,7 @@ namespace Stats
             return type switch
             {
                 LaserStatType.Range=> range,
-                LaserStatType.DamageIntervalReduction => damageIntervalReduction,
+                LaserStatType.DamageInterval => damageInterval,
                 LaserStatType.LaserLastingTime => laserLastingTime,
                 LaserStatType.LaserTurnLate => laserTurnLate,
                 LaserStatType.LaserWidth => laserWidth,

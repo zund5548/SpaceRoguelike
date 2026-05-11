@@ -16,13 +16,12 @@ namespace Weapons
         public float range;
         public float shotInterval;
         public float angleDif;//弾と弾の間の角(deg)
-        public float maxErrorDeg;
         [Header("unique stat")]
         public float burstNum;
         public int projectileNum;
         public bool isPiercing;
         public float shotSpeed;
-        public float maxErrorDegReduction;
+        public float maxErrorDeg;
 
         public override void SetUniqueStat(Ship applyingShip)
         {
@@ -34,14 +33,13 @@ namespace Weapons
                 burstNum = new(burstNum),
                 isPiercing = new(isPiercing? 1f : 0f ),
                 shotSpeed = new(shotSpeed),
-                maxErrorDegReduction = new(maxErrorDegReduction)
+                maxErrorDeg = new(maxErrorDeg)
             });
         }
         public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
             float currentShotSpeed = applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().shotSpeed.Value;
-            float currentMaxErrorDegReduction = applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().maxErrorDegReduction.Value;
-            float currentMaxErrorDeg = maxErrorDeg * (1f - currentMaxErrorDegReduction/100f) > 0f ? maxErrorDeg * (1f - currentMaxErrorDegReduction/100f) : 0f;
+            float currentMaxErrorDeg = applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().maxErrorDeg.Value;
             ShootBullet(angleDif,currentMaxErrorDeg ,currentShotSpeed,applyingShipObject,applyingShip);
         }
         public override void ShootAction(GameObject applyingShipObject,Ship applyingShip)

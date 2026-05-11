@@ -16,7 +16,7 @@ namespace Stats
             BurstNum,
             IsPiercing,
             ShotSpeed,
-            MaxErrorDegReduction,
+            MaxErrorDeg,
         }
         // public float range;
         // public float shotInterval;
@@ -28,7 +28,7 @@ namespace Stats
         public Stat burstNum = new(1);
         public Stat isPiercing = new(0);
         public Stat shotSpeed = new(10f);
-        public Stat maxErrorDegReduction = new(3f);
+        public Stat maxErrorDeg = new(3f);
         public Stat GetStat(BulletStatType type)
         {
             return type switch
@@ -37,7 +37,7 @@ namespace Stats
                 BulletStatType.ProjectileNum => projectileNum,
                 BulletStatType.IsPiercing => isPiercing,
                 BulletStatType.ShotSpeed => shotSpeed,
-                BulletStatType.MaxErrorDegReduction => maxErrorDegReduction,
+                BulletStatType.MaxErrorDeg => maxErrorDeg,
                 _ => null
             };
         }

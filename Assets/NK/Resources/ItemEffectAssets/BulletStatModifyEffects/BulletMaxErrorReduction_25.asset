@@ -16,4 +16,4 @@ MonoBehaviour:
   isPlayers: 1
   value: 25
   bulletShotStatType: 4
-  modType: 0
+  modType: 3
