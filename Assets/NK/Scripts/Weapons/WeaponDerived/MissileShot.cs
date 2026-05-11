@@ -16,7 +16,6 @@ namespace Weapons
         public bool isHoming;
         public float range;
         public float projectileSpeed;
-        public float shotInterval;
         public float hitTime;
         public float errorRadius;
         [Header("Unique Stat")]
@@ -187,10 +186,11 @@ namespace Weapons
         }
         private IObservable<long> ShootMissileLoop(bool isRight,Ship applyingShip)
         {
-            var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            //var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            float currentShotInterval = applyingShip.shotInterval.Value;
             int currentBurstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<MissileStatSet>().missileBurstNum.Value;
             applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipAttackEvent{dealerShip = applyingShip});
-            return Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+            return Observable.Timer(TimeSpan.FromSeconds(currentShotInterval))
                 .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.1f)).Take(currentBurstNum).Do(i =>
                 {
                     if(!applyingShip.gameObject || !applyingShip.GetNearestOpponet())return;

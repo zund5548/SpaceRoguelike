@@ -26,7 +26,7 @@ namespace Ships
         public Stat currentPower;
         public Stat critRate;
         /// <summary>砲撃間隔の減少(%)</summary>
-        public Stat shotIntervalReduction;
+        public Stat shotInterval;
         public Stat shieldResistance;
         public Stat hullResistance;
         public UniqueStatController uniqueStatController = new();
@@ -41,7 +41,7 @@ namespace Ships
                 StatType.Hull => maxHullPoint,
                 StatType.ShieldResistance => shieldResistance,
                 StatType.HullResistance => hullResistance,
-                StatType.ShotIntervalReduction => shotIntervalReduction,
+                StatType.ShotInterval => shotInterval,
                 _ => null
             };
         }
@@ -91,7 +91,7 @@ namespace Ships
             shieldResistance = new Stat(shipData.shieldResistance);
             hullResistance = new Stat(shipData.hullResistance);
             currentPower = new Stat(shipData.power);
-            shotIntervalReduction = new Stat(0f);
+            shotInterval = new Stat(shipData.shotInterval);
             //shotSpeed = new Stat(shipData.shotSpeed);
         }
         

@@ -63,8 +63,10 @@ namespace Weapons
         }
         public override void ShootAction(GameObject applyingShipObject, Ship applyingShip)
         {
-            var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
-            Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+            float currentShotInterval = applyingShip.shotInterval.Value;
+            //var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            //Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+            Observable.Timer(TimeSpan.FromSeconds(currentShotInterval))
                 .Repeat()
                 .Subscribe(_ =>
                 {

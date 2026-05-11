@@ -21,6 +21,7 @@ MonoBehaviour:
   power: 50
   critRate: 2.5
   speed: 10
+  shotInterval: 1
   weaponData:
     rid: 8997316271938470206
   references:

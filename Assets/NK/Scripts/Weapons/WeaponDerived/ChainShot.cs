@@ -18,7 +18,7 @@ namespace Weapons
         public GameObject ChianLineObject;
         public float range = 10f;
         public float chainRange = 10f;
-        public float shotInterval = 2f;
+
         public float chainInterval = 0.2f;
         public int maxChainNum = 5;
         public override void SetUniqueStat(Ship applyingShip)
@@ -29,10 +29,12 @@ namespace Weapons
         {
             if(applyingShip == null)return;
             SetWeaponPrefab();
-            var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            float currentShotInterval = applyingShip.shotInterval.Value;
+            //var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             applyingShipObject.UpdateAsObservable()
                 .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
-                .ThrottleFirst(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+                //.ThrottleFirst(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+                .ThrottleFirst(TimeSpan.FromSeconds(currentShotInterval))
                 .Subscribe(_ =>
                 {
                     applyingShip.GetNearestOpponet();

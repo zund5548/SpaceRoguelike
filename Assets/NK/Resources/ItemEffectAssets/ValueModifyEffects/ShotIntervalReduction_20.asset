@@ -16,4 +16,4 @@ MonoBehaviour:
   isPlayers: 1
   value: 20
   statType: 6
-  modType: 0
+  modType: 3

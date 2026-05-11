@@ -14,7 +14,6 @@ namespace Weapons
     public class BulletShot : WeaponData
     {
         public float range;
-        public float shotInterval;
         public float angleDif;//弾と弾の間の角(deg)
         [Header("unique stat")]
         public float burstNum;
@@ -51,9 +50,11 @@ namespace Weapons
         }
         private IObservable<long> ShootLoop(Ship applyingShip)
         {
-            var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            //var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            float currentShotInterval = applyingShip.shotInterval.Value;
             int currentBurstNum = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().burstNum.Value;
-            return Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+            //return Observable.Timer(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+            return Observable.Timer(TimeSpan.FromSeconds(currentShotInterval))
                 .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.05f)).Take(currentBurstNum).Do(i =>
                 {
                     var targetShip = applyingShip.GetNearestOpponet();

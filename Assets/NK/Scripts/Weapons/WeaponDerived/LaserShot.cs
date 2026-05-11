@@ -13,8 +13,6 @@ namespace Weapons
     public class LaserShot : WeaponData
     {
         public GameObject laserObject;
-        public float shotInterval = 5f;
-        
         [Header("unique stat")]
         public float range = 10f;
         public float damageInterval = 0.5f;
@@ -128,10 +126,11 @@ namespace Weapons
         {
             if(applyingShip == null)return;
             SetWeaponPrefab();
-            var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            //var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            float currentShotInterval = applyingShip.shotInterval.Value;
             applyingdShipObject.UpdateAsObservable()
                 .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
-                .ThrottleFirst(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+                .ThrottleFirst(TimeSpan.FromSeconds(currentShotInterval))
                 .Subscribe(_ =>
                 {
                     var targetObject = applyingShip.GetNearestOpponet();

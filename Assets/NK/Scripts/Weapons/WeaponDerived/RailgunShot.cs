@@ -12,7 +12,6 @@ namespace Weapons
     {
         public GameObject railgunProjectile;
         public float range;
-        public float shotInterval;
         [Header("unique")]
         public float projectileSpeed;
         public float projectileWidth;
@@ -42,10 +41,11 @@ namespace Weapons
                     })
                     .AddTo(applyingShip.gameObject);
             }
-            var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            //var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
+            float currentShotInterval = applyingShip.shotInterval.Value;
             applyingdShipObject.UpdateAsObservable()
                 .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
-                .ThrottleFirst(TimeSpan.FromSeconds(shotInterval * (100f - trueSir)/100f))
+                .ThrottleFirst(TimeSpan.FromSeconds(currentShotInterval))
                 .Subscribe(_ =>
                 {
                     if(applyingShip.isSurged)return;

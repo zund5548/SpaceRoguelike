@@ -62,7 +62,7 @@ namespace Stats
         Hull,
         ShieldResistance,
         HullResistance,
-        ShotIntervalReduction,
+        ShotInterval,
     }
     [Serializable]
     public enum ModType
