@@ -17,9 +17,7 @@ namespace Managers
         public static ShipManager Instance{get;private set;}
         private Camera _cam;
 
-        private GameObject _shipObject;
-        private GameObject _bossObject;
-        private GameObject _warpEffectObject;
+        
         //艦隊の基準点と回転
         public Vector2 _currentFleetPos = Vector2.zero;
         public float _currentFleetDeg = 0f;
@@ -42,6 +40,10 @@ namespace Managers
         [Header("Prefab")]
         public TextMeshProUGUI damageValueDisplay;
         public GameObject playerShipBanner;
+        private GameObject _ShipObject;
+        private GameObject _BossObject;
+        private GameObject _WarpEffectObject;
+        private GameObject _AnchorObject;
         //input
         public InputActionAsset inputAction;
         private InputAction clickAction;
@@ -75,9 +77,10 @@ namespace Managers
         {
             if(GManager.Instance.playerShipDataList.Count != 0)playerShipDataList = GManager.Instance.playerShipDataList;
             //if(GManager.Instance.enemyShipDataList.Count != 0)enemyShipDataList = GManager.Instance.enemyShipDataList;
-            _shipObject = (GameObject)Resources.Load("Ship");
-            _bossObject = (GameObject)Resources.Load("BossShip");
-            _warpEffectObject = (GameObject)Resources.Load("WarpEffect");
+            _ShipObject = (GameObject)Resources.Load("Ship");
+            _BossObject = (GameObject)Resources.Load("BossShip");
+            _WarpEffectObject = (GameObject)Resources.Load("WarpEffect");
+            _AnchorObject = (GameObject)Resources.Load("AnchorObject");
             _cam = Camera.main;
             _playerSpeed = new(initPlayerSpeed);
             gameObject.UpdateAsObservable()
@@ -108,7 +111,7 @@ namespace Managers
             // }  
             foreach(var shipData in playerShipDataList)
             {
-                var shipObject = SpawnPlayerShip(shipData);
+                SpawnPlayerShip(shipData);
             }   
             foreach(var ship in playerShipList)
             {
@@ -134,7 +137,7 @@ namespace Managers
         
         private GameObject SpawnPlayerShip(ShipData shipData)
         {
-            GameObject shipObject = Instantiate(_shipObject);
+            GameObject shipObject = Instantiate(_ShipObject);
             playerShipObjectList.Add(shipObject);
             Ship ship = shipObject.GetComponent<Ship>();
             playerShipList.Add(ship);
@@ -169,7 +172,7 @@ namespace Managers
         float separationStrength = 0.5f;//敵艦同士の間隔以下に近づいたときにこの速度で遠ざける
         private GameObject SpawnEnemyShip(ShipData shipData,Vector2 pos)
         {
-            GameObject shipObject = Instantiate(_shipObject);
+            GameObject shipObject = Instantiate(_ShipObject);
             Ship ship = shipObject.GetComponent<Ship>();
             enemyShipObjectList.Add(shipObject);
             float deg = Mathf.Atan2(-pos.y,-pos.x) * Mathf.Rad2Deg;
@@ -215,12 +218,25 @@ namespace Managers
             return shipObject;
         }   
 
+        public GameObject SpawnAnchor(ShipData shipData)
+        {
+            GameObject anchorObject = Instantiate(_AnchorObject);
+            Ship ship = anchorObject.GetComponent<Ship>();
+            playerShipObjectList.Add(anchorObject);
+            ship.isPlayer = true;
+            ship.tag = "PlayerShip";
+            ship.shipData = shipData;
+            ship.SetShipList(playerShipObjectList,enemyShipObjectList);
+            ship.SetStats();
+            return anchorObject;
+        }
+
         private IEnumerator SpawnWithDelay(ShipData shipData,int limit)
         {
             if(enemyShipObjectList.Count >= limit)yield return new WaitUntil(()=>enemyShipObjectList.Count < limit);
             float randDeg = UnityEngine.Random.Range(-180f,180f);
             var pos = 10f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
-            var warpEffect = Instantiate(_warpEffectObject,pos,Quaternion.identity);
+            var warpEffect = Instantiate(_WarpEffectObject,pos,Quaternion.identity);
             Observable.Timer(TimeSpan.FromSeconds(1f))
                 .Subscribe(_ =>
                 {
@@ -243,7 +259,7 @@ namespace Managers
         }
         public GameObject SpawnBossShip(ShipData shipData,BossType bossType)
         {
-            GameObject bossShipObject = Instantiate(_bossObject);
+            GameObject bossShipObject = Instantiate(_BossObject);
             BossShip bossShip = bossShipObject.GetComponent<BossShip>();
             enemyShipObjectList.Add(bossShipObject);
             bossShipObject.transform.position = new Vector2(5f,0f);

@@ -3216,6 +3216,7 @@ MonoBehaviour:
   CurrentState:
     value: 0
   _floorNum: 0
+  _mapLevel: 0
   isMapCreated: 0
   currentStageNode:
     stageName: 
@@ -3232,7 +3233,8 @@ MonoBehaviour:
   enemyShipDataList: []
   itemList: []
   inputAction: {fileID: -944628639613478452, guid: 836744da074f51e41adc85c738fc1322, type: 3}
-  _CreditDisplay: {fileID: 5989246726018207520}
+  inventoryWindowObject: {fileID: 0}
+  iw: {fileID: 0}
   InventoryCanvas: {fileID: 58058995018182442}
   inventoryWorldCamera: {fileID: 0}
   references:
