@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: AddCritRatB
+  m_Name: LasDmgIntRedB
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u7CBE\u5BC6\u60272"
+  itemName: "\u5149\u6E90\u5897\u5E452"
   itemIcon: {fileID: 0}
-  itemTier: 0
+  itemTier: 2
   itemEffectList:
-  - {fileID: 11400000, guid: 74af6bddf2c6d9444bf728fd9802bb75, type: 2}
+  - {fileID: 11400000, guid: af5c49fe9d697264db2ddd03b2f7e7f0, type: 2}

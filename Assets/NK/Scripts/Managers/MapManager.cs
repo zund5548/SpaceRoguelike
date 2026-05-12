@@ -233,8 +233,8 @@ namespace Managers
             {
                 {0,1},
                 {1,2},
-                {2,2},
-                {3,3},
+                {2,3},
+                {3,4},
                 {4,4},
             };
             for(int i = 1;i < _floorList.Count-1;i++)

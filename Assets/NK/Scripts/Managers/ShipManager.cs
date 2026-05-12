@@ -235,11 +235,11 @@ namespace Managers
         /// <summary>ステージを経るにつれて敵艦を強化</summary>
         public void SetEnemyStatBuff(Ship enemyShip)
         {
-            int k = GManager.Instance.currentStageNode.floorStageNum / 2;
+            int k = GManager.Instance.currentStageNode.floorStageNum / 5;
             if(k == 0)return;
-            enemyShip.GetStat(StatType.Hull).AddModifier(new StatModifier(k * 5f,ModType.Percent));
-            enemyShip.GetStat(StatType.Shield).AddModifier(new StatModifier(k * 20f,ModType.Percent));
-            enemyShip.GetStat(StatType.Power).AddModifier(new StatModifier(k * 25f,ModType.Percent));
+            enemyShip.GetStat(StatType.Hull).AddModifier(new StatModifier(k * 10f,ModType.Percent));
+            enemyShip.GetStat(StatType.Shield).AddModifier(new StatModifier(k * 50f,ModType.Percent));
+            enemyShip.GetStat(StatType.Power).AddModifier(new StatModifier(k * 50f,ModType.Percent));
         }
         public GameObject SpawnBossShip(ShipData shipData,BossType bossType)
         {
