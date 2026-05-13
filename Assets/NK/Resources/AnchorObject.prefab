@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4916854388471205576}
   - component: {fileID: 2585687527382186293}
-  - component: {fileID: -1115711943142474329}
+  - component: {fileID: -7424850649291013226}
   m_Layer: 0
   m_Name: AnchorObject
   m_TagString: Untagged
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &-1115711943142474329
+--- !u!114 &-7424850649291013226
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,9 +101,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2841826535665778135}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1038629d0bf75694d8c9631ade92ac7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 27d633e6eefc9504d8c4870c546a3494, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Ships.Ship
+  m_EditorClassIdentifier: Assembly-CSharp::Ships.AnchorObject
   isPlayer: 1
   isSurged: 0
   shipData: {fileID: 0}
@@ -111,3 +111,5 @@ MonoBehaviour:
   currentHullPoint: 0
   allyShipObjectList: []
   opponentShipObjectList: []
+  maxAnchorHullPoint: 5
+  currentAnchorHullPoint: 0

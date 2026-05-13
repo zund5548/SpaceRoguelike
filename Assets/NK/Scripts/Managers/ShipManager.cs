@@ -31,6 +31,7 @@ namespace Managers
         public List<GameObject> enemyShipObjectList = new List<GameObject>();
         public List<Ship> playerShipList = new List<Ship>();
         public List<Ship> enemyShipList = new List<Ship>();
+        private AnchorObject _currentAnchorObject;
         //public List<Item> itemList = new();
         [Header("Canvas")]
         public RectTransform DamageValueCanvas;
@@ -221,14 +222,27 @@ namespace Managers
         public GameObject SpawnAnchor(ShipData shipData)
         {
             GameObject anchorObject = Instantiate(_AnchorObject);
-            Ship ship = anchorObject.GetComponent<Ship>();
+            AnchorObject anchor = anchorObject.GetComponent<AnchorObject>();
             playerShipObjectList.Add(anchorObject);
-            ship.isPlayer = true;
-            ship.tag = "PlayerShip";
-            ship.shipData = shipData;
-            ship.SetShipList(playerShipObjectList,enemyShipObjectList);
-            ship.SetStats();
+            // anchorObject.UpdateAsObservable()
+            //     .Subscribe(_ =>
+            //     {
+            //         if(anchor.isSurged)return;
+            //     })
+            //     .AddTo(anchorObject);
+            anchor.isPlayer = true;
+            anchor.tag = "PlayerAnchor";
+            anchor.shipData = shipData;
+            anchor.SetShipList(playerShipObjectList,enemyShipObjectList);
+            anchor.SetStats();
+            _currentAnchorObject = anchor;
             return anchorObject;
+        }
+
+        public AnchorObject GetAnchorObject()
+        {
+            if(_currentAnchorObject)return _currentAnchorObject;
+            else return null;
         }
 
         private IEnumerator SpawnWithDelay(ShipData shipData,int limit)

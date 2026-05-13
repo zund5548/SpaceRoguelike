@@ -102,13 +102,12 @@ namespace Ships
         //     SetCurrentWeapon();
         // }
         
-        public void SetCurrentSPHP()
+        public virtual void SetCurrentSPHP()
         {
             //Debug.Log((int)maxShieldPoint.Value);
             currentShieldPoint = (int)maxShieldPoint.Value;
             currentHullPoint = (int)maxHullPoint.Value;
         }
-
         public void SetCurrentUniqueStat()
         {
         
@@ -161,7 +160,7 @@ namespace Ships
         /// <summary>このshipにダメージを与える</summary>
         /// <param name="power">ダメージ量</param>
         /// <param name="dealerShip">ダメージを与えた船</param>
-        public void DealDamage(int power,bool isCritEnable,Ship dealerShip = null)
+        public virtual void DealDamage(int power,bool isCritEnable,Ship dealerShip = null)
         {
             int actualPowerSum = 0;
             
@@ -240,7 +239,7 @@ namespace Ships
                 }
             }
             if(isPlayer && allyShipObjectList.Count == 0)EventManager.Instance.PublishFail();
-            killerShip.shipEventController.PublishKilling(new ShipEventController.ShipAttackEvent(this,killerShip));
+            if(killerShip)killerShip.shipEventController.PublishKilling(new ShipEventController.ShipAttackEvent(this,killerShip));
             Destroy(gameObject);
         }
     }

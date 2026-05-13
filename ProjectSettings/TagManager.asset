@@ -10,6 +10,7 @@ TagManager:
   - EnemyProjectile
   - PlayerExplosion
   - EnemyExplosion
+  - PlayerAnchor
   layers:
   - Default
   - TransparentFX
