@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Items;
-using UnityEngine;
 namespace Stats
 {
     [Serializable]

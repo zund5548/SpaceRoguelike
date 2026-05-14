@@ -33,6 +33,7 @@ namespace Managers
         public RectTransform _ItemRewardContent;
         public RectTransform _ShipDataRewardContent;
         public RectTransform _ShopScrollContent;
+        public TextMeshProUGUI _ShopCreditDisplay;
         public GameObject _LeaveShopButton;
         [Header("Canvas")]
         public GameObject _ResultCanvas;
@@ -250,7 +251,8 @@ namespace Managers
                 typeof(DroneStatModify),
                 typeof(DamageAreaStatModify),
                 typeof(RailgunStatModify),
-                typeof(LaserStatModify)
+                typeof(LaserStatModify),
+                typeof(ChainStatModify)
             };
             //uniqueStatをいじるクラスを除外
             itemList = allItemList
@@ -280,6 +282,9 @@ namespace Managers
                         break;
                      case LaserShot:
                         tmpItemList = allItemList.Where(item => item.itemEffectList.Any(itemEffect => itemEffect is LaserStatModify)).ToList();
+                        break;
+                    case ChainShot:
+                        tmpItemList = allItemList.Where(item => item.itemEffectList.Any(itemEffect => itemEffect is ChainStatModify)).ToList();
                         break;
                 }
                 itemList = itemList.Union(tmpItemList).ToList();

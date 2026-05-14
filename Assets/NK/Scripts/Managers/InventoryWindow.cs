@@ -12,6 +12,7 @@ namespace Managers
         public void SetCreditDisplay()
         {
             _CreditDisplayTMP.SetText(GManager.Instance.credit.ToString() + "C");
+            
         }
         public void GenerateItemBanner(Item item)
         {

@@ -165,6 +165,7 @@ namespace Managers
             }
             credit -= value;
             iw.SetCreditDisplay();
+            StageManager.Instance._ShopCreditDisplay.text = credit.ToString() + "C";
         }
 
         public void AddItemToInventory(Item item)

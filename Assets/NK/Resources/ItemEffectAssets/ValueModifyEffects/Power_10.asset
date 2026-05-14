@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
-  m_Name: Power_25
+  m_Name: Power_10
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u653B\u6483\u529B+25"
+  description: "\u653B\u6483\u529B+10"
   isPlayers: 1
-  value: 25
+  value: 10
   statType: 0
   modType: 0

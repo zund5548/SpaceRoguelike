@@ -7,6 +7,8 @@ using Projectiles;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using System.Collections;
+using Stats;
+using Items;
 
 namespace Weapons
 {
@@ -17,13 +19,19 @@ namespace Weapons
         //連鎖した敵には1/2倍のダメージ
         public GameObject ChianLineObject;
         public float range = 10f;
-        public float chainRange = 10f;
-
         public float chainInterval = 0.2f;
-        public int maxChainNum = 5;
+        [Header("unique stat")]
+        public int maxChainNum = 3;
+        public float chainRange = 5f;
         public override void SetUniqueStat(Ship applyingShip)
         {
-
+            if(applyingShip.uniqueStatController.GetUniqueStat<ChainStatSet>() != null)return;
+            applyingShip.uniqueStatController.AddUniqueStat(
+            new ChainStatSet
+            {
+                chainNum = new(maxChainNum),
+                chainRange = new(chainRange)
+            });
         }
         public override void ShootAction(GameObject applyingShipObject,Ship applyingShip)
         {
@@ -62,8 +70,13 @@ namespace Weapons
                     
                     if(endShipObject)
                     {
-                        if(startShipObject == applyingdShipObject)endShipObject.GetComponent<Ship>().DealDamage((int)applyingShip.currentPower.Value,false,applyingShip);
-                        else endShipObject.GetComponent<Ship>().DealDamage((int)(applyingShip.currentPower.Value / 2f),false,applyingShip);
+                        var targetShip = endShipObject.GetComponent<Ship>();
+                        if(startShipObject == applyingdShipObject)targetShip.DealDamage((int)applyingShip.currentPower.Value,false,applyingShip);
+                        else targetShip.DealDamage((int)(applyingShip.currentPower.Value / 2f),false,applyingShip);
+
+                        bool enableAddSurge = applyingShip.uniqueStatController.GetUniqueStat<ChainStatSet>().enableAddSurge.IsAble;
+                        if(enableAddSurge)targetShip.stackEffectController.AddStack<SurgeStackEffect>(applyingShip,targetShip);
+
                         targetObjectList.Add(endShipObject);
                         SetChainLine(startShipObject,endShipObject);
                         startShipObject = endShipObject;

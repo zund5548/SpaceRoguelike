@@ -9,7 +9,7 @@ namespace Items
     [Serializable]
     public class DamageAreaStatModify:ItemEffect
     {
-         public float value;
+        public float value;
         public DamageAreaStatSet.DamageAreaStatType damageAreaStatType;
         public ModType modType;
         public override void OnApply()

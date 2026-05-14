@@ -27,6 +27,7 @@ namespace Maps
                 StageManager.Instance.StageClear();
             })
             .AddTo(EventManager.Instance);
+            StageManager.Instance._ShopCreditDisplay.text = GManager.Instance.credit.ToString() + "C";
             yield return ShopCoroutine();
         }
         public IEnumerator ShopCoroutine()
