@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ships.BossShip
   isPlayer: 0
-  isAbleToMove: 1
+  isSurged: 0
   shipData: {fileID: 0}
   currentShieldPoint: 0
   currentHullPoint: 0

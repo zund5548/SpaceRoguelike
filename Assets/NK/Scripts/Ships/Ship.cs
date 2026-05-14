@@ -7,6 +7,7 @@ using Managers;
 using Stats;
 using System;
 using Items;
+using UnityEngine.UIElements;
 namespace Ships
 {
     public class Ship : MonoBehaviour
@@ -50,6 +51,48 @@ namespace Ships
         //
         public void Start()
         {
+            var tr1 = transform.GetChild(0).GetComponent<TrailRenderer>();
+            var tr2 = transform.GetChild(1).GetComponent<TrailRenderer>();
+            //tr.colorGradient = isPlayer?
+            Gradient gradient = new Gradient();
+            if(tr1 && tr2)
+            {
+                if(isPlayer)
+                {
+                    gradient.SetKeys
+                    (
+                        new GradientColorKey[]
+                        {
+                            new GradientColorKey(Color.turquoise, 0f),
+                            new GradientColorKey(Color.turquoise, 1f)
+                        },
+                        new GradientAlphaKey[]
+                        {
+                            new GradientAlphaKey(0.5f, 0f),
+                            new GradientAlphaKey(0f, 1f)
+                        }
+                    );
+                }
+                else
+                {
+                    gradient.SetKeys
+                    (
+                        new GradientColorKey[]
+                        {
+                            new GradientColorKey(Color.orange, 0f),
+                            new GradientColorKey(Color.orange, 1f)
+                        },
+                        new GradientAlphaKey[]
+                        {
+                            new GradientAlphaKey(0.5f, 0f),
+                            new GradientAlphaKey(0f, 1f)
+                        }
+                    );
+                }
+            }
+            
+            tr1.colorGradient = gradient;
+            tr2.colorGradient = gradient;
             if(!isPlayer)return;
             gameObject.OnDestroyAsObservable()
                 .Subscribe(_ =>

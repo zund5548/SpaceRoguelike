@@ -35,7 +35,7 @@ MonoBehaviour:
         _explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
         laserObject: {fileID: 4070486188369185136, guid: 3bd39d843a923ba49b282d382675c53f, type: 3}
         range: 7.5
-        damageInterval: 0.3
+        damageInterval: 1
         laserLastingTime: 3
         laserTurnRate: 45
         laserWidth: 0.1
