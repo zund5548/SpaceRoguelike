@@ -12,6 +12,7 @@ namespace Stats
             IsPiercing,
             ShotSpeed,
             MaxErrorDeg,
+            EnableAdditionalDamage,
         }
         // public float range;
         // public float shotInterval;
@@ -24,6 +25,7 @@ namespace Stats
         public Stat isPiercing = new(0);
         public Stat shotSpeed = new(10f);
         public Stat maxErrorDeg = new(3f);
+        public Stat enableAdditionalDamage = new(0);
         public Stat GetStat(BulletStatType type)
         {
             return type switch
@@ -33,6 +35,7 @@ namespace Stats
                 BulletStatType.IsPiercing => isPiercing,
                 BulletStatType.ShotSpeed => shotSpeed,
                 BulletStatType.MaxErrorDeg => maxErrorDeg,
+                BulletStatType.EnableAdditionalDamage => enableAdditionalDamage,
                 _ => null
             };
         }

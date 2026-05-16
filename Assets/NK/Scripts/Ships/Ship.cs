@@ -202,13 +202,12 @@ namespace Ships
         }
         /// <summary>このshipにダメージを与える</summary>
         /// <param name="power">ダメージ量</param>
+        /// <param name="isCritEnable">クリティカルな攻撃</param>
         /// <param name="dealerShip">ダメージを与えた船</param>
         public virtual void DealDamage(int power,bool isCritEnable,Ship dealerShip = null)
         {
             int actualPowerSum = 0;
-            
             bool isShieldDamaged = false;
-            //Debug.Log(currentShieldPoint.ToString()+"/"+currentHullPoint.ToString());
             int actualPower = power;
             if(currentShieldPoint > 0)
             {
@@ -237,7 +236,7 @@ namespace Ships
                 actualPowerSum += actualPower;
                 if(isShieldDamaged && actualPower <= 0)
                 {
-                    SetDamagingEvent(dealerShip,actualPowerSum);
+                    SetEvent(dealerShip,actualPowerSum);
                     return;
                 }
                 if(currentHullPoint > actualPower)
@@ -253,7 +252,8 @@ namespace Ships
                     currentHullPoint = 0;
                 }
             }
-            SetDamagingEvent(dealerShip,actualPowerSum);
+            SetEvent(dealerShip,actualPowerSum);
+            if(isCritEnable)SetCriticalEvent(dealerShip,actualPowerSum);
             if(currentHullPoint == 0)
             {
                 if(!isPlayer)GManager.Instance.AddCredit(shipData.shipType);
@@ -261,9 +261,24 @@ namespace Ships
             }
             
         }
-        private void SetDamagingEvent(Ship dealerShip,int power)
+        private void SetEvent(Ship dealerShip,int power)
         {
-            if(dealerShip)dealerShip.shipEventController.PublishDamaging(new ShipEventController.ShipAttackEvent
+            if(dealerShip)shipEventController.PublishDamaging(new ShipEventController.ShipAttackEvent
+            {
+                targetShip = this,
+                dealerShip = dealerShip,
+                dealtDamageValue = power
+            });
+            if(dealerShip)dealerShip.shipEventController.PublishHit(new ShipEventController.ShipAttackEvent
+            {
+                targetShip = this,
+                dealerShip = dealerShip,
+                dealtDamageValue = power
+            });
+        }
+        private void SetCriticalEvent(Ship dealerShip,int power)
+        {
+            if(dealerShip)dealerShip.shipEventController.PublishCritical(new ShipEventController.ShipAttackEvent
             {
                 targetShip = this,
                 dealerShip = dealerShip,

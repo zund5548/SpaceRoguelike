@@ -45,6 +45,16 @@ namespace Weapons
         {
             if(applyingShip == null)return;
             if(applyingShip.isSurged)return;
+            int additionalDamage = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().enableAdditionalDamage.Value;
+            if(additionalDamage != 0)
+            {
+                applyingShip.shipEventController.OnHit
+                    .Subscribe(e=>
+                    {
+                        if(e.targetShip)e.targetShip.DealDamage(additionalDamage,false);
+                    })
+                    .AddTo(applyingShipObject);
+            }
             SetWeaponPrefab();
             ShootLoop(applyingShip).Subscribe().AddTo(applyingShipObject);
         }

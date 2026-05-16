@@ -292,7 +292,7 @@ namespace Managers
             }
             var result = new List<Item>();
             var itemPool = itemList.Except(ownedItems).ToList();
-            List<float> weightList = new List<float>{50,30,20,10};
+            List<float> weightList = new List<float>{50,30,15,5};
             for(int i = 0;i < count;i++)
             {
                 var item = itemPool.Where(item => item.itemTier == WeightedItemTier(weightList)).OrderBy(x => UnityEngine.Random.Range(0,itemPool.Count)).ToList()[0];

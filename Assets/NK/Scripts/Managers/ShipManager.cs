@@ -293,7 +293,7 @@ namespace Managers
             return bossShipObject;
         }
 
-        public void SetDamagevalue(int value,Vector2 worldPos,bool onShield,bool isCrit)
+        public void SetDamagevalue(int value,Vector2 worldPos,bool onShield,bool isCritEnable)
         {
             var display = Instantiate(damageValueDisplay);
             //位置
@@ -307,7 +307,7 @@ namespace Managers
             string txt = onShield?$"<color={"#1EE3DA"}>{value}</color>":value.ToString();
             //isCritが真:値の表記に!をつける
             //onShieldが真:値の色をtarquoiseにする
-            textMesh.text = isCrit ? txt + (onShield ? $"<color={"#1EE3DA"}>{"!"}</color>" : "!") : txt;
+            textMesh.text = isCritEnable ? txt + (onShield ? $"<color={"#1EE3DA"}>{"!"}</color>" : "!") : txt;
             display.UpdateAsObservable()
                 .Delay(TimeSpan.FromSeconds(0.5f))
                 .Subscribe(_ =>

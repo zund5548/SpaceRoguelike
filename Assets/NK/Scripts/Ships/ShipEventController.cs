@@ -13,7 +13,8 @@ namespace Ships
             OnDamaging,
             OnShoot,
             OnHit,
-            OnKilled
+            OnKilled,
+            OnCritical,
         }
         public struct ShipAttackEvent
         {
@@ -35,19 +36,22 @@ namespace Ships
         }
 
 
-        public IObservable<ShipAttackEvent> GetEventByCategory(EventCategory eventCategory)
-        {
-            return eventCategory switch
-            {
-                EventCategory.OnDamaging => onDamaging,
-                EventCategory.OnShoot => onShoot,
-                EventCategory.OnHit => onHit,
-                EventCategory.OnKilled => onKilling,
-                _ => null
-            };
-        }
+        // public IObservable<ShipAttackEvent> GetEventByCategory(EventCategory eventCategory)
+        // {
+        //     return eventCategory switch
+        //     {
+        //         EventCategory.OnDamaging => onDamaging,
+        //         EventCategory.OnShoot => onShoot,
+        //         EventCategory.OnHit => onHit,
+        //         EventCategory.OnKilled => onKilling,
+        //         EventCategory.OnCritical => onCritical,
+        //         _ => null
+        //     };
+        // }
 
-        //ダメージを受けたとき
+        /// <summary>
+        /// ダメージを受けたとき
+        /// </summary>
         private Subject<ShipAttackEvent> onDamaging = new Subject<ShipAttackEvent>();
         public IObservable<ShipAttackEvent> OnDamaging => onDamaging;
         public void PublishDamaging(ShipAttackEvent shipAttackEvent)
@@ -55,7 +59,9 @@ namespace Ships
             onDamaging.OnNext(shipAttackEvent);
         }
 
-        //砲撃したとき
+        /// <summary>
+        /// 砲撃したとき
+        /// </summary>
         private Subject<ShipAttackEvent> onShoot = new Subject<ShipAttackEvent>();
         public IObservable<ShipAttackEvent> OnShoot => onShoot;
         public void PublishShoot(ShipAttackEvent shipAttackEvent)
@@ -63,7 +69,9 @@ namespace Ships
             onShoot.OnNext(shipAttackEvent);
         }
 
-        // 攻撃がこの艦船にヒットしたとき
+        /// <summary>
+        /// この艦船の攻撃が当たった時
+        /// </summary>
         private Subject<ShipAttackEvent> onHit = new Subject<ShipAttackEvent>();
         public IObservable<ShipAttackEvent> OnHit => onHit;
         public void PublishHit(ShipAttackEvent shipDamageEvent)
@@ -71,12 +79,24 @@ namespace Ships
             onHit.OnNext(shipDamageEvent);
         }
 
-        // この艦船が敵を倒したとき
+        /// <summary>
+        /// この艦船が敵を倒したとき
+        /// </summary>
         private Subject<ShipAttackEvent> onKilling = new Subject<ShipAttackEvent>();
         public IObservable<ShipAttackEvent> OnKilling => onKilling;
         public void PublishKilling(ShipAttackEvent shipDamageEvent)
         {
             onKilling.OnNext(shipDamageEvent);
+        }
+
+        /// <summary>
+        /// この艦船がクリティカル攻撃を出したとき
+        /// </summary>
+        private Subject<ShipAttackEvent> onCritical = new Subject<ShipAttackEvent>();
+        public IObservable<ShipAttackEvent> OnCritical => onCritical;
+        public void PublishCritical(ShipAttackEvent shipDamageEvent)
+        {
+            onCritical.OnNext(shipDamageEvent);
         }
     }
 }
