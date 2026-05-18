@@ -111,7 +111,7 @@ namespace Managers
         private void Start() 
         {
             credit = 0;
-            iw = inventoryWindowObject.GetComponent<InventoryWindow>();
+            if(inventoryWindowObject)iw = inventoryWindowObject.GetComponent<InventoryWindow>();
             AddCredit(1000);
             if(inventoryAction == null)SetInventoryInput();
             foreach(var item in itemList)
@@ -137,7 +137,7 @@ namespace Managers
         public void AddCredit(int value)
         {
             credit += value;
-            iw.SetCreditDisplay();
+            if(iw)iw.SetCreditDisplay();
         }
         private Dictionary<ShipData.ShipType,(int,int)> CreditTable = new Dictionary<ShipData.ShipType, (int, int)>
         {

@@ -18,7 +18,7 @@ MonoBehaviour:
   maxShieldPoint: 300
   hullResistance: 10
   shieldResistance: 5
-  power: 30
+  power: 20
   critRate: 5
   speed: 2.5
   shotInterval: 5
@@ -35,7 +35,7 @@ MonoBehaviour:
         _explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
         laserObject: {fileID: 4070486188369185136, guid: 3bd39d843a923ba49b282d382675c53f, type: 3}
         range: 7.5
-        damageInterval: 1
+        damageInterval: 0.5
         laserLastingTime: 3
         laserTurnRate: 45
         laserWidth: 0.1

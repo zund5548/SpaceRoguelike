@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
-  m_Name: ChaNumB
+  m_Name: PowC
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u653E\u96FB2"
+  itemName: "\u5F3E\u982D\u5F37\u53163"
   itemIcon: {fileID: 0}
-  itemTier: 1
+  itemTier: 2
   itemEffectList:
-  - {fileID: 11400000, guid: ff37caca747814b4a9e13684823bbfe2, type: 2}
+  - {fileID: 11400000, guid: b3c1c83c7d5b691428c97e7363cefb39, type: 2}

@@ -36,7 +36,7 @@ MonoBehaviour:
         droneObject: {fileID: 5459487165565507037, guid: 1f5761bf836c797469816aa9a04b9d2a, type: 3}
         range: 10
         orbitRadius: 0.75
-        shotSpeed: 10
+        shotSpeed: 5
         droneNum: 3
         droneLifetime: 6
         droneShotInterval: 1
