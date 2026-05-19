@@ -24,6 +24,7 @@ namespace Managers
         private bool isShipDataBannerPushed = false;
         [Header("prefab")]
         public GameObject NoticeObject;
+        public GameObject _starObject;
         public GameObject _planetObject;
         public GameObject _ItemBannerButton;
         public GameObject _ShipDataBannerButton;
@@ -132,10 +133,11 @@ namespace Managers
             
             foreach(var star in stageNode.starList)
             {
-                var planetObject = Instantiate(_planetObject);
-                planetObjectList.Add(planetObject);
-                planetObject.transform.position = Vector2.zero;
-                planetObject.transform.localScale = star.radius * Vector2.one;
+                var starObject = Instantiate(_starObject);
+                planetObjectList.Add(starObject);
+                starObject.GetComponent<SpriteRenderer>().color = star.GetColor();
+                starObject.transform.position = Vector2.zero;
+                starObject.transform.localScale = star.radius * Vector2.one;
             }   
             float radius = 3f;
             int pointNum = 100;

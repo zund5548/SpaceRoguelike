@@ -3636,7 +3636,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1374560575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3653,7 +3653,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 82b8a8e9944ed514b9bd4eaf28024540, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 355ecf70cb6c034418643fba454a5b45, type: 2}
 --- !u!4 &1374560576
 Transform:
   m_ObjectHideFlags: 0
@@ -4670,6 +4670,7 @@ MonoBehaviour:
   ToMapButton: {fileID: 1531537615}
   GameClearButton: {fileID: 220756235}
   NoticeObject: {fileID: 8553833092285859728, guid: 60e19d86e5750b74386365c9db52af99, type: 3}
+  _starObject: {fileID: 5953231632616163392, guid: 1d9a5f709b3c50342b53e03fb9bd6679, type: 3}
   _planetObject: {fileID: 5953231632616163392, guid: c46596476dea0544dbf42333e34b305a, type: 3}
   _ItemBannerButton: {fileID: 5537610097911331643, guid: 180bf10402688e54b998326e93414b13, type: 3}
   _ShipDataBannerButton: {fileID: 5537610097911331643, guid: 523db95835d9e6640b5bacd7dd905b13, type: 3}
