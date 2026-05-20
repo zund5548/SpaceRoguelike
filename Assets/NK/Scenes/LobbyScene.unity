@@ -1576,8 +1576,7 @@ MonoBehaviour:
   playerShipDataList:
   - {fileID: 11400000, guid: 34553048b1b190345b011b3836a2aecd, type: 2}
   enemyShipDataList: []
-  itemList:
-  - {fileID: 11400000, guid: 11e3952d65100c04b87baaac5a1a1ee9, type: 2}
+  itemList: []
   inputAction: {fileID: -944628639613478452, guid: 836744da074f51e41adc85c738fc1322, type: 3}
   inventoryWindowObject: {fileID: 1620603502}
   iw: {fileID: 0}
@@ -4201,6 +4200,7 @@ MonoBehaviour:
   _CreditDisplayTMP: {fileID: 30204351}
   _ItemDisplayContent: {fileID: 685107976}
   _ItemBanner: {fileID: 6719362426757518569, guid: 71a08285365f04242a1829844cf98cf5, type: 3}
+  _ItemBannerObjectList: []
 --- !u!1 &1644442839
 GameObject:
   m_ObjectHideFlags: 0

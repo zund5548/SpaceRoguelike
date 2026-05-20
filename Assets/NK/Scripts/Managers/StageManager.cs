@@ -298,6 +298,7 @@ namespace Managers
             for(int i = 0;i < count;i++)
             {
                 var item = itemPool.Where(item => item.itemTier == WeightedItemTier(weightList)).OrderBy(x => UnityEngine.Random.Range(0,itemPool.Count)).ToList()[0];
+                if(!item)item = itemPool.OrderBy(x => UnityEngine.Random.Range(0,itemPool.Count)).ToList()[0];
                 result.Add(item);
                 itemPool.Remove(item);
             }

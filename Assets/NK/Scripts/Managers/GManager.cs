@@ -72,6 +72,7 @@ namespace Managers
             currentStageNode = null;
             passsedStageNodes.Clear();
             passsedStageNodes.Clear();
+            iw.DeleteAllItemBanner();
             itemList.Clear();
             playerShipDataList.Clear();
             //currentShipHullPoint.Clear();
