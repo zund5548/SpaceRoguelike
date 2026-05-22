@@ -223,7 +223,7 @@ namespace Managers
         {
             GameObject anchorObject = Instantiate(_AnchorObject);
             AnchorObject anchor = anchorObject.GetComponent<AnchorObject>();
-            playerShipObjectList.Add(anchorObject);
+            //playerShipObjectList.Add(anchorObject);
             // anchorObject.UpdateAsObservable()
             //     .Subscribe(_ =>
             //     {
@@ -236,6 +236,7 @@ namespace Managers
             anchor.SetShipList(playerShipObjectList,enemyShipObjectList);
             anchor.SetStats();
             _currentAnchorObject = anchor;
+            StageManager.Instance._AnchorGauge.gameObject.SetActive(true);
             return anchorObject;
         }
 
@@ -245,11 +246,11 @@ namespace Managers
             else return null;
         }
 
-        private IEnumerator SpawnWithDelay(ShipData shipData,int limit)
+        private IEnumerator SpawnWithDelay(ShipData shipData,int limit,Vector2 pos,Func<ShipData,Vector2,GameObject> spawnShipMethod)
         {
             if(enemyShipObjectList.Count >= limit)yield return new WaitUntil(()=>enemyShipObjectList.Count < limit);
-            float randDeg = UnityEngine.Random.Range(-180f,180f);
-            var pos = 10f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
+            // float randDeg = UnityEngine.Random.Range(-180f,180f);
+            // var pos = 10f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
             var warpEffect = Instantiate(_WarpEffectObject,pos,Quaternion.identity);
             Observable.Timer(TimeSpan.FromSeconds(1f))
                 .Subscribe(_ =>
@@ -258,7 +259,8 @@ namespace Managers
                 })
                 .AddTo(warpEffect);
             yield return new WaitForSeconds(0.5f);
-            SpawnEnemyShip(shipData,pos);
+            spawnShipMethod(shipData,pos);
+            //SpawnEnemyShip(shipData,pos);
             yield return null;
         }
         
@@ -345,7 +347,7 @@ namespace Managers
                 });
         }
 
-        public IEnumerator BattleEncountWave(List<EnemyWave> enemyWaveList,int limit)
+        public IEnumerator SetBattleEncountWave(List<EnemyWave> enemyWaveList,int limit)
         {
             _StageNameText.text = "ウェーブ : -/-";
             yield return BattleEncountWaveCoroutine(enemyWaveList,limit);
@@ -368,7 +370,9 @@ namespace Managers
         {
             foreach(var shipData in enemyWave.shipDataList)
             {
-                yield return SpawnWithDelay(shipData,limit);
+                float randDeg = UnityEngine.Random.Range(-180f,180f);
+                var pos = 10f * new Vector2(Mathf.Cos(randDeg  * Mathf.Deg2Rad),Mathf.Sin(randDeg  * Mathf.Deg2Rad));
+                yield return SpawnWithDelay(shipData,limit,pos,SpawnEnemyShip);
             }
             // //ここで敵のアイテムをロード
             // foreach(var shipObject in enemyShipObjectList)

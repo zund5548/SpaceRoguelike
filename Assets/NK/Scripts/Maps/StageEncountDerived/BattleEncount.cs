@@ -9,7 +9,7 @@ using UniRx.Triggers;
 using System.Collections;
 namespace Maps
 {
-    [CreateAssetMenu(menuName = "StageEncount/StageEncount")]
+    [CreateAssetMenu(menuName = "StageEncount/BattleEncount")]
     [Serializable]
     public class BattleEncount : StageEncount
     {
@@ -29,7 +29,7 @@ namespace Maps
                     StageManager.Instance.StageClear();
                 })
                 .AddTo(EventManager.Instance);
-            yield return ShipManager.Instance.BattleEncountWave(enemyWaveList,oneWaveLimit);
+            yield return ShipManager.Instance.SetBattleEncountWave(enemyWaveList,oneWaveLimit);
             EventManager.Instance.PublishClear();
         }
     }

@@ -36,6 +36,7 @@ namespace Managers
         public RectTransform _ShopScrollContent;
         public TextMeshProUGUI _ShopCreditDisplay;
         public GameObject _LeaveShopButton;
+        public Slider _AnchorGauge;
         [Header("Canvas")]
         public GameObject _ResultCanvas;
         public GameObject _GameClearCanvas;

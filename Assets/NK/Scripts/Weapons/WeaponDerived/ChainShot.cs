@@ -45,8 +45,10 @@ namespace Weapons
                 .ThrottleFirst(TimeSpan.FromSeconds(currentShotInterval))
                 .Subscribe(_ =>
                 {
-                    applyingShip.GetNearestOpponet();
-                    if(!applyingShipObject || !applyingShip.GetNearestOpponet())return;
+                    
+                    var targetShipObject = applyingShip.GetNearestOpponet();
+                    if(!applyingShipObject || !targetShipObject)return;
+                    if(targetShipObject.tag == "PlayerAnchor")return;
                     if(Vector2.Distance(applyingShipObject.transform.position,applyingShip.GetNearestOpponet().transform.position) > range)return;
                     //ShootChain(applyingShip,applyingShipObject,applyingShip.targetObject,new List<GameObject>{applyingShip.targetObject},chainInterval,maxChainNum);
                     Shoot(applyingShipObject,applyingShip);

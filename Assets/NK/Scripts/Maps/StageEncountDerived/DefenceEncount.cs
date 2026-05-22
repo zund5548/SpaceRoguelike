@@ -18,21 +18,34 @@ namespace Maps
     [Serializable]
     public class DefenceEncount:StageEncount
     {
+        public int oneWaveLimit;//ウェーブ内で１度に出てくる敵の最大
+        public List<EnemyWave> enemyWaveList = new();
         public ShipData anchorData;
         public override IEnumerator SetStageEncount()
         {
+             var disposable =EventManager.OnStageFail
+                .Subscribe(_ =>
+                {
+                    StageManager.Instance.GameFail();
+                })
+                .AddTo(EventManager.Instance);
+                
             EventManager.OnStageClear
             .Subscribe(_ =>
             {
                 StageManager.Instance.StageClear();
             })
             .AddTo(EventManager.Instance);
-            yield return DefenceCoroutine();
-        }
-        public IEnumerator DefenceCoroutine()
-        {
-            ShipManager.Instance.SpawnAnchor(anchorData);
-            yield return null;
+
+            var anchorObject = ShipManager.Instance.SpawnAnchor(anchorData);
+            anchorObject.OnDestroyAsObservable()
+            .Subscribe(_=>
+            {
+                EventManager.Instance.PublishFail();
+            });
+            yield return ShipManager.Instance.SetBattleEncountWave(enemyWaveList,oneWaveLimit);
+            disposable.Dispose();
+            EventManager.Instance.PublishClear();
         }
     }
 }

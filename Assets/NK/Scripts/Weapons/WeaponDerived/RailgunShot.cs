@@ -49,8 +49,9 @@ namespace Weapons
                 .Subscribe(_ =>
                 {
                     if(applyingShip.isSurged)return;
-                    applyingShip.GetNearestOpponet();
-                    if(!applyingdShipObject || !applyingShip.GetNearestOpponet())return;
+                    var targetShipObject = applyingShip.GetNearestOpponet();
+                    if(!applyingdShipObject || !targetShipObject)return;
+                    if(targetShipObject.tag == "PlayerAnchor")return;
                     if(Vector2.Distance(applyingdShipObject.transform.position,applyingShip.GetNearestOpponet().transform.position) > range)return;
                     
                     var railgunBullet = UnityEngine.Object.Instantiate(railgunProjectile);

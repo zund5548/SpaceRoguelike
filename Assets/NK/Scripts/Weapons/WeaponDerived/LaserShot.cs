@@ -76,9 +76,10 @@ namespace Weapons
                         .Do(_ =>
                         {
                             //回転・移動
-                            var targetObject = applyingShip.GetNearestOpponet();
-                            if(!targetObject)UnityEngine.Object.Destroy(laser);
-                            else targetPos = targetObject.transform.position;
+                            var targetShipObject = applyingShip.GetNearestOpponet();
+                            if(targetShipObject.tag == "PlayerAnchor")return;
+                            if(!targetShipObject)UnityEngine.Object.Destroy(laser);
+                            else targetPos = targetShipObject.transform.position;
                             var w = targetPos - (Vector2)applyingdShipObject.transform.position;
                             float targetDeg = Mathf.Atan2(w.y,w.x) * Mathf.Rad2Deg;
                             float currentLaserTurnRate = applyingShip.uniqueStatController.GetUniqueStat<LaserStatSet>().laserTurnLate.Value;

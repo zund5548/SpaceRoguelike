@@ -67,9 +67,9 @@ namespace Weapons
             return Observable.Timer(TimeSpan.FromSeconds(currentShotInterval))
                 .SelectMany(_=>Observable.Interval(TimeSpan.FromSeconds(0.05f)).Take(currentBurstNum).Do(i =>
                 {
-                    var targetShip = applyingShip.GetNearestOpponet();
-                    if(!applyingShip.gameObject || !targetShip)return;
-                    if(Vector2.Distance(applyingShip.gameObject.transform.position, targetShip.transform.position) > range) return;
+                    var targetShipObject = applyingShip.GetNearestOpponet();
+                    if(!applyingShip.gameObject || !targetShipObject)return;
+                    if(Vector2.Distance(applyingShip.gameObject.transform.position, targetShipObject.transform.position) > range) return;
                     Shoot(applyingShip.gameObject,applyingShip);
                     applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipAttackEvent{dealerShip = applyingShip});
                 }).Last())

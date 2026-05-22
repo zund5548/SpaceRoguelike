@@ -15,8 +15,8 @@ MonoBehaviour:
   shipName: 
   shipType: 0
   maxHullPoint: 500
-  maxShieldPoint: 500
-  hullResistance: 100
+  maxShieldPoint: 0
+  hullResistance: 0
   shieldResistance: 0
   power: 0
   critRate: 0

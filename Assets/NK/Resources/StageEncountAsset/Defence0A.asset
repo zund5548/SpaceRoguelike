@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02c9839407a34f646974296ebdd8950b, type: 3}
+  m_Name: Defence0A
+  m_EditorClassIdentifier: Assembly-CSharp::Maps.DefenceEncount
+  stageType: 2
+  icon: {fileID: 3340684741368923895, guid: cf4e60cfbfedfd54cb313a64d4b9f2e1, type: 3}
+  dificulty: 0
+  oneWaveLimit: 3
+  enemyWaveList:
+  - shipDataList:
+    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
+    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
+    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
+    - {fileID: 11400000, guid: 31ef5f9da2d9fae4184489e2b64cb041, type: 2}
+  anchorData: {fileID: 11400000, guid: 11fc46d3b3a5e214abacdcd9fecd35d9, type: 2}

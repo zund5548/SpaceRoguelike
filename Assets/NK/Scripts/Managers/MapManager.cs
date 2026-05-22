@@ -242,7 +242,8 @@ namespace Managers
                 for(int j = 0;j < _floorList[i].Count;j++)
                 {
                     float r = UnityEngine.Random.value;
-                    if(r < 0.9f)_floorList[i][j].stageType = StageNode.StageType.Battle;
+                    if(r < 0.6f)_floorList[i][j].stageType = StageNode.StageType.Battle;
+                    else if(r < 0.9f)_floorList[i][j].stageType = StageNode.StageType.Defence;
                     else _floorList[i][j].stageType = StageNode.StageType.Shop;
                     //if(i % obtainShipInterval == 0)_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
                     if(i % 4 == 0 && i <= 4 * obtainShipNumDic[GManager.Instance._mapLevel])_floorList[i][j].stageType = StageNode.StageType.ObtainShip;
