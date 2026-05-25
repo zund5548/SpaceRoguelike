@@ -14,17 +14,20 @@ namespace Stats
             ProjectileSpeed,
             ProjectileWidth,
             EnableOnKillingExplosion,
+            OnPiercingPowerScale,
         }
         public Stat projectileSpeed = new(75);
         public Stat projectileWidth = new(0.1f);
         public Stat enableOnKillingExplosion = new(0f);
+        public Stat onPiercingPowerScale = new(0f);
         public Stat GetStat(RailGunStatType type)
         {
             return type switch
             {
                 RailGunStatType.ProjectileSpeed => projectileSpeed,
                 RailGunStatType.ProjectileWidth => projectileWidth,
-                RailGunStatType.EnableOnKillingExplosion=> enableOnKillingExplosion,
+                RailGunStatType.EnableOnKillingExplosion => enableOnKillingExplosion,
+                RailGunStatType.OnPiercingPowerScale => onPiercingPowerScale,
                 _ => null
             };
         }

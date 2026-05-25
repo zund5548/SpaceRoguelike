@@ -18,8 +18,8 @@ MonoBehaviour:
   maxShieldPoint: 200
   hullResistance: 10
   shieldResistance: 5
-  power: 150
-  critRate: 5
+  power: 10
+  critRate: 0
   speed: 5
   shotInterval: 2
   weaponData:
@@ -38,3 +38,4 @@ MonoBehaviour:
         projectileSpeed: 50
         projectileWidth: 0.1
         enableOnKillingExplosion: 0
+        onPiercingPowerScale: 0

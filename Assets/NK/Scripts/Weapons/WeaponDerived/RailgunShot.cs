@@ -5,6 +5,8 @@ using System;
 using Ships;
 using Projectiles;
 using Stats;
+using System.Collections;
+using System.Collections.Generic;
 namespace Weapons
 {
     [Serializable]
@@ -16,6 +18,7 @@ namespace Weapons
         public float projectileSpeed;
         public float projectileWidth;
         public bool enableOnKillingExplosion;
+        public float onPiercingPowerScale;
         public override void SetUniqueStat(Ship applyingShip)
         {
             if(applyingShip.uniqueStatController.GetUniqueStat<RailgunStatSet>() != null)return;
@@ -24,7 +27,8 @@ namespace Weapons
             {
                 projectileSpeed = new(projectileSpeed),
                 projectileWidth  = new(projectileWidth),
-                enableOnKillingExplosion = new(enableOnKillingExplosion? 1f : 0f )
+                enableOnKillingExplosion = new(enableOnKillingExplosion? 1f : 0f ),
+                onPiercingPowerScale = new(onPiercingPowerScale),
             });
         }
         public  override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
@@ -67,9 +71,17 @@ namespace Weapons
                     float t = 0f;
                     float currentWidth = applyingShip.uniqueStatController.GetUniqueStat<RailgunStatSet>().projectileWidth.Value;
                     float currentProjectileSpeed = applyingShip.uniqueStatController.GetUniqueStat<RailgunStatSet>().projectileSpeed.Value;
+                    float currentPowerScale = applyingShip.uniqueStatController.GetUniqueStat<RailgunStatSet>().onPiercingPowerScale.Value;
+                    int confirmedPower = (int)applyingShip.currentPower.Value;
                     railgunBullet.UpdateAsObservable()
-                        .Subscribe(_=>
+                        .Scan(new List<GameObject>(),
+                        (List<GameObject> piercedOpponets, UniRx.Unit _) =>
                         {
+                            return piercedOpponets;
+                        })
+                        .Subscribe(piercedOpponets=>
+                        {
+                            
                             // bullet.transform.position += projectileSpeed * bullet.transform.right * Time.deltaTime; 
                             // if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
                             if(projectileSpeed * t < range)
@@ -85,8 +97,18 @@ namespace Weapons
                                 Color color  = new Color(SR.color.r,SR.color.g,SR.color.b,a);
                                 SR.color = color;
                             }
+                            railgunBullet.OnTriggerEnter2DAsObservable()
+                                .Subscribe(col =>
+                                {
+                                    if(piercedOpponets.Contains(col.gameObject))return;
+                                    PR.SetProjectile(applyingShip,(int)(confirmedPower * (1 + piercedOpponets.Count * currentPowerScale / 100f)),true,true);
+                                    piercedOpponets.Add(col.gameObject);
+                                })
+                                .AddTo(railgunBullet);                          
                         })
                         .AddTo(railgunBullet);
+                    
+                    
                 })
                 .AddTo(applyingdShipObject);
         }
