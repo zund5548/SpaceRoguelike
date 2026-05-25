@@ -48,7 +48,7 @@ namespace Weapons
                     
                     var targetShipObject = applyingShip.GetNearestOpponet();
                     if(!applyingShipObject || !targetShipObject)return;
-                    if(targetShipObject.tag == "PlayerAnchor")return;
+                    //if(targetShipObject && targetShipObject.tag == "PlayerAnchor")return;
                     if(Vector2.Distance(applyingShipObject.transform.position,applyingShip.GetNearestOpponet().transform.position) > range)return;
                     //ShootChain(applyingShip,applyingShipObject,applyingShip.targetObject,new List<GameObject>{applyingShip.targetObject},chainInterval,maxChainNum);
                     Shoot(applyingShipObject,applyingShip);

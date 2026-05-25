@@ -121,7 +121,7 @@ namespace Weapons
             if(applyingShip.isSurged)return;
             var targetShipObject = applyingShip.GetNearestOpponet();
             if(!targetShipObject)return;
-            if(targetShipObject.tag == "PlayerAnchor")return;
+            //if(targetShipObject && targetShipObject.tag == "PlayerAnchor")return;
             Vector2 initTargetPos = (Vector2)targetShipObject.transform.position;
             var v = initTargetPos - (Vector2)applyingShipObject.transform.position;
             float targetRad = Mathf.Atan2(v.y,v.x);

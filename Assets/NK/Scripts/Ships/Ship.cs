@@ -32,6 +32,9 @@ namespace Ships
         public Stat hullResistance;
         public UniqueStatController uniqueStatController = new();
         public ShipEventController shipEventController = new();
+
+        public IDisposable shipMoveStream;
+        
         public Stat GetStat(StatType type)
         {
             return type switch

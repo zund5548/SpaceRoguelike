@@ -86,7 +86,7 @@ namespace Weapons
                 {
                     var targetShipObject = applyingShip.GetNearestOpponet();
                     if(!applyingShip.gameObject || !targetShipObject)return;
-                    if(targetShipObject.tag == "PlayerAnchor")return;
+                    //if(targetShipObject && targetShipObject.tag == "PlayerAnchor")return;
                     if(Vector2.Distance(applyingShip.transform.position, targetShipObject.transform.position) > range) return;
                     if(!drone)return;
                     DroneShoot(drone.transform.position,applyingShip);

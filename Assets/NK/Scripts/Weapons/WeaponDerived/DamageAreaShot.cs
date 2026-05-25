@@ -39,7 +39,7 @@ namespace Weapons
             if(applyingShip.isSurged)return;
             var targetShipObject = applyingShip.GetNearestOpponet();
             if(!applyingShip.gameObject || !targetShipObject)return;
-            if(targetShipObject.tag == "PlayerAnchor")return;
+            //if(targetShipObject && targetShipObject.tag == "PlayerAnchor")return;
             SetWeaponPrefab();
             var bullet = UnityEngine.Object.Instantiate(_projectile);
             bullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";

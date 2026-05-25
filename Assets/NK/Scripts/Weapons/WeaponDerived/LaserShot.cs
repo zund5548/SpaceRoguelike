@@ -77,7 +77,7 @@ namespace Weapons
                         {
                             //回転・移動
                             var targetShipObject = applyingShip.GetNearestOpponet();
-                            if(targetShipObject.tag == "PlayerAnchor")return;
+                            //if(targetShipObject && targetShipObject.tag == "PlayerAnchor")return;
                             if(!targetShipObject)UnityEngine.Object.Destroy(laser);
                             else targetPos = targetShipObject.transform.position;
                             var w = targetPos - (Vector2)applyingdShipObject.transform.position;

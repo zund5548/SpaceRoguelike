@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
+  m_Name: EAnchorrTargetingA
+  m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
+  shipName: 
+  shipType: 0
+  maxHullPoint: 300
+  maxShieldPoint: 300
+  hullResistance: 5
+  shieldResistance: 5
+  power: 20
+  critRate: 0
+  speed: 0.5
+  shotInterval: 1
+  weaponData:
+    rid: 7073474440374518073
+  references:
+    version: 2
+    RefIds:
+    - rid: 7073474440374518073
+      type: {class: AnchorTargeting, ns: Weapons, asm: Assembly-CSharp}
+      data:
+        weaponName: 
+        _projectile: {fileID: 0}
+        _explosion: {fileID: 0}
+        ChianLineObject: {fileID: 0}

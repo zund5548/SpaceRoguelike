@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87c1c11888306a64782bf6bee8680497, type: 3}
-  m_Name: RaigunPowerScale_10
+  m_Name: RaigunPowerScale_20
   m_EditorClassIdentifier: Assembly-CSharp::Items.RailgunStatModify
-  description: "\u30EC\u30FC\u30EB\u30AC\u30F3\u306E\u5F3E\u4E38\u304C\u6575\u3092\u8CAB\u901A\u3059\u308B\u305F\u3073\u3001\u305D\u306E\u5F3E\u4E38\u306E\u4E0E\u3048\u308B\u30C0\u30E1\u30FC\u30B8\u304C10%\u5897\u52A0\u3059\u308B"
+  description: "\u30EC\u30FC\u30EB\u30AC\u30F3\u306E\u5F3E\u4E38\u304C\u6575\u3092\u8CAB\u901A\u3059\u308B\u305F\u3073\u3001\u305D\u306E\u5F3E\u4E38\u306E\u4E0E\u3048\u308B\u30C0\u30E1\u30FC\u30B8\u304C20%\u5897\u52A0\u3059\u308B"
   isPlayers: 1
-  value: 10
+  value: 20
   railgunShotStatType: 3
   modType: 0

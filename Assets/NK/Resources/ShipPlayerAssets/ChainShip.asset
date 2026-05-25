@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
   shipName: "Buraq\u7D1A"
   shipType: 0
-  maxHullPoint: 200
+  maxHullPoint: 300
   maxShieldPoint: 200
   hullResistance: 5
   shieldResistance: 5
-  power: 30
+  power: 50
   critRate: 2
   speed: 10
   shotInterval: 1

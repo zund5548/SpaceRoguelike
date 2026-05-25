@@ -31,7 +31,12 @@ namespace Weapons
                 onPiercingPowerScale = new(onPiercingPowerScale),
             });
         }
-        public  override void ShootAction(GameObject applyingdShipObject,Ship applyingShip)
+        public class RailgunBulletStatus
+        {
+            public List<GameObject> piercedOpponets;
+            public Projectile projectile;
+        }
+        public  override void ShootAction(GameObject applyingShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
             SetWeaponPrefab();
@@ -47,25 +52,25 @@ namespace Weapons
             }
             //var trueSir = applyingShip.shotIntervalReduction.Value < MAX_ShotIntervalReduction ? applyingShip.shotIntervalReduction.Value : MAX_ShotIntervalReduction;
             float currentShotInterval = applyingShip.shotInterval.Value;
-            applyingdShipObject.UpdateAsObservable()
+            applyingShipObject.UpdateAsObservable()
                 .DelaySubscription(TimeSpan.FromSeconds(UnityEngine.Random.Range(0,0.5f)))
                 .ThrottleFirst(TimeSpan.FromSeconds(currentShotInterval))
                 .Subscribe(_ =>
                 {
                     if(applyingShip.isSurged)return;
                     var targetShipObject = applyingShip.GetNearestOpponet();
-                    if(!applyingdShipObject || !targetShipObject)return;
-                    if(targetShipObject.tag == "PlayerAnchor")return;
-                    if(Vector2.Distance(applyingdShipObject.transform.position,applyingShip.GetNearestOpponet().transform.position) > range)return;
+                    if(!applyingShipObject || !targetShipObject)return;
+                    //if(targetShipObject && targetShipObject.tag == "PlayerAnchor")return;
+                    if(Vector2.Distance(applyingShipObject.transform.position,applyingShip.GetNearestOpponet().transform.position) > range)return;
                     
                     var railgunBullet = UnityEngine.Object.Instantiate(railgunProjectile);
                     railgunBullet.tag = applyingShip.isPlayer ? "PlayerProjectile":"EnemyProjectile";
-                    railgunBullet.transform.position = applyingdShipObject.transform.position;
+                    railgunBullet.transform.position = applyingShipObject.transform.position;
 
                     var PR = railgunBullet.GetComponent<Projectile>();
                     PR.SetProjectile(applyingShip,(int)applyingShip.currentPower.Value,true,true);
 
-                    var v = applyingShip.GetNearestOpponet().transform.position - applyingdShipObject.transform.position;
+                    var v = applyingShip.GetNearestOpponet().transform.position - applyingShipObject.transform.position;
                     railgunBullet.transform.eulerAngles = new Vector3(0f,0f,Mathf.Atan2(v.y,v.x) * Mathf.Rad2Deg);
                     var SR = railgunBullet.GetComponent<SpriteRenderer>();
                     float t = 0f;
@@ -74,43 +79,51 @@ namespace Weapons
                     float currentPowerScale = applyingShip.uniqueStatController.GetUniqueStat<RailgunStatSet>().onPiercingPowerScale.Value;
                     int confirmedPower = (int)applyingShip.currentPower.Value;
                     railgunBullet.UpdateAsObservable()
-                        .Scan(new List<GameObject>(),
-                        (List<GameObject> piercedOpponets, UniRx.Unit _) =>
-                        {
-                            return piercedOpponets;
-                        })
-                        .Subscribe(piercedOpponets=>
-                        {
-                            
-                            // bullet.transform.position += projectileSpeed * bullet.transform.right * Time.deltaTime; 
-                            // if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
-                            if(projectileSpeed * t < range)
+                        .Scan(
+                            new RailgunBulletStatus
                             {
-                                railgunBullet.transform.localScale = new Vector2(projectileSpeed*t,currentWidth);
-                                t += Time.deltaTime;
-                            }
-                            else
+                                piercedOpponets = new(),
+                                projectile = PR
+                            },
+                            (RailgunBulletStatus railgunBulletStatus, UniRx.Unit _) =>
                             {
-                                if(PR._isDamaging)PR._isDamaging = false;
-                                float a = SR.color.a - Time.deltaTime/2f;
-                                if(a < 0f)UnityEngine.Object.Destroy(railgunBullet);
-                                Color color  = new Color(SR.color.r,SR.color.g,SR.color.b,a);
-                                SR.color = color;
-                            }
-                            railgunBullet.OnTriggerEnter2DAsObservable()
-                                .Subscribe(col =>
+                                return railgunBulletStatus;
+                            })
+                            .Subscribe(railgunBulletStatus=>
+                            {
+                                
+                                // bullet.transform.position += projectileSpeed * bullet.transform.right * Time.deltaTime; 
+                                // if(Vector2.Distance(bullet.transform.position,Vector2.zero) >= 20f)UnityEngine.Object.Destroy(bullet);
+                                if(projectileSpeed * t < range)
                                 {
-                                    if(piercedOpponets.Contains(col.gameObject))return;
-                                    PR.SetProjectile(applyingShip,(int)(confirmedPower * (1 + piercedOpponets.Count * currentPowerScale / 100f)),true,true);
-                                    piercedOpponets.Add(col.gameObject);
-                                })
-                                .AddTo(railgunBullet);                          
-                        })
-                        .AddTo(railgunBullet);
+                                    railgunBullet.transform.localScale = new Vector2(projectileSpeed*t,currentWidth);
+                                    t += Time.deltaTime;
+                                }
+                                else
+                                {
+                                    if(railgunBulletStatus.projectile._isDamaging)railgunBulletStatus.projectile._isDamaging = false;
+                                    float a = SR.color.a - Time.deltaTime/2f;
+                                    if(a < 0f)UnityEngine.Object.Destroy(railgunBullet);
+                                    Color color  = new Color(SR.color.r,SR.color.g,SR.color.b,a);
+                                    SR.color = color;
+                                }
+                                railgunBullet.OnTriggerEnter2DAsObservable()
+                                    .Subscribe(col =>
+                                    {
+                                        if(railgunBulletStatus.piercedOpponets.Contains(col.gameObject))return;
+                                        bool b1 = railgunBullet.CompareTag("PlayerProjectile") && col.gameObject.CompareTag("EnemyShip");
+                                        bool b2 = railgunBullet.CompareTag("EnemyProjectile") && col.gameObject.CompareTag("PlayerShip");
+                                        if(b1 || b2)railgunBulletStatus.piercedOpponets.Add(col.gameObject);
+                                        railgunBulletStatus.projectile.SetProjectile(applyingShip,(int)(confirmedPower * (1 + railgunBulletStatus.piercedOpponets.Count * currentPowerScale / 100f)),true,true);
+                                        
+                                    })
+                                    .AddTo(railgunBullet);                          
+                            })
+                            .AddTo(railgunBullet);
                     
                     
                 })
-                .AddTo(applyingdShipObject);
+                .AddTo(applyingShipObject);
         }
     }
 }

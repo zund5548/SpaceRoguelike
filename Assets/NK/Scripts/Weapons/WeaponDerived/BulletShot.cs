@@ -44,11 +44,11 @@ namespace Weapons
         public override void ShootAction(GameObject applyingShipObject,Ship applyingShip)
         {
             if(applyingShip == null)return;
-            if(applyingShip.isSurged)return;
+            //if(applyingShip.isSurged)return;
             int additionalDamage = (int)applyingShip.uniqueStatController.GetUniqueStat<BulletStatSet>().enableAdditionalDamage.Value;
             if(additionalDamage != 0)
             {
-                applyingShip.shipEventController.OnHit
+                var disposable = applyingShip.shipEventController.OnHit
                     .Subscribe(e=>
                     {
                         if(e.targetShip)e.targetShip.DealDamage(additionalDamage,false);
@@ -69,6 +69,7 @@ namespace Weapons
                 {
                     var targetShipObject = applyingShip.GetNearestOpponet();
                     if(!applyingShip.gameObject || !targetShipObject)return;
+                    //if(targetShipObject && targetShipObject.tag == "PlayerAnchor")return;
                     if(Vector2.Distance(applyingShip.gameObject.transform.position, targetShipObject.transform.position) > range) return;
                     Shoot(applyingShip.gameObject,applyingShip);
                     applyingShip.shipEventController.PublishShoot(new ShipEventController.ShipAttackEvent{dealerShip = applyingShip});

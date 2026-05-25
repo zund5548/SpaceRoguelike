@@ -179,31 +179,31 @@ namespace Managers
             float deg = Mathf.Atan2(-pos.y,-pos.x) * Mathf.Rad2Deg;
             shipObject.transform.position = pos;
             shipObject.transform.eulerAngles = new Vector3(0f,0f,deg);
-            shipObject.UpdateAsObservable()
-            .Subscribe(_ =>
-            {
-                //Debug.Log(ship.isSurged);
-                if(ship.isSurged)return;
-                if(Vector2.Distance(shipObject.transform.position,_currentFleetPos) < 0.1f)return;
-                var v = _currentFleetPos - (Vector2)shipObject.transform.position;
-                Vector2 moveDir = v.normalized;
-                Vector2 separation = Vector2.zero;
-                foreach (var other in ship.allyShipObjectList)
+            ship.shipMoveStream = shipObject.UpdateAsObservable()
+                .Subscribe(_ =>
                 {
-                    if(other == shipObject)continue;
-                    float dist = Vector2.Distance(shipObject.transform.position,other.transform.position);
-                    if(dist < separationDist)
+                    //Debug.Log(ship.isSurged);
+                    if(ship.isSurged)return;
+                    if(Vector2.Distance(shipObject.transform.position,_currentFleetPos) < 0.1f)return;
+                    var v = _currentFleetPos - (Vector2)shipObject.transform.position;
+                    Vector2 moveDir = v.normalized;
+                    Vector2 separation = Vector2.zero;
+                    foreach (var other in ship.allyShipObjectList)
                     {
-                        Vector2 away = shipObject.transform.position - other.transform.position;
-                        separation += away.normalized/dist;
+                        if(other == shipObject)continue;
+                        float dist = Vector2.Distance(shipObject.transform.position,other.transform.position);
+                        if(dist < separationDist)
+                        {
+                            Vector2 away = shipObject.transform.position - other.transform.position;
+                            separation += away.normalized/dist;
+                        }
                     }
-                }
-                Vector2 finalDir = moveDir + separation * separationStrength;
-                shipObject.transform.position = (Vector2)shipObject.transform.position + finalDir.normalized * shipData.speed * Time.deltaTime; 
-                float deg = Mathf.MoveTowardsAngle(shipObject.transform.eulerAngles.z,Mathf.Atan2(finalDir.y,finalDir.x) * Mathf.Rad2Deg,180f*Time.deltaTime);
-                shipObject.transform.eulerAngles = new Vector3(0f,0f,deg);
-            })
-            .AddTo(shipObject);
+                    Vector2 finalDir = moveDir + separation * separationStrength;
+                    shipObject.transform.position = (Vector2)shipObject.transform.position + finalDir.normalized * shipData.speed * Time.deltaTime; 
+                    float deg = Mathf.MoveTowardsAngle(shipObject.transform.eulerAngles.z,Mathf.Atan2(finalDir.y,finalDir.x) * Mathf.Rad2Deg,180f*Time.deltaTime);
+                    shipObject.transform.eulerAngles = new Vector3(0f,0f,deg);
+                })
+                .AddTo(shipObject);
 
             ship.isPlayer = false;
             ship.tag = "EnemyShip";
