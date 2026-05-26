@@ -295,7 +295,7 @@ namespace Managers
             }
             var result = new List<Item>();
             var itemPool = itemList.Except(ownedItems).ToList();
-            List<float> weightList = new List<float>{50,30,15,5};
+            List<float> weightList = new List<float>{50,35,10,5};
             for(int i = 0;i < count;i++)
             {
                 var item = itemPool.Where(item => item.itemTier == WeightedItemTier(weightList)).OrderBy(x => UnityEngine.Random.Range(0,itemPool.Count)).ToList()[0];
@@ -356,7 +356,6 @@ namespace Managers
             if(shipDataList == null || shipDataList.Count == 0)isShipDataBannerPushed = true;
             foreach(var shipData in shipDataList)
             {
-                Debug.Log("a");
                 var banner = Instantiate(_ShipDataBannerButton);
                 var button = banner.transform.GetChild(0).GetComponent<Button>();
                 buttonList.Add(button);

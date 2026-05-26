@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BossAEncount
   m_EditorClassIdentifier: Assembly-CSharp::Maps.BossEncounter
   stageType: 7
-  icon: {fileID: 0}
+  icon: {fileID: -9168135307392156145, guid: cabfd5aaa38309841abd2ef104c333e4, type: 3}
   dificulty: 0
   bossType:
     rid: 8997316388243374247

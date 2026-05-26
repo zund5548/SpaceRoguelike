@@ -2676,6 +2676,7 @@ MonoBehaviour:
   _floorNum: 1
   scrollVerticalSize: 1080
   stageButtonSize: 50
+  lobbyIcon: {fileID: 2660195087753647290, guid: 688874ab154af194f8af19949e35b6e9, type: 3}
   _toStageButton: {fileID: 1681470752}
   _mapScrollRect: {fileID: 1646137094}
   _mapScrollContent: {fileID: 538656797}

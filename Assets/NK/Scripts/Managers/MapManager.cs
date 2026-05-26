@@ -23,6 +23,7 @@ namespace Managers
         public int _floorNum;
         public float scrollVerticalSize;
         public float stageButtonSize;
+        public Sprite lobbyIcon;
         [Header("UI")]
         public UnityEngine.UI.Button _toStageButton;
         public ScrollRect _mapScrollRect;
@@ -251,7 +252,7 @@ namespace Managers
                     // filteredEncountList = encountList.Where(e=>e.stageType == _floorList[i][j].stageType).ToList();
                     // _floorList[i][j].stageEncount = filteredEncountList[UnityEngine.Random.Range(0,filteredEncountList.Count)];
                     _floorList[i][j].stageEncount = GetStageEncount(_floorList[i][j].stageType,i/5);
-                    //すべてのフロアを下から3分割して、上に行くほど難易度が上がる
+                    //すべてのフロアを下からn分割して、上に行くほど難易度が上がる
                 }
             }
             //bossStageNode
@@ -357,6 +358,7 @@ namespace Managers
                     // if(_floorList[p][q].stageEncount && _floorList[p][q].stageEncount.icon)buttonObject.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = _floorList[p][q].stageEncount.icon;
                     // else buttonObject.transform.GetChild(0).gameObject.SetActive(false);
                     if(_floorList[p][q].stageEncount && _floorList[p][q].stageEncount.icon)buttonObject.GetComponent<UnityEngine.UI.Image>().sprite = _floorList[p][q].stageEncount.icon;
+                    else if(i == 0)buttonObject.GetComponent<UnityEngine.UI.Image>().sprite = lobbyIcon;
                     else
                     {
                         var color =  buttonObject.GetComponent<UnityEngine.UI.Image>().color;
