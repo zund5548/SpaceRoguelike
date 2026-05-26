@@ -21,6 +21,8 @@ namespace Weapons
         {
             var anchor = ShipManager.Instance.GetAnchorObject();
             if(!anchor)return;
+            var anchorObjectComp = anchor.GetComponent<AnchorObject>();
+            
             //艦船の動きを変える
             var v = anchor.transform.position - applyingShipObject.transform.position;
             float rad  = Mathf.Atan2(v.y,v.x);
@@ -38,6 +40,7 @@ namespace Weapons
             //         }
             //     })
             //     .AddTo(applyingShip);
+            bool isReached = false;
             Observable.Timer(TimeSpan.Zero)
                 .SelectMany(_ =>
                 {
@@ -49,17 +52,18 @@ namespace Weapons
                                 applyingShipObject.transform.position += (Vector3)(applyingShip.shipData.speed * Time.deltaTime * new Vector2(Mathf.Cos(rad),Mathf.Sin(rad)));
                             }
                         });
-                    // var chain = UnityEngine.Object.Instantiate(ChianLineObject);
-                    // var LR = chain.GetComponent<LineRenderer>();
-                    // LR.positionCount = 2;
-                    // LR.SetPosition(0,new Vector3(applyingShipObject.transform.position.x,applyingShipObject.transform.position.y,0f));
-                    // LR.SetPosition(1,new Vector3(applyingShipObject.transform.position.x,applyingShipObject.transform.position.y,0f));
-                    var interval = Observable.Interval(TimeSpan.FromSeconds(1f))
+                    
+                    var interval = Observable.Interval(TimeSpan.FromSeconds(0.1f))
                         .Do(_=>
                         {
                             if(Vector2.Distance(applyingShipObject.transform.position,anchor.transform.position) <= 1f)
                             {
-                                
+                                if(!isReached)
+                                {
+                                    isReached = true;
+                                    SetLaser(applyingShipObject,applyingShipObject.transform.position,anchor.transform.position);
+                                }
+                                if(anchorObjectComp)anchorObjectComp.DealDamage((int)applyingShip.currentPower.Value,false,applyingShip);
                             }
                         });
                     return Observable.Merge(everyFrame, interval);
@@ -70,6 +74,51 @@ namespace Weapons
         public override void Shoot(GameObject applyingShipObject, Ship applyingShip)
         {
             
+        }
+        private void SetLaser(GameObject applyingShipObject,Vector2 s,Vector2 e)
+        {
+            //linerendererをlaserとする
+            var laser = UnityEngine.Object.Instantiate(ChianLineObject);
+            var LR = laser.GetComponent<LineRenderer>();
+            Gradient gradient = new();
+            if(applyingShipObject.CompareTag("PlayerShip"))
+            {
+                gradient.SetKeys
+                (
+                    new GradientColorKey[]
+                    {
+                        new GradientColorKey(Color.turquoise, 0f),
+                        new GradientColorKey(Color.turquoise, 1f)
+                    },
+                    new GradientAlphaKey[]
+                    {
+                        //new GradientAlphaKey(0.5f, 0f),
+                        new GradientAlphaKey(1f, 1f)
+                    }
+                );
+            }
+            else
+            {
+                gradient.SetKeys
+                (
+                    new GradientColorKey[]
+                    {
+                        new GradientColorKey(Color.orange, 0f),
+                        new GradientColorKey(Color.orange, 1f)
+                    },
+                    new GradientAlphaKey[]
+                    {
+                        // new GradientAlphaKey(0.5f, 1f),
+                        new GradientAlphaKey(1f, 1f)
+                    }
+                );
+            }
+            LR.colorGradient = gradient;
+            LR.positionCount = 2;
+            LR.SetPosition(0,new Vector3(s.x,s.y,0f));
+            LR.SetPosition(1,new Vector3(e.x,e.y,0f));
+            applyingShipObject.OnDestroyAsObservable()
+                .Subscribe(_=>UnityEngine.Object.Destroy(laser));
         }
     }
 }

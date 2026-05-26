@@ -18,7 +18,7 @@ MonoBehaviour:
   maxShieldPoint: 300
   hullResistance: 5
   shieldResistance: 5
-  power: 20
+  power: 1
   critRate: 0
   speed: 0.5
   shotInterval: 1
@@ -33,4 +33,4 @@ MonoBehaviour:
         weaponName: 
         _projectile: {fileID: 0}
         _explosion: {fileID: 0}
-        ChianLineObject: {fileID: 0}
+        ChianLineObject: {fileID: 3562957314161690254, guid: 332f9659690b8734cb0a7e5a43f05dbd, type: 3}
