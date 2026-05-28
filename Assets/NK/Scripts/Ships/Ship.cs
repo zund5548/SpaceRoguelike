@@ -17,7 +17,8 @@ namespace Ships
         public ShipData shipData;
         public int currentShieldPoint;
         public int currentHullPoint;
-
+        [HideInInspector]
+        GameObject damagingEffectObject;
         //public GameObject targetObject;
         public List<GameObject> allyShipObjectList = new List<GameObject>();
         public List<GameObject> opponentShipObjectList = new List<GameObject>();
@@ -96,6 +97,7 @@ namespace Ships
             
             tr1.colorGradient = gradient;
             tr2.colorGradient = gradient;
+            SetSpawnDamagingEffect();
             if(!isPlayer)return;
             gameObject.OnDestroyAsObservable()
                 .Subscribe(_ =>
@@ -110,6 +112,43 @@ namespace Ships
                         }
                     }
                 })
+                .AddTo(gameObject);
+        }
+        private void SetSpawnDamagingEffect()
+        {
+            damagingEffectObject = (GameObject)Resources.Load("DamagingEffect");
+            GameObject effect = null;
+            // shipEventController.OnDamaging
+            //     .Subscribe(_ =>
+            //     {
+            //         effect = Instantiate(damagingEffectObject);
+            //     })
+            //     .AddTo(gameObject);
+            // shipEventController.OnDamaging
+            //     .Delay(TimeSpan.FromSeconds(1f))
+            //     .Subscribe(_ =>
+            //     {
+            //         if(effect)Destroy(effect);
+            //     })
+            //     .AddTo(gameObject);
+            shipEventController.OnDamaging
+                .SelectMany(_=>
+                    Observable.Concat
+                    (
+                        Observable.Return(Unit.Default)
+                            .Do(_ =>
+                            {
+                                effect = Instantiate(damagingEffectObject,gameObject.transform.position,Quaternion.identity);
+                            }),
+                        Observable.Timer(TimeSpan.FromSeconds(1f))
+                            .Do(_ =>
+                            {
+                                if(effect)Destroy(effect);
+                            })
+                            .AsUnitObservable()
+                    )
+                )
+                .Subscribe()
                 .AddTo(gameObject);
         }
         public void SetMaxSPHP()
