@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: PlanetDatabase
   m_EditorClassIdentifier: Assembly-CSharp::Maps.PlanetDatabase
   planetList:
-  - radius: 0.4
+  - radius: 1
     sprite: {fileID: 5357521309655992534, guid: c70d27d3afe970146a5e1371d9d756ae, type: 3}
     planetType: 0
-  - radius: 0.5
+  - radius: 1.2
     sprite: {fileID: 5357521309655992534, guid: c70d27d3afe970146a5e1371d9d756ae, type: 3}
     planetType: 0
-  - radius: 0.6
+  - radius: 1.4
     sprite: {fileID: 5357521309655992534, guid: c70d27d3afe970146a5e1371d9d756ae, type: 3}
     planetType: 0

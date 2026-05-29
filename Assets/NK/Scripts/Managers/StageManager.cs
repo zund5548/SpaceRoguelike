@@ -144,11 +144,13 @@ namespace Managers
             int pointNum = 100;
             foreach(var planet in stageNode.planetList)
             {
-                var planetObject = Instantiate(_planetObject);
-                planetObjectList.Add(planetObject);
                 float rad = UnityEngine.Random.Range(-Mathf.PI,Mathf.PI);
-                planetObject.transform.position = radius * new Vector2(Mathf.Cos(rad),Mathf.Sin(rad));
+                var planetObject = Instantiate(_planetObject,radius * new Vector3(Mathf.Cos(rad),Mathf.Sin(rad),0f),Quaternion.identity);
+                planetObjectList.Add(planetObject);
+                planetObject.GetComponent<SpriteRenderer>().sprite = planet.sprite;
+                //planetObject.transform.position;
                 planetObject.transform.localScale = planet.radius * Vector2.one;
+                planetObject.transform.eulerAngles = new Vector3(0f,0f,UnityEngine.Random.Range(-180f,180f));
                 var LR = planetObject.GetComponent<LineRenderer>();
                 LR.positionCount = pointNum;
                 float orbitRad = 0f;
