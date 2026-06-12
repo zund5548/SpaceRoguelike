@@ -79,13 +79,6 @@ namespace Managers
                     _CreditCanvas.SetActive(true);
                 })
                 .AddTo(gameObject);
-            _SelectDifficultyMapButton.OnClickAsObservable()
-                .Subscribe(_ =>
-                {
-                    _DifficultyArea.SetActive(true);
-                    _TechTreeArea.SetActive(false);
-                })
-                .AddTo(gameObject);
             _TechButton.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
@@ -93,6 +86,14 @@ namespace Managers
                     _TechTreeArea.SetActive(true);
                 })
                 .AddTo(gameObject);
+            _SelectDifficultyMapButton.OnClickAsObservable()
+                .Subscribe(_ =>
+                {
+                    _DifficultyArea.SetActive(true);
+                    _TechTreeArea.SetActive(false);
+                })
+                .AddTo(gameObject);
+            
             for(int i = 0;i < stageNumDic.Count;i++)
             {
                 var buttonObject = Instantiate(_DifficultyButtonObject);
@@ -118,6 +119,8 @@ namespace Managers
                     _ToMapButton.interactable = false;
                 })
                 .AddTo(gameObject);
+            _DifficultyArea.SetActive(true);
+            _TechTreeArea.SetActive(false);
         }
         //表示する難易度はlevel+1
         public void SetDifficulty(int level)
