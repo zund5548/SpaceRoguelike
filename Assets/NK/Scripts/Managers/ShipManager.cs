@@ -336,7 +336,7 @@ namespace Managers
                     shieldValueDisplay.text = shieldSlider.value.ToString() + " / " +  shieldSlider.maxValue.ToString();
                     hullSlider.value = ship.currentHullPoint;
                     hullValueDisplay.text = hullSlider.value.ToString() + " / " +  hullSlider.maxValue.ToString();
-                    StatDisplay.text = "攻撃:" + ship.currentPower.Value.ToString();
+                    StatDisplay.text = "Atk:" + ship.currentPower.Value.ToString();
                 })
                 .AddTo(ship);
                 
@@ -349,7 +349,7 @@ namespace Managers
 
         public IEnumerator SetBattleEncountWave(List<EnemyWave> enemyWaveList,int limit)
         {
-            _StageNameText.text = "ウェーブ : -/-";
+            _StageNameText.text = "Wave : -/-";
             yield return BattleEncountWaveCoroutine(enemyWaveList,limit);
         }
 
@@ -359,7 +359,7 @@ namespace Managers
             foreach(var enemyWave in enemyWaveList)
             {
                 //Debug.Log(currentWaveNum);
-                _StageNameText.text = "ウェーブ : "+currentWaveNum.ToString()+"/"+ enemyWaveList.Count.ToString();
+                _StageNameText.text = "Wave : "+currentWaveNum.ToString()+"/"+ enemyWaveList.Count.ToString();
                 yield return WaveCoroutine(enemyWave,limit);
                 yield return new WaitForSeconds(2f);
                 currentWaveNum++;

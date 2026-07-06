@@ -84,7 +84,7 @@ namespace Managers
                 {
                     SceneLoader.Instance.ToStage();
                     _toStageButton.interactable = false;
-                    _toStageButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "ワープドライブ起動...";
+                    _toStageButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Warpdrive initiated...";
                 })
                 .AddTo(_toStageButton.gameObject);
         }
@@ -334,7 +334,7 @@ namespace Managers
                             stageNodeBanner.SetBanner(_floorList[p][q]);
                             GManager.Instance.currentStageNode = _floorList[p][q];
                             _toStageButton.interactable = true;
-                            _toStageButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "星系へワープ";
+                            _toStageButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Warp to system";
                             //pointer
                             if(!pointer)
                             {

@@ -36,14 +36,14 @@ namespace Maps
             //if((int)stageType == 7)Debug.Log("stageType isn't set");
             return stageType switch
             {
-                StageType.Lobby => "ロビー",
-                StageType.Battle => "戦闘:通常",
-                StageType.Defence => "戦闘:防衛",
-                StageType.Shop => "ショップ",
-                StageType.Credit => "賞金稼ぎ",
-                StageType.ObtainShip => "艦船追加",
-                StageType.Elite => "精鋭",
-                StageType.Boss => "ボス",
+                StageType.Lobby => "Lobby",
+                StageType.Battle => "Combat",
+                StageType.Defence => "Defence",
+                StageType.Shop => "Shop",
+                StageType.Credit => "Bounty",
+                StageType.ObtainShip => "Add Ship",
+                StageType.Elite => "Elite",
+                StageType.Boss => "Boss",
                 _=> ""
             };
         }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9f6107d46268e40b7c2fefa69d7a27, type: 3}
   m_Name: MissileShip
   m_EditorClassIdentifier: Assembly-CSharp::Ships.ShipData
-  shipName: "Helios\u7D1A"
+  shipName: Helios Class
   shipType: 0
   maxHullPoint: 200
   maxShieldPoint: 200

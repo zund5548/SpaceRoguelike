@@ -117,7 +117,7 @@ namespace Managers
         private void SetFloorDisplay()
         {
             string floorNum = GManager.Instance.currentStageNode.floorStageNum.ToString();
-            _CurrentFloorText.text = "セクター"+floorNum;
+            _CurrentFloorText.text = "Sector"+floorNum;
         }
         private void InstantiateStage(StageNode stageNode)
         {
