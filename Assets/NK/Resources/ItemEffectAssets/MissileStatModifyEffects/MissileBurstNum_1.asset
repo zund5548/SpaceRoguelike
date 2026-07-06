@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2726dbffacddd4c937e0b61b8a26ff, type: 3}
   m_Name: MissileBurstNum_1
   m_EditorClassIdentifier: Assembly-CSharp::Items.MissileStatModify
-  description: "\u30DF\u30B5\u30A4\u30EB\u306E\u30D0\u30FC\u30B9\u30C8\u56DE\u6570+1"
+  description: +1 Missile Burst
   isPlayers: 1
   value: 1
   missileShotStatType: 1

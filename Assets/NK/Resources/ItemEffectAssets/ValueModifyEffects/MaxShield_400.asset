@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
   m_Name: MaxShield_400
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u30B7\u30FC\u30EB\u30C9\u5024+400"
+  description: +400 Shield Point
   isPlayers: 1
   value: 400
   statType: 2

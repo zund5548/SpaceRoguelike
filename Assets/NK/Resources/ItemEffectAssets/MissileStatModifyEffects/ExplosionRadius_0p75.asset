@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2726dbffacddd4c937e0b61b8a26ff, type: 3}
   m_Name: ExplosionRadius_0p75
   m_EditorClassIdentifier: Assembly-CSharp::Items.MissileStatModify
-  description: "\u30DF\u30B5\u30A4\u30EB\u306E\u7206\u767A\u534A\u5F84+0.75"
+  description: +0.75 Explosion radius of Missile
   isPlayers: 1
   value: 0.75
   missileShotStatType: 2

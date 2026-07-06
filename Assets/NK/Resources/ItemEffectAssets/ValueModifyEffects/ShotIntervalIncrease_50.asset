@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
   m_Name: ShotIntervalIncrease_50
   m_EditorClassIdentifier: Assembly-CSharp::Items.PlayerValueModify
-  description: "\u5C04\u6483\u9593\u9694\u5897\u52A0(%)+50"
+  description: '+50% Increase Shot Interval '
   isPlayers: 1
   value: 50
   statType: 6

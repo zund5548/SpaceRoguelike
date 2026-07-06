@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1affd1c9e7ef8d644b38b154272e8d4e, type: 3}
   m_Name: AddCritRate_15
   m_EditorClassIdentifier: Assembly-CSharp::Items.ValueModify
-  description: "\u4F1A\u5FC3\u7387+15"
+  description: +15% Critical Rate
   isPlayers: 1
   value: 15
   statType: 1
