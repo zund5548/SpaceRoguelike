@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
   m_Name: PowB
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u5F3E\u982D\u5F37\u53162"
+  itemName: Reinfoce 2
   itemIcon: {fileID: 0}
   itemTier: 1
   itemEffectList:

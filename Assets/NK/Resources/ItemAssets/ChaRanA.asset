@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
   m_Name: ChaRanA
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u8A98\u96FB1"
+  itemName: Induing 1
   itemIcon: {fileID: 0}
   itemTier: 0
   itemEffectList:

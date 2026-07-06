@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e01c1a2b9a4bac41b7fe8d1b0302d36, type: 3}
   m_Name: DamageAreaRadius_50P
   m_EditorClassIdentifier: Assembly-CSharp::Items.DamageAreaStatModify
-  description: "\u30D7\u30E9\u30BA\u30DE\u306E\u7BC4\u56F2+50%"
+  description: +50% Plasma Radius
   isPlayers: 1
   value: 50
   damageAreaStatType: 1

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e01c1a2b9a4bac41b7fe8d1b0302d36, type: 3}
   m_Name: DamageAreaLasting_5
   m_EditorClassIdentifier: Assembly-CSharp::Items.DamageAreaStatModify
-  description: "\u30D7\u30E9\u30BA\u30DE\u6301\u7D9A\u6642\u9593+5"
+  description: +5s Plasma Lasting Time
   isPlayers: 1
   value: 5
   damageAreaStatType: 2

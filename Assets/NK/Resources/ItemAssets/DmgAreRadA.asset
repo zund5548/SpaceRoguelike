@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c9d3e7a30d535449217ee2b3e81611, type: 3}
   m_Name: DmgAreRadA
   m_EditorClassIdentifier: Assembly-CSharp::Items.Item
-  itemName: "\u96FB\u6C17\u7684\u5B89\u5B9A\u53161"
+  itemName: Stabilization 1
   itemIcon: {fileID: 0}
   itemTier: 0
   itemEffectList:

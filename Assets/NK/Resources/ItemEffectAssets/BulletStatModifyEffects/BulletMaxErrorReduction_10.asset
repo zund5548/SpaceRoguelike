@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a97b8b36a3e9747a1f5e7efb5549c9, type: 3}
   m_Name: BulletMaxErrorReduction_10
   m_EditorClassIdentifier: Assembly-CSharp::Items.BulletStatModify
-  description: "\u901A\u5E38\u5F3E\u306E\u8AA4\u5DEE\u6E1B\u5C11(%)+10"
+  description: '+10(%) Reducing Shoot Error of Bullet  '
   isPlayers: 1
   value: 10
   bulletShotStatType: 4

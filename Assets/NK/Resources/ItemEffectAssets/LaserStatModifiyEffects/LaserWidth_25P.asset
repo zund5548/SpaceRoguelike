@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74eee1d2bbbcea44694acf83541759a8, type: 3}
   m_Name: LaserWidth_25P
   m_EditorClassIdentifier: Assembly-CSharp::Items.LaserStatModify
-  description: "\u30EC\u30FC\u30B6\u30FC\u5E45+25%"
+  description: +25% Laser Width
   isPlayers: 1
   value: 25
   laserShotStatType: 4

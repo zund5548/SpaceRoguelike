@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0746b57d13318f4097b06afd9e8d810, type: 3}
   m_Name: ChainRange_25P
   m_EditorClassIdentifier: Assembly-CSharp::Items.ChainStatModify
-  description: "\u30A2\u30FC\u30AF\u653E\u96FB\u306E\u9023\u9396\u7BC4\u56F2+20%"
+  description: +20% Chain Range
   isPlayers: 1
   value: 20
   chainStatType: 1

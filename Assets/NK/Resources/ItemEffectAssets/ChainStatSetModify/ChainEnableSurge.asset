@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0746b57d13318f4097b06afd9e8d810, type: 3}
   m_Name: ChainEnableSurge
   m_EditorClassIdentifier: Assembly-CSharp::Items.ChainStatModify
-  description: "\u30A2\u30FC\u30AF\u653E\u96FB\u304C\u30D2\u30C3\u30C8\u3057\u305F\u3068\u304DSurge+1\u3002Surge\u304C5\u306B\u306A\u3063\u305F\u6642\u3001\u6575\u306F3\u79D2\u9593\u79FB\u52D5\u3067\u304D\u306A\u3044"
+  description: Enemies have Surge +1 When Hit Chain Shot.
   isPlayers: 1
   value: 1
   chainStatType: 2

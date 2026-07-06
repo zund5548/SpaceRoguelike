@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0746b57d13318f4097b06afd9e8d810, type: 3}
   m_Name: ChainNum_2
   m_EditorClassIdentifier: Assembly-CSharp::Items.ChainStatModify
-  description: "\u30A2\u30FC\u30AF\u653E\u96FB\u306E\u9023\u9396\u6570+2"
+  description: +2 Chain Targets
   isPlayers: 1
   value: 2
   chainStatType: 0

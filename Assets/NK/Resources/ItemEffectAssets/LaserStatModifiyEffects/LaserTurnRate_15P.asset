@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74eee1d2bbbcea44694acf83541759a8, type: 3}
   m_Name: LaserTurnRate_15P
   m_EditorClassIdentifier: Assembly-CSharp::Items.LaserStatModify
-  description: "\u30EC\u30FC\u30B6\u30FC\u56DE\u8EE2\u901F\u5EA6+15%"
+  description: +10% Tergetting Speed
   isPlayers: 1
   value: 15
   laserShotStatType: 3

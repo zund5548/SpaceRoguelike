@@ -30,7 +30,7 @@ MonoBehaviour:
     - rid: 1541337840300064768
       type: {class: RailgunShot, ns: Weapons, asm: Assembly-CSharp}
       data:
-        weaponName: "\u30EC\u30FC\u30EB\u30AC\u30F3"
+        weaponName: Railgun
         _projectile: {fileID: 2805919839176803890, guid: 08fbb0d7c5718224eb829b81e0bf2993, type: 3}
         _explosion: {fileID: 5553690570481249395, guid: ffc2be1c984648e498ba6bf07ba32294, type: 3}
         railgunProjectile: {fileID: 2904888318123126438, guid: 9e7e7811405f6ed4ea6f0198f353de97, type: 3}

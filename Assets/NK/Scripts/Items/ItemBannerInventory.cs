@@ -12,7 +12,7 @@ namespace Items
             _ItemNameTMP.text = item.itemName;
             foreach(var itemEffect in item.itemEffectList)
             {
-                _ItemDescriptionTMP.text += "・" + itemEffect.description + "\n";
+                _ItemDescriptionTMP.text += " " + itemEffect.description + "\n";
             }
         }
     }

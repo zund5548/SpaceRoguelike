@@ -20,7 +20,7 @@ namespace Items
             string result = "";
             foreach(var itemEffect in itemEffectList)
             {
-                result += "・" + itemEffect.description + "\n";
+                result += " " + itemEffect.description + "\n";
             }
             return result;
         }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf8ef852fed94f44844032dd7601072, type: 3}
   m_Name: DroneLifetime_50P
   m_EditorClassIdentifier: Assembly-CSharp::Items.DroneStatModify
-  description: "\u30C9\u30ED\u30FC\u30F3\u306E\u7A3C\u50CD\u6642\u9593+50%"
+  description: +25% Drone Lifetime
   isPlayers: 1
   value: 50
   droneStatType: 1

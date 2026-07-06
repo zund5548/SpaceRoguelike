@@ -19,9 +19,8 @@ namespace Items
         {
             itemNameText.text = item.itemName;
             itemDescriptionText.text = item.GetItemDescription();
-            string tierText = "";
-            for(int i = 0;i < item.itemTier + 1;i++)tierText += "★";
-            itemTierDisplay.text = tierText;
+            // for(int i = 0;i < item.itemTier + 1;i++)tierText += "★";
+            itemTierDisplay.text = "tier : " + item.itemTier.ToString();
         }
     }
 }

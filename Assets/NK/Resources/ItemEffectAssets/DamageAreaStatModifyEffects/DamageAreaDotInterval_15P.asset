@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e01c1a2b9a4bac41b7fe8d1b0302d36, type: 3}
   m_Name: DamageAreaDotInterval_15P
   m_EditorClassIdentifier: Assembly-CSharp::Items.DamageAreaStatModify
-  description: "\u30D7\u30E9\u30BA\u30DE\u306E\u30C0\u30E1\u30FC\u30B8\u9593\u9694\u6E1B\u5C11+15"
+  description: +15 Reduction of hit interval of Plasma
   isPlayers: 1
   value: 15
   damageAreaStatType: 0
