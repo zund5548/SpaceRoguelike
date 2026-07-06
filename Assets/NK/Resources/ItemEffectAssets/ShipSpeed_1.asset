@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eee3b1a12b4b3943abd51923d1a3c1f, type: 3}
   m_Name: ShipSpeed_1
   m_EditorClassIdentifier: Assembly-CSharp::Items.ShipSpeedEffect
-  description: "\u822A\u884C\u901F\u5EA6+1"
+  description: +1 Ship Speed
   isPlayers: 1
   value: 1
   modType: 0
