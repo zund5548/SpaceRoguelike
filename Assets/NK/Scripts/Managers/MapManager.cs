@@ -3,17 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Maps;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
-using Unity.Collections;
 using TMPro;
-using Unity.Mathematics;
-using UnityEngine.UIElements;
 using UniRx.Triggers;
-using System;
-using System.Collections;
 using System.Linq;
-using Items;
-using UnityEngine.Rendering;
 namespace Managers
 {
     public class MapManager : MonoBehaviour
