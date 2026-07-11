@@ -14,7 +14,7 @@ namespace Maps
         {
             RedDwarf,M,K,G,F,A,B,O,NeutronStar,BlackHole,
         }
-        Dictionary<StarType,string> starColorDic = new Dictionary<StarType, string>
+        private static Dictionary<StarType,string> starColorDic = new Dictionary<StarType, string>
         {
             {StarType.RedDwarf,"#ff0000"},
             {StarType.M,"#ff0000"},

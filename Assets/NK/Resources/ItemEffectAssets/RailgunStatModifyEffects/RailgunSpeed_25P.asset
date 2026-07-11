@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c1c11888306a64782bf6bee8680497, type: 3}
   m_Name: RailgunSpeed_25P
   m_EditorClassIdentifier: Assembly-CSharp::SpaceRoguelike.Assets.NK.Scripts.Items.ItemEffectDerived.UniqueStatModify.RailgunStatModify
-  description: "\u30EC\u30FC\u30EB\u30AC\u30F3\u306E\u5F3E\u901F+25%"
+  description: +25% Railgun bullet speed
   isPlayers: 1
   value: 25
   railgunShotStatType: 0

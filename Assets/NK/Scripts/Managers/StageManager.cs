@@ -300,7 +300,7 @@ namespace Managers
             List<float> weightList = new List<float>{50,35,10,5};
             for(int i = 0;i < count;i++)
             {
-                var item = itemPool.Where(item => item.itemTier == WeightedItemTier(weightList)).OrderBy(x => UnityEngine.Random.Range(0,itemPool.Count)).ToList()[0];
+                var item = itemPool.Where(item => item.itemTier == GetWeightedItemTier(weightList)).OrderBy(x => UnityEngine.Random.Range(0,itemPool.Count)).ToList()[0];
                 if(!item)item = itemPool.OrderBy(x => UnityEngine.Random.Range(0,itemPool.Count)).ToList()[0];
                 result.Add(item);
                 itemPool.Remove(item);
@@ -308,7 +308,7 @@ namespace Managers
             if(result.Count != count)result = itemPool.OrderBy(x => UnityEngine.Random.Range(0,itemPool.Count)).Take(count).ToList();
             return result;
         }
-        private int WeightedItemTier(List<float> weightList)
+        private int GetWeightedItemTier(List<float> weightList)
         {
             float weightSum = 0;
             for(int i = 0;i < weightList.Count;i++)
