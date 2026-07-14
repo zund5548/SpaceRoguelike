@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Maps
 {
-     [Serializable]
+    [Serializable]
     public class StageNode
     {
         public string stageName;
