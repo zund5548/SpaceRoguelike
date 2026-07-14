@@ -16,8 +16,8 @@ namespace Managers
     {
         public static GManager Instance{get;private set;}
         public ReactiveProperty<GameState> CurrentState = new ReactiveProperty<GameState>();
-        public int _floorNum;
-        public int _mapLevel;
+        public int _floorNum{get;private set;}
+        public int _mapLevel{get;private set;}
         [HideInInspector]
         public bool isMapCreated = false;
         public List<List<StageNode>> _stageFloorList = new();
@@ -179,6 +179,12 @@ namespace Managers
         {
             var list = Resources.LoadAll<ShipData>("ShipPlayerAssets").OrderBy(x => UnityEngine.Random.value).Take(1).ToList();
             return list[UnityEngine.Random.Range(0,list.Count)];
+        }
+
+        public void SetDifficulty(int floorNum,int mapLevel)
+        {
+            _floorNum = floorNum;
+            _mapLevel = mapLevel;
         }
         // public void AddCurrentHullPoint(Ship ship)
         // {
