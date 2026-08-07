@@ -11,7 +11,7 @@ namespace Maps
         public int floorStageNum;
         public Vector2 buttonLocalPos;
         public StageType stageType;
-        public (int,int) mapIdx;//マップでのインデックス
+        public (int,int) mapIdx;
         //public GameObject buttonObject;
         [Serializable]
         public enum StageType
