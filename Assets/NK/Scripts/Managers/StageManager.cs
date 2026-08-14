@@ -227,7 +227,8 @@ namespace Managers
                 var button = banner.transform.GetChild(0).GetComponent<Button>();
                 buttonList.Add(button);
                 banner.transform.SetParent(_ItemRewardContent,false);
-                banner.GetComponent<ItemBanner>().SetBannerMessage(item);
+                var itemBanner = banner.GetComponent<ItemBanner>();
+                itemBanner.InitBanner(item);
                 button.OnClickAsObservable()
                     .Where(_=>!isBannerPushed)
                     .Subscribe(_=>
