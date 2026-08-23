@@ -1635,8 +1635,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GManager
   CurrentState:
     value: 0
-  _floorNum: 0
-  _mapLevel: 0
   isMapCreated: 0
   currentStageNode:
     stageName: 
@@ -1648,7 +1646,8 @@ MonoBehaviour:
     planetList: []
     stageEncount: {fileID: 0}
   passsedStageNodes: []
-  playerShipDataList: []
+  playerShipDataList:
+  - {fileID: 11400000, guid: 34553048b1b190345b011b3836a2aecd, type: 2}
   enemyShipDataList: []
   itemList: []
   inputAction: {fileID: -944628639613478452, guid: 836744da074f51e41adc85c738fc1322, type: 3}
