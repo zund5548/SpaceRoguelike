@@ -11,7 +11,7 @@ using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 using Weapons;
-
+using UnityEngine.InputSystem;
 namespace Managers
 {
     public class StageManager : MonoBehaviour
@@ -45,11 +45,29 @@ namespace Managers
         public GameObject _ShopItemBannerCanvas;
         public GameObject _ShipDataBannerCanvas;
         public GameObject _UICanvas;
+        public GameObject _MenuCanvas;
 
        
 
         public List<Item> allItemList;
         List<GameObject> planetObjectList = new();
+
+        public InputActionAsset inputAction;
+        public InputAction menuAction;
+        private void OnEnable()
+        {
+            menuAction.performed += SwitchMenu;
+
+        }
+        private void OnDisable()
+        {
+            menuAction.performed -= SwitchMenu;
+
+        }
+        public void SwitchMenu(InputAction.CallbackContext ctx)
+        {
+            _MenuCanvas.SetActive(!_MenuCanvas.activeSelf);
+        }
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -58,6 +76,7 @@ namespace Managers
                 return;
             }
             Instance = this;
+            menuAction = inputAction["Menu"];
         }
         void Start()
         {

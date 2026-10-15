@@ -53,10 +53,12 @@ namespace Managers
         private void OnEnable()
         {
             positionAction.performed += OnCursorMoved;
+
         }
         private void OnDisable()
         {
             positionAction.performed -= OnCursorMoved;
+
         }
         private void OnCursorMoved(InputAction.CallbackContext ctx)
         {
@@ -73,6 +75,7 @@ namespace Managers
             Instance = this;
             clickAction = inputAction["Click"];
             positionAction = inputAction["Position"];
+            
         }
         void Start()
         {
